@@ -1,0 +1,87 @@
+@startuml kommanda
+
+Encargado -- Barra
+Encargado -- Cocina
+Administrador -- Mesa
+Administrador -- Plato
+Comanda -- Plato
+Plato -- Ingrediente
+Plato -- EstadoPlato
+Plato -- Categoria
+Mozo -- Comanda
+Encargado -- Comanda
+
+class Administrador{
+    {method}marcarPlato()
+    {method}ingresarMesa()
+}
+class Encargado{
+    {method}obtenerPedidos(Criterio)
+    {method}marcarListo(Criterio)
+}
+class Barra{
+
+}
+class Cocina{
+}
+class Plato{
+    nombre: String
+    categoria: Categoria
+    ingredientes: list<Ingrediente>
+    precio: float
+    estado: EstadoPlato
+    nota: list<String>
+    {method}crearPlato()
+    {method}modificarPlato()
+    {method}cambiarEstado()
+}
+class Ingrediente{
+    id: int
+    nombre: String
+    cantInventario: int
+    {method}cantSuficiente()
+}
+enum EstadoPlato{
+    LISTO
+    NO_LISTO
+    NO_DISPONIBLE
+}
+enum Categoria{
+    ENTRADA
+    PRINCIPAL
+    POSTRE
+    BEBIDA
+    PRECIO
+}
+class Mesa{
+    id: int
+    maxComensales: int
+    {method}crearMesa()
+}
+class Mozo{
+    {method}entregarBebdias()
+}
+class Comanda{
+    mesa: Mesa
+    platos: lista<Plato>
+    estadosComanda[0]: < Ingresado, EntradaListas,
+    PrincipalesListos, PostresListos, Entregado ,Pagado >
+    {method}crearComanda(): Comanda
+    {method}eliminarPlato(Plato)
+    {method}modificarPlato(Plato, modificacion)
+    {method}obtenerEstado(): estadosComanda[]
+    {method}verificarBebidasListas()
+    {method}modificarEstado(estado)
+    {method}agregarPlato(Plato)
+    {method}totalPedido()
+}
+class Personal{
+
+}
+enum Usuario{
+    ADMINISTRADOR
+    MOZO
+    ENCARGADO
+}
+
+@enduml
