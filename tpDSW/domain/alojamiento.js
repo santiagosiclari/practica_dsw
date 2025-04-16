@@ -39,7 +39,6 @@ export class Alojamiento{
     get fotos(){return this.#fotos}
 
     estasDisponibleEn(rangoDeFechas){
-        
     }
     tuPrecioEstaDentroDe(valorMinimo, valorMaximo){
         return valorMinimo < this.precioPorNoche && valorMaximo > this.precioPorNoche;
@@ -72,15 +71,3 @@ export class Pais{
         this.nombre = nombre;
     }
 }
-
-export const Moneda = Object.freeze({
-    DOLAR_USA: 'DOLAR_USA',
-    PESO_ARG: 'PESO_ARG',
-    REALES: 'REALES'
-});
-export const Caracteristica = Object.freeze({
-    WIFI: 'WIFI',
-    PISCINA:'PISCINA',
-    MASCOTAS_PERMITIDAS:'MASCOTAS_PERMITIDAS',
-    ESTACIONAMIENTO:'ESTACIONAMIENTO'
-});

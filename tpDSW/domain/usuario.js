@@ -12,7 +12,10 @@ export class Usuario{
     getTipo(){return this.tipo};
 }
 
-export const TipoUsuario = Object.freeze({
-    HUESPED: 'HUESPED',
-    ANFITRION: 'ANFITRION'
-});
+export class TipoUsuario{
+    nombre
+    constructor(nombre){
+        this.nombre = nombre;
+    }
+}
+export const HUESPED = new TipoUsuario('HUESPED');

@@ -1,13 +1,16 @@
-import express from "express";
+import express from "express"
 import { z } from "zod";
 
-import { Usuario } from "./utils/usuario.js";
-import { Direccion, Ciudad, Alojamiento, Pais, Moneda, Caracteristica } from "./utils/alojamiento.js";
-import { Foto } from "./utils/foto.js";
-import { Reserva  } from "./utils/reserva.js";
+import { Usuario } from "./domain/usuario.js";
+import { Direccion, Ciudad, Alojamiento, Pais } from "./domain/alojamiento.js";
+import { WIFI, ESTACIONAMIENTO, PISCINA, MASCOTAS_PERMITIDAS } from "./domain/caracteristica.js";
+import { DOLAR_USA, PESO_ARG, REALES } from "./domain/moneda.js";
+import { Foto } from "./domain/foto.js";
+import { Reserva , RangoFechas, CambioEstadoReserva } from "./domain/reserva.js";
+import { Notificacion, FactoryNotificacion } from "./domain/notificacion.js";
 
-const healthRoute = require('./rutas/healthRoute.js');
-const reservaRoute = require('./rutas/reservaRoute.js');
+import healthRoute from './rutas/healthRoute.js';
+import reservaRoute from './rutas/reservaRoute.js';
 
 const app = express();
 const PUERTO = 3000;
@@ -23,9 +26,7 @@ app.listen(PUERTO, () => {
     console.log('Servidor Activo');
 });
 
-function validarEntero(){
 
-}
 
 const usuario1 = new Usuario("Juan", "Cospito", 'HUESPED');
 console.log(usuario1);
