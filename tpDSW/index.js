@@ -20,12 +20,11 @@ app.get('/', (req, res) => {
 });
 
 app.use("/healthcheck", healthRoute);
-app.use("reserva", reservaRoute);
+app.use("/reserva", reservaRoute);
 
 app.listen(PUERTO, () => {
     console.log('Servidor Activo');
 });
-
 
 
 const usuario1 = new Usuario("Juan", "Cospito", 'HUESPED');

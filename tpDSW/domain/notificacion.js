@@ -1,9 +1,9 @@
 export class Notificacion{
-    constructor(mensaje, usuario, fechaAlta, leida, fechaLeida){
+    constructor(mensaje, usuario, fechaAlta, fechaLeida){
         this.mensaje = mensaje;
         this.usuario = usuario;
         this.fechaAlta = fechaAlta;
-        this.leida = leida;
+        this.leida = false;
         this.fechaLeida = fechaLeida;
     }
     marcarComoLeida(){

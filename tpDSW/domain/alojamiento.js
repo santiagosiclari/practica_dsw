@@ -41,10 +41,10 @@ export class Alojamiento{
     estasDisponibleEn(rangoDeFechas){
     }
     tuPrecioEstaDentroDe(valorMinimo, valorMaximo){
-        return valorMinimo < this.precioPorNoche && valorMaximo > this.precioPorNoche;
+        return (valorMinimo < this.precioPorNoche && valorMaximo > this.precioPorNoche);
     }
-    tenesCaracteristicas(caracteristica){
-        return this.caracteristicas.includes(caracteristica, 0);
+    tenesCaracteristica(caracteristica){
+        this.caracteristicas
     }
     puedenAlojarse(cantHuespedes){
         return cantHuespedes <= this.cantHuespedesMax;
