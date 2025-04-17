@@ -1,15 +1,12 @@
 export class Usuario{
+    nombre
+    email
+    tipo
     constructor(nombre, email, tipo){
         this.nombre = nombre;
         this.email = email;
         this.tipo = tipo;
     }
-    cancelarReserva(){
-        if(this.tipo == "HUESPED"){
-            enviarMensajeAnfitrion();
-        }
-    }
-    getTipo(){return this.tipo};
 }
 
 export class TipoUsuario{
@@ -18,4 +15,5 @@ export class TipoUsuario{
         this.nombre = nombre;
     }
 }
+export const ANFITRION = new TipoUsuario('ANFITRION');
 export const HUESPED = new TipoUsuario('HUESPED');

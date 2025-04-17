@@ -39,3 +39,5 @@ console.log(dir1);
 const foto1 = new Foto("bUENA", "ARG");
 const alojamiento1 = new Alojamiento(anfitrion1, "Riu", "Hermoso", 100, 'DOLAR_USA', '10:00', '11:00', dir1, 5, ['WIFI'], null, [foto1]);
 console.log(alojamiento1);
+
+const reserva = new Reserva(usuario1, 3, alojamiento1, )

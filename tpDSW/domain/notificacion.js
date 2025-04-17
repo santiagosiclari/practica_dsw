@@ -1,18 +1,34 @@
 export class Notificacion{
-    constructor(mensaje, usuario, fechaAlta, fechaLeida){
+    mensaje
+    usuario
+    fechaAlta
+    fechaLeida
+    constructor(mensaje, usuario){
         this.mensaje = mensaje;
         this.usuario = usuario;
-        this.fechaAlta = fechaAlta;
+        this.fechaAlta = new Date.now();
         this.leida = false;
-        this.fechaLeida = fechaLeida;
+        this.fechaLeida = null;
     }
     marcarComoLeida(){
         this.leida = true;
+        this.fechaLeida = new Date.now()
     }
 }
 export class FactoryNotificacion{
     crearSegunReserva(reserva){
-        //obtiene reserva y devuelve notificacion
-        const notificacion = new Notificacion("Aviso de notificacion",reserva.huespedReservador, reserva.fechaAlta, false, null);
+        mensaje = "El cliente "
+            + reserva.getHuespedReservador().getNombre()
+            + " realizó una reserva desde el día "
+            + reserva.getRangoFechas().getFechaInicio().toDateString()
+            + " hasta el día "
+            + reserva.getRangoFechas().getFechaFin().toDateString()
+            + " por un total de "
+            + reserva.calcularDias().toString()
+            + " días sobre el alojamiento "
+            + reserva.getAlojamiento().getNombre()
+            + "."
+        const notificacion = new Notificacion(mensaje, reserva.getHuespedReservador())
+        return notificacion
     }
 }
