@@ -27,7 +27,7 @@ app.listen(PUERTO, () => {
 });
 
 
-const usuario1 = new Usuario("Juan", "Cospito", 'HUESPED');
+/* const usuario1 = new Usuario("Juan", "Cospito", 'HUESPED');
 console.log(usuario1);
 const anfitrion1 = new Usuario("Santiago", "santisic", 'ANFITRION');
 console.log(anfitrion1);
@@ -40,4 +40,4 @@ const foto1 = new Foto("bUENA", "ARG");
 const alojamiento1 = new Alojamiento(anfitrion1, "Riu", "Hermoso", 100, 'DOLAR_USA', '10:00', '11:00', dir1, 5, ['WIFI'], null, [foto1]);
 console.log(alojamiento1);
 
-const reserva = new Reserva(usuario1, 3, alojamiento1, )
+const reserva = new Reserva(usuario1, 3, alojamiento1, ) */

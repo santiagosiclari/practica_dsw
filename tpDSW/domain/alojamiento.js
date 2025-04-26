@@ -1,6 +1,6 @@
-import { DOLAR_USA, Moneda } from "./moneda"
-import { Reserva , RangoFechas } from "./reserva"
-import { Foto } from "./foto"
+import { DOLAR_USA, Moneda } from "./moneda.js"
+import { Reserva , RangoFechas } from "./reserva.js"
+import { Foto } from "./foto.js"
 
 export class Alojamiento{
     anfitrion
