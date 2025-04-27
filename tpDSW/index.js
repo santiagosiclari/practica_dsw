@@ -19,11 +19,11 @@ app.get('/', (req, res) => {
     res.send('Hello world')
 });
 
-app.use("/healthcheck", healthRoute);
+app.use("/healthCheck", healthRoute);
 app.use("/reserva", reservaRoute);
 
 app.listen(PUERTO, () => {
-    console.log('Servidor Activo');
+    console.log('Servidor escuchando en htps://localhost:3000');
 });
 
 
