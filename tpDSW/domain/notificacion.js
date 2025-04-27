@@ -28,7 +28,27 @@ export class FactoryNotificacion{
             + " días sobre el alojamiento "
             + reserva.getAlojamiento().getNombre()
             + "."
-        const notificacion = new Notificacion(mensaje, reserva.getHuespedReservador())
+        const notificacion = new Notificacion(mensaje, reserva.getAlojamiento().getAnfitrion())
         return notificacion
+    }
+
+    crearSegunAceptar(reserva) {
+        mensaje = "El anfitrión de la reserva "
+            + reserva.getAlojamiento().getNombre()
+            + " ha aceptado su solicitud de reserva."
+        const notificacion = new Notificacion(mensaje, reserva.getHuespedReservador())
+    } 
+
+    crearSegunRechazo(reserva, motivoCancelacion = null) {
+        mensaje = "El cliente "
+            + reserva.getHuespedReservador()
+            + " ha cancelado su reserva sobre "
+            + reserva.getAlojamiento.getNombre()
+        if (motivoCancelacion) {
+            mensaje += " debido al siguiente motivo: '"
+            + motivoCancelacion
+            + "'."
+        }
+        const notificacion = new Notificacion(mensaje, reserva.getAlojamiento().getAnfitrion())
     }
 }

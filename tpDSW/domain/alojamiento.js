@@ -53,6 +53,9 @@ export class Alojamiento{
         return cantHuespedes <= this.cantHuespedesMax;
     }
     getNombre(){return this.nombre}
+    getAnfitrion() {
+        return this.anfitrion
+    }
 }
 export class Direccion{
     calle
