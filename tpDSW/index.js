@@ -2,7 +2,7 @@ import express from "express"
 import { z } from "zod";
 
 import { Usuario } from "./domain/usuario.js";
-import { Direccion, Ciudad, Alojamiento, Pais } from "./domain/alojamiento.js";
+import { Alojamiento } from "./domain/alojamiento.js";
 import { WIFI, ESTACIONAMIENTO, PISCINA, MASCOTAS_PERMITIDAS } from "./domain/caracteristica.js";
 import { DOLAR_USA, PESO_ARG, REALES } from "./domain/moneda.js";
 import { Foto } from "./domain/foto.js";
