@@ -41,6 +41,7 @@ class EstadoReserva{
         this.nombre = nombre
     }
 }
+
 const PENDIENTE = new EstadoReserva('PENDIENTE')
 const CONFIRMADA = new EstadoReserva('CONFIRMADA')
 const CANCELADA = new EstadoReserva('CANCELADA')

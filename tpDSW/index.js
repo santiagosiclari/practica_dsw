@@ -23,21 +23,5 @@ app.use("/healthCheck", healthRoute);
 app.use("/reserva", reservaRoute);
 
 app.listen(PUERTO, () => {
-    console.log('Servidor escuchando en htps://localhost:3000');
+    console.log('Servidor escuchando en http://localhost:3000');
 });
-
-
-/* const usuario1 = new Usuario("Juan", "Cospito", 'HUESPED');
-console.log(usuario1);
-const anfitrion1 = new Usuario("Santiago", "santisic", 'ANFITRION');
-console.log(anfitrion1);
-
-const pais1 = new Pais("argentina");
-console.log(pais1);
-const dir1 = new Direccion("BsAs", pais1);
-console.log(dir1);
-const foto1 = new Foto("bUENA", "ARG");
-const alojamiento1 = new Alojamiento(anfitrion1, "Riu", "Hermoso", 100, 'DOLAR_USA', '10:00', '11:00', dir1, 5, ['WIFI'], null, [foto1]);
-console.log(alojamiento1);
-
-const reserva = new Reserva(usuario1, 3, alojamiento1, ) */

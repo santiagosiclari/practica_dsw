@@ -37,7 +37,7 @@ export class FactoryNotificacion{
             + reserva.getAlojamiento().getNombre()
             + " ha aceptado su solicitud de reserva."
         const notificacion = new Notificacion(mensaje, reserva.getHuespedReservador())
-    } 
+    }
 
     crearSegunRechazo(reserva, motivoCancelacion = null) {
         mensaje = "El cliente "

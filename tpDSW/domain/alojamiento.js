@@ -35,6 +35,9 @@ export class Alojamiento{
     }
 
     rangoFechaEstaEntre(rangoDeFechas1, rangoDeFechas2){
+        return rangoDeFechas1.seSuperponeCon(rangoDeFechas1)
+
+
         fechaInicialCumple = this.fechaEstaEntre(rangoDeFechas1.fechaInicio, rangoDeFechas2.fechaFin, rangoDeFechas2.fechaFin)
         fechaFinalCumple = this.fechaEstaEntre(rangoDeFechas1.fechaFin, rangoDeFechas2.fechaFin, rangoDeFechas2.fechaFin)
         return fechaInicialCumple && fechaFinalCumple
