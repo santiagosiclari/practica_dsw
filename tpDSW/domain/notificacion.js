@@ -18,37 +18,36 @@ export class Notificacion{
 export class FactoryNotificacion{
     crearSegunReserva(reserva){
         mensaje = "El cliente "
-            + reserva.getHuespedReservador().getNombre()
+            + reserva.getHuespedReservadorNombre()
             + " realizó una reserva desde el día "
-            + reserva.getRangoFechas().getFechaInicio().toDateString()
+            + reserva.getRangoFechaInicio().toDateString()
             + " hasta el día "
-            + reserva.getRangoFechas().getFechaFin().toDateString()
+            + reserva.getRangoFechaFinal().toDateString()
             + " por un total de "
             + reserva.calcularDias().toString()
             + " días sobre el alojamiento "
-            + reserva.getAlojamiento().getNombre()
+            + reserva.getAlojamientoNombre()
             + "."
-        const notificacion = new Notificacion(mensaje, reserva.getAlojamiento().getAnfitrion())
+        const notificacion = new Notificacion(mensaje, reserva.getAnfitrionAlojamiento())
         return notificacion
     }
 
     crearSegunAceptar(reserva) {
         mensaje = "El anfitrión de la reserva "
-            + reserva.getAlojamiento().getNombre()
+            + reserva.getAlojamientoNombre()
             + " ha aceptado su solicitud de reserva."
         const notificacion = new Notificacion(mensaje, reserva.getHuespedReservador())
     }
-
     crearSegunRechazo(reserva, motivoCancelacion = null) {
         mensaje = "El cliente "
-            + reserva.getHuespedReservador()
+            + reserva.getHuespedReservadorNombre()
             + " ha cancelado su reserva sobre "
-            + reserva.getAlojamiento.getNombre()
+            + reserva.getAlojamientoNombre()
         if (motivoCancelacion) {
             mensaje += " debido al siguiente motivo: '"
             + motivoCancelacion
             + "'."
         }
-        const notificacion = new Notificacion(mensaje, reserva.getAlojamiento().getAnfitrion())
+        const notificacion = new Notificacion(mensaje, reserva.getAnfitrionAlojamiento())
     }
 }

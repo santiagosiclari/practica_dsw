@@ -29,7 +29,7 @@ export class Alojamiento{
     }
 
     estasDisponibleEn(rangoDeFechas){
-        return this.reservas.every(reserva => 
+        return this.reservas.every(reserva =>
             !reserva.rangoFechas.seSuperponeCon(rangoDeFechas)
         );
     }
