@@ -35,6 +35,9 @@ export class RangoFechas{
     }
     getFechaInicio(){return this.fechaInicio}
     getFechaFin(){return this.fechaFin}
+    seSuperponeCon(otroRango) {
+        return this.fechaInicio < otroRango.fechaFin && this.fechaFin > otroRango.fechaInicio;
+    }
 }
 class EstadoReserva{
     constructor(nombre){
