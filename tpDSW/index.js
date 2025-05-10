@@ -11,8 +11,14 @@ import { Notificacion, FactoryNotificacion } from "./domain/notificacion.js";
 
 import healthRoute from './rutas/healthRoute.js';
 import reservaRoute from './rutas/reservaRoute.js';
+import { ReservaController } from "./controllers/reservaController.js";
+import { ReservaService } from "./services/reservaService.js";
+import { ReservaRepository } from "./models/repositories/reservaRepository.js";
+import { UserRepository } from "./models/repositories/userRepository.js";
+import { AlojamientoRepository } from "./models/repositories/alojamientoRepository.js";
 
 const app = express();
+app.use(express.json())
 const PUERTO = 3000;
 
 app.get('/', (req, res) => {
@@ -20,7 +26,15 @@ app.get('/', (req, res) => {
 });
 
 app.use("/healthCheck", healthRoute);
-app.use("/reserva", reservaRoute);
+// app.use("/reserva", reservaRoute);
+
+const reservaRepo = new ReservaRepository()
+const userRepo = new UserRepository()
+const alojamientoRepo = new AlojamientoRepository()
+const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo)
+const reservaController = new ReservaController(reservaService)
+
+app.post("/reservas", (req, res) => reservaController.crearReserva(req, res));
 
 app.listen(PUERTO, () => {
     console.log('Servidor escuchando en http://localhost:3000');
