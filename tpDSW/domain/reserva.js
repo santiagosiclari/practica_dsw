@@ -15,12 +15,14 @@ export class Reserva{
         this.estado = EstadoReserva.PENDIENTE;
         this.precioPorNoche = alojamiento.getPrecioPorNoche();
     }
-    actualizarEstado(EstadoReserva){
-        this.estado = EstadoReserva;
+    actualizarEstado(estadoReserva){
+        this.estado = estadoReserva;
     }
-    getAlojamiento(){return this.alojamiento}
-    getRangoFechas(){return this.rangoFechas}
-    getHuespedReservador(){return this.huespedReservador}
+    getAlojamientoNombre(){return this.alojamiento.getNombre()}
+    getAnfitrionAlojamiento(){return this.alojamiento.getAnfitrion()}
+    getRangoFechaInicio(){return this.rangoFechas.getFechaInicio()}
+    getRangoFechaFinal(){return this.rangoFechas.getFechaFin()}
+    getHuespedReservadorNombre(){return this.huespedReservador.getNombre()}
     calcularDias(){
         const dias = this.rangoFechas.fechaFin - this.rangoFechas.fechaInicio
         return Math.ceil(dias / (1000 * 60 * 60 * 24));
