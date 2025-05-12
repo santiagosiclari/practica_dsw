@@ -1,7 +1,7 @@
 import { DOLAR_USA, Moneda } from "./moneda.js"
 import { Reserva , RangoFechas } from "./reserva.js"
 import { Foto } from "./foto.js"
-import { Direccion } from "./direccionn.js"
+import { Direccion } from "./direccion.js"
 
 export class Alojamiento{
     id

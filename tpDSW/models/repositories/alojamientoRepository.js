@@ -1,5 +1,5 @@
 import { Alojamiento } from "../../domain/alojamiento.js";
-import { Direccion } from "../../domain/direccionn.js";
+import { Direccion } from "../../domain/direccion.js";
 import { TipoUsuario, Usuario } from "../../domain/usuario.js";
 
 export class AlojamientoRepository {

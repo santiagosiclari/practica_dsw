@@ -10,11 +10,6 @@ export class ReservaController {
         } catch(error) {
             console.error(error)
             res.status(400).json
-
-
-
-
-            
         }
     }
 }
