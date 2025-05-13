@@ -1,4 +1,4 @@
-import { Reserva } from "../../domain/reserva.js";
+import { Reserva } from "../domain/reserva.js";
 
 export class ReservaRepository {
     reservas = [];
