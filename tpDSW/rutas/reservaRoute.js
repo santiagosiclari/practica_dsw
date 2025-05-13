@@ -1,8 +1,5 @@
-import express from 'express';
-const router = express.Router();
+import { ReservaController } from "../controllers/reservaController.js";
 
-router.get('/', (req, res) => {
-    res.status(201).json({msg: "Todo ok"});
-});
-
-export default router;
+export function registerReservaRoutes(app, ReservaController){
+    app.post("/reservas", (req, res, next) => reservaController.crearReserva(req, res));
+}

@@ -3,13 +3,12 @@ export class ReservaController {
         this.reservaService = reservaService
     }
 
-    crearReserva(req, res) {
+    crearReserva(req, res, next) {
         try {
             const reserva = this.reservaService.crearReserva(req.body)
             res.status(201).json(reserva)
         } catch(error) {
-            console.error(error)
-            res.status(400).json
+            next(error)
         }
     }
 }

@@ -1,4 +1,5 @@
 import express from "express"
+import bodyParser from "body-parser"
 import { z } from "zod";
 
 import { Usuario } from "./domain/usuario.js";
@@ -18,7 +19,7 @@ import { UserRepository } from "./models/repositories/userRepository.js";
 import { AlojamientoRepository } from "./models/repositories/alojamientoRepository.js";
 
 const app = express();
-app.use(express.json())
+app.use(bodyParser.json())
 const PUERTO = 3000;
 
 app.get('/', (req, res) => {

@@ -15,9 +15,9 @@ export class UserRepository {
 
     findById(id) {
         const usuario = this.usuarios.find(usuario => usuario.id === id)
-        if(!usuario) {
+        /* if(!usuario) {
             throw new Error("No existe el usuario")
-        }
+        } */
         return usuario
     }
     obtenerSiguienteId() {

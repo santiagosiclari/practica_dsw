@@ -1,4 +1,5 @@
 import { RangoFechas, Reserva } from "../domain/reserva.js";
+import { ConflictError, NotFoundError, ValidationError } from "../errors/AppError.js";
 
 export class ReservaService {
     constructor(reservaRepository, alojamientoRepository, userRepository) {
@@ -9,7 +10,9 @@ export class ReservaService {
 
     crearReserva(reserva) {
         const { huespedReservador, cantHuespedes, alojamiento, rangoFechas } = this.fromDto(reserva)
-        //TODO Hacer validaciones de cada atributo
+/*         if(!huespedReservador || cantHuespedes < 0 || !alojamiento || typeof rangoFechas !== "date"){
+            throw new ValidationError('Faltan campos requeridos o son inválidos');
+        } */
         const nueva = new Reserva(huespedReservador, cantHuespedes, alojamiento, rangoFechas)
         const reservaGuardada = this.reservaRepository.agregarReserva(nueva)
         return this.toDto(reservaGuardada) //TODO: toDTO
