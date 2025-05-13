@@ -1,4 +1,4 @@
-import { TipoUsuario, Usuario } from "../../domain/usuario.js";
+import { TipoUsuario, Usuario } from "../domain/usuario.js";
 
 export class UserRepository {
     usuario = new Usuario("Jorge", "jorge@gmail.com", TipoUsuario.HUESPED, "1")

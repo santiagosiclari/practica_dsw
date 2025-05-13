@@ -1,6 +1,6 @@
-import { Alojamiento } from "../../domain/alojamiento.js";
-import { Direccion } from "../../domain/direccion.js";
-import { TipoUsuario, Usuario } from "../../domain/usuario.js";
+import { Alojamiento } from "../domain/alojamiento.js";
+import { Direccion } from "../domain/direccion.js";
+import { TipoUsuario, Usuario } from "../domain/usuario.js";
 
 export class AlojamientoRepository {
     anfitrion = new Usuario("Juan", "aa", TipoUsuario.ANFITIRON, "1")
