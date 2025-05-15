@@ -1,41 +1,40 @@
-import express from "express"
-import { z } from "zod";
+import dotenv from "dotenv";
+dotenv.config();
 
-import { Usuario } from "./domain/usuario.js";
-import { Alojamiento } from "./domain/alojamiento.js";
-import { WIFI, ESTACIONAMIENTO, PISCINA, MASCOTAS_PERMITIDAS } from "./domain/caracteristica.js";
-import { DOLAR_USA, PESO_ARG, REALES } from "./domain/moneda.js";
-import { Foto } from "./domain/foto.js";
-import { Reserva , RangoFechas, CambioEstadoReserva } from "./domain/reserva.js";
-import { Notificacion, FactoryNotificacion } from "./domain/notificacion.js";
+import express from "express";
+import { Server } from "./server.js";
 
-import healthRoute from './rutas/healthRoute.js';
-import reservaRoute from './rutas/reservaRoute.js';
-import { ReservaController } from "./controllers/reservaController.js";
-import { ReservaService } from "./services/reservaService.js";
-import { ReservaRepository } from "./models/repositories/reservaRepository.js";
-import { UserRepository } from "./models/repositories/userRepository.js";
-import { AlojamientoRepository } from "./models/repositories/alojamientoRepository.js";
+import healthRoute from './airbnb/rutas/healthRoute.js';
+
+import { ReservaRepository } from "./airbnb/models/repositories/reservaRepository.js";
+import { UserRepository } from "./airbnb/models/repositories/userRepository.js";
+import { AlojamientoRepository } from "./airbnb/models/repositories/alojamientoRepository.js";
+
+import { ReservaService } from "./airbnb/services/reservaService.js";
+
+import { ReservaController } from "./airbnb/controllers/reservaController.js";
 
 const app = express();
-app.use(express.json())
-const PUERTO = 3000;
-
-app.get('/', (req, res) => {
-    res.send('Hello world')
-});
+const port = process.env.port;
+const server = new Server(app, port);
 
 app.use("/healthCheck", healthRoute);
-// app.use("/reserva", reservaRoute);
 
-const reservaRepo = new ReservaRepository()
-const userRepo = new UserRepository()
-const alojamientoRepo = new AlojamientoRepository()
-const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo)
-const reservaController = new ReservaController(reservaService)
+// Repositories
+const reservaRepo = new ReservaRepository();
+const userRepo = new UserRepository();
+const alojamientoRepo = new AlojamientoRepository();
 
-app.post("/reservas", (req, res) => reservaController.crearReserva(req, res));
+// Services
+const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo);
 
-app.listen(PUERTO, () => {
-    console.log('Servidor escuchando en http://localhost:3000');
-});
+// Controllers
+const reservaController = new ReservaController(reservaService);
+
+
+// Registro de controllers en el server
+server.setController(ReservaController, reservaController);
+
+// Lanzamiento
+server.configureRoutes();
+server.launch();
