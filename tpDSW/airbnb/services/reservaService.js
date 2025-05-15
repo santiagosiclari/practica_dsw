@@ -1,4 +1,4 @@
-import { RangoFechas, Reserva } from "../domain/reserva.js";
+import { RangoFechas, Reserva } from "../models/domain/reserva.js";
 
 export class ReservaService {
     constructor(reservaRepository, alojamientoRepository, userRepository) {
@@ -12,27 +12,16 @@ export class ReservaService {
         //TODO Hacer validaciones de cada atributo
         const nueva = new Reserva(huespedReservador, cantHuespedes, alojamiento, rangoFechas)
         const reservaGuardada = this.reservaRepository.agregarReserva(nueva)
-        return this.toDto(reservaGuardada) //TODO: toDTO
+        return reservaGuardada
     }
 
-    toDto(reserva) {
-        return {
-          id: reserva.id,
-          fechaAlta: reserva.fechaAlta.toDateString(),
-          huespedReservador: reserva.getHuespedReservadorId(),
-          cantHuespedes: reserva.getCantHuespedes(),
-          alojamiento: reserva.getAlojamientoId(),
-          fechaInicio: reserva.getRangoFechaInicioString(),
-          fechaFinal: reserva.getRangoFechaFinalString(),
-          precioPorNoche: reserva.getPrecioPorNoche()
-        }
-    }
+
 
     fromDto(reservaDto) {
         return {
-            huespedReservador: this.userRepository.findById(reservaDto.huespedId),
+            huespedReservador: this.userRepository.findById(reservaDto.huespedReservador),
             cantHuespedes: reservaDto.cantHuespedes,
-            alojamiento: this.alojamientoRepository.findById(reservaDto.alojamientoId),
+            alojamiento: this.alojamientoRepository.findById(reservaDto.alojamiento),
             rangoFechas: new RangoFechas(Date.parse(reservaDto.fechaInicio), Date.parse(reservaDto.fechaFinal))
         }
     }

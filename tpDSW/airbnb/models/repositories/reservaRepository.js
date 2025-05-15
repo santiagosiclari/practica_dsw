@@ -1,4 +1,4 @@
-import { Reserva } from "../../domain/reserva.js";
+import { Reserva } from "../domain/reserva.js";
 
 export class ReservaRepository {
     reservas = [];
@@ -6,6 +6,7 @@ export class ReservaRepository {
     agregarReserva(reserva) {
         reserva.id = this.obtenerSiguienteId()
         this.reservas.push(reserva)
+        return reserva
     }
 
     findAll() {
@@ -31,9 +32,6 @@ export class ReservaRepository {
     }
 
     obtenerSiguienteId() {
-        if (this.reservas.length() > 0)
-            return this.reservas.length() + 1
-        return 0
-        //return (this.reservas[this.platos.length - 1]?.id || 0) + 1;
+        return this.reservas.length + 1
     }
 }

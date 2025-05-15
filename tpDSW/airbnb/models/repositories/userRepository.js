@@ -1,4 +1,4 @@
-import { TipoUsuario, Usuario } from "../../domain/usuario.js";
+import { TipoUsuario, Usuario } from "../domain/usuario.js";
 
 export class UserRepository {
     usuario = new Usuario("Jorge", "jorge@gmail.com", TipoUsuario.HUESPED, "1")
@@ -14,7 +14,7 @@ export class UserRepository {
     }
 
     findById(id) {
-        const usuario = this.usuarios.find(usuario => usuario.id === id)
+        const usuario = this.usuarios.find(u => u.id === id)
         if(!usuario) {
             throw new Error("No existe el usuario")
         }

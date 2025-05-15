@@ -8,29 +8,41 @@ export class Reserva{
     estado
     precioPorNoche
     constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas){
-        this.fechaAlta = new Date.now();
+        this.fechaAlta = new Date();
         this.huespedReservador = huespedReservador;
         this.cantHuespedes = cantHuespedes;
         this.alojamiento = alojamiento;
         this.rangoFechas = rangoFechas;
         this.estado = EstadoReserva.PENDIENTE;
-        this.precioPorNoche = alojamiento.getPrecioPorNoche();
+        this.precioPorNoche = 1; //TODO
     }
     setId(idNuevo){this.id = idNuevo}
+    getId(){return this.id}
     actualizarEstado(estadoReserva){
         this.estado = estadoReserva;
     }
     getAlojamientoNombre(){return this.alojamiento.getNombre()}
+    getAlojamientoId(){return this.alojamiento.getId()}
+
     getCantHuespedes(){return this.cantHuespedes}
     getEstado(){return this.estado}
+
     getPrecioPorNoche(){return this.precioPorNoche}
+
     getAnfitrionAlojamiento(){return this.alojamiento.getAnfitrion()}
+
     getRangoFechaInicio(){return this.rangoFechas.getFechaInicio()}
     getRangoFechaFinal(){return this.rangoFechas.getFechaFin()}
-    getRangoFechaInicioString(){return this.rangoFechas.fechaInicioToString()}
-    getRangoFechaFinalString(){return this.rangoFechas.fechaFinToString()}
+    getRangoFechaInicioFormateada() {
+        return this.rangoFechas.getFechaInicioFormateada();
+    }
+      getRangoFechaFinalFormateada() {
+        return this.rangoFechas.getFechaFinFormateada();
+    }
+
     getHuespedReservadorNombre(){return this.huespedReservador.getNombre()}
     getHuespedId(){return this.huespedReservador.getId()}
+
     calcularDias(){
         const dias = this.rangoFechas.fechaFin - this.rangoFechas.fechaInicio
         return Math.ceil(dias / (1000 * 60 * 60 * 24));
@@ -42,20 +54,26 @@ export class Reserva{
 export class RangoFechas{
     fechaInicio
     fechaFin
-    constructor(fechaInicio, fechaFin){
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+
+    constructor(fechaInicio, fechaFin) {
+        this.fechaInicio = fechaInicio instanceof Date ? fechaInicio : new Date(fechaInicio);
+        this.fechaFin = fechaFin instanceof Date ? fechaFin : new Date(fechaFin);
     }
+
+
     getFechaInicio(){return this.fechaInicio}
     getFechaFin(){return this.fechaFin}
+
+    getFechaInicioFormateada() {
+        return this.fechaInicio.toLocaleDateString("en-US");
+    }
+    
+      getFechaFinFormateada() {
+        return this.fechaFin.toLocaleDateString("en-US");
+    }
+
     seSuperponeCon(otroRango) {
         return this.fechaInicio < otroRango.fechaFin && this.fechaFin > otroRango.fechaInicio;
-    }
-    fechaInicioToString() {
-        return this.fechaInicio.toDateString()
-    }
-    fechaFinToString() {
-        return this.fechaFin.toDateString()
     }
 }
 export class EstadoReserva{
@@ -75,7 +93,7 @@ export class CambioEstadoReserva{
     motivo
     usuario
     constructor(estado, reserva, motivo, usuario){
-        this.fecha = new Date.now();
+        this.fecha = new Date();
         this.estado = estado;
         this.reserva = reserva;
         this.motivo = motivo;
