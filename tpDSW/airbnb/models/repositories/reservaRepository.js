@@ -1,4 +1,5 @@
 import { Reserva } from "../domain/reserva.js";
+import remove from "lodash-es/remove.js"
 
 export class ReservaRepository {
     reservas = [];
@@ -19,6 +20,15 @@ export class ReservaRepository {
             throw new Error("No existe la reserva")
         }
         return reserva
+    }
+
+    obtenerReservas(idUsuario) {
+        //const id = Number(idUsuario);
+        const reservas = this.reservas.filter(reserva => reserva.getHuespedId() === idUsuario) // Get huesped Id devuelve string
+        if(reservas.length === 0) {
+            throw new Error("No existen reservas para este usuario")
+        }
+        return reservas
     }
 
     guardarReserva(id, reservaActualidada) {

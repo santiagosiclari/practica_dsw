@@ -50,6 +50,9 @@ export class Reserva{
     mostrarRangoReserva() {
         return this.rangoFechas.rangoToString()
     }
+    comenzoReserva(fechaActual){
+        this.rangoFechas.seSuperpone(fechaActual);
+    }
 }
 export class RangoFechas{
     fechaInicio
@@ -74,6 +77,9 @@ export class RangoFechas{
 
     seSuperponeCon(otroRango) {
         return this.fechaInicio < otroRango.fechaFin && this.fechaFin > otroRango.fechaInicio;
+    }
+    seSuperpone(fecha) {
+        return this.fechaInicio < fecha
     }
 }
 export class EstadoReserva{

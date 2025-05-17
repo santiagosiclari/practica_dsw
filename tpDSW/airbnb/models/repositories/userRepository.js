@@ -14,7 +14,8 @@ export class UserRepository {
     }
 
     findById(id) {
-        const usuario = this.usuarios.find(u => u.id === id)
+        const idStr = String(id);
+        const usuario = this.usuarios.find(u => u.id === idStr)
         if(!usuario) {
             throw new Error("No existe el usuario")
         }
