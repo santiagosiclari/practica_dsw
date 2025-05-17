@@ -1,9 +1,10 @@
 import { DOLAR_USA, Moneda } from "./moneda.js"
 import { Reserva , RangoFechas } from "./reserva.js"
 import { Foto } from "./foto.js"
-import { Direccion } from "./direccionn.js"
+import { Direccion } from "./direccion.js"
 
 export class Alojamiento{
+    id
     anfitrion
     nombre
     descripcion
@@ -16,18 +17,19 @@ export class Alojamiento{
     caracteristicas
     reservas
     fotos
-    constructor(anfitrion, nombre, direccion){
+    constructor(anfitrion, nombre, direccion, id){
+        this.id = id
         this.anfitrion = anfitrion;
         this.nombre = nombre;
         this.precioPorNoche = 0;
         this.moneda = Moneda.DOLAR_USA;
-        this.direccion = new Direccion();
+        this.direccion = direccion;
         this.cantHuespedesMax = 5;
         this.caracteristicas = [];
         this.reservas = [];
         this.fotos = [];
     }
-
+    setId(idNuevo){this.id = idNuevo}
     estasDisponibleEn(rangoDeFechas){
         return this.reservas.every(reserva =>
             !reserva.rangoFechas.seSuperponeCon(rangoDeFechas)
@@ -47,6 +49,6 @@ export class Alojamiento{
     }
 
     getNombre(){ return this.nombre; }
-
+    getId(){return this.id}
     getAnfitrion(){ return this.anfitrion; }
 }

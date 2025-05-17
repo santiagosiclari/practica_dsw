@@ -1,27 +1,40 @@
-import express from "express"
-import { z } from "zod";
+import dotenv from "dotenv";
+dotenv.config();
 
-import { Usuario } from "./domain/usuario.js";
-import { Alojamiento } from "./domain/alojamiento.js";
-import { WIFI, ESTACIONAMIENTO, PISCINA, MASCOTAS_PERMITIDAS } from "./domain/caracteristica.js";
-import { DOLAR_USA, PESO_ARG, REALES } from "./domain/moneda.js";
-import { Foto } from "./domain/foto.js";
-import { Reserva , RangoFechas, CambioEstadoReserva } from "./domain/reserva.js";
-import { Notificacion, FactoryNotificacion } from "./domain/notificacion.js";
+import express from "express";
+import { Server } from "./server.js";
 
-import healthRoute from './rutas/healthRoute.js';
-import reservaRoute from './rutas/reservaRoute.js';
+import healthRoute from './airbnb/rutas/healthRoute.js';
+
+import { ReservaRepository } from "./airbnb/models/repositories/reservaRepository.js";
+import { UserRepository } from "./airbnb/models/repositories/userRepository.js";
+import { AlojamientoRepository } from "./airbnb/models/repositories/alojamientoRepository.js";
+
+import { ReservaService } from "./airbnb/services/reservaService.js";
+
+import { ReservaController } from "./airbnb/controllers/reservaController.js";
 
 const app = express();
-const PUERTO = 3000;
-
-app.get('/', (req, res) => {
-    res.send('Hello world')
-});
+const port = process.env.port;
+const server = new Server(app, port);
 
 app.use("/healthCheck", healthRoute);
-app.use("/reserva", reservaRoute);
 
-app.listen(PUERTO, () => {
-    console.log('Servidor escuchando en http://localhost:3000');
-});
+// Repositories
+const reservaRepo = new ReservaRepository();
+const userRepo = new UserRepository();
+const alojamientoRepo = new AlojamientoRepository();
+
+// Services
+const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo);
+
+// Controllers
+const reservaController = new ReservaController(reservaService);
+
+
+// Registro de controllers en el server
+server.setController(ReservaController, reservaController);
+
+// Lanzamiento
+server.configureRoutes();
+server.launch();
