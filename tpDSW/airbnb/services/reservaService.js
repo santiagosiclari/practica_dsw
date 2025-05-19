@@ -1,5 +1,7 @@
 import { CANCELADA, RangoFechas, Reserva , CambioEstadoReserva} from "../models/domain/reserva.js";
 import { AppError, ValidationError, NotFoundError, ConflictError } from "../errors/appError.js";
+import { AlojamientoOcupadoError } from "../models/domain/errors/alojamientoOcupadoError.js";
+import { AlojamientoSobrepasadoError } from "../models/domain/errors/alojamientoSobrepasado.js";
 
 export class ReservaService {
     constructor(reservaRepository, alojamientoRepository, userRepository) {
@@ -19,8 +21,12 @@ export class ReservaService {
         return reservaGuardada
     }
 
-    cancelarReserva(cambioEstadoDto) {
-        const { idReserva, reserva, motivo, usuario } = this.fromDtoCambio(cambioEstadoDto);
+    cancelarReserva(idReserva, cambioEstado) {
+        if (!cambioEstado.motivo || typeof cambioEstado.usuario !== "number") {
+            throw new ValidationError('Faltan campos requeridos o son inválidos');
+        }
+        const reserva = this.reservaRepository.findById(Number(idReserva));
+        const { motivo, usuario } = this.fromDtoCambio(cambioEstado);
 
         //PROBAR DESPUES LAS FECHAS, NOC COMO SE ESCRIBEN CLANK
 /*        const fechaAhora = new Date()
@@ -35,6 +41,44 @@ export class ReservaService {
         reserva.historialCambios.push(cambio);
 
         return this.reservaRepository.guardarReserva(idReserva, reserva);
+    }
+
+    modificarReserva(idReserva, modificacion) {
+        const reserva = this.reservaRepository.findById(Number(idReserva));
+        const alojamiento = this.alojamientoRepository.findById(reserva.getAlojamientoId());
+
+        const quiereModificarCant = modificacion.cantHuespedes !== undefined;
+        const quiereModificarFechas = modificacion.fechaInicio !== undefined || modificacion.fechaFinal !== undefined;
+
+        if (!quiereModificarCant && !quiereModificarFechas) {
+            throw new ValidationError('Debe especificar al menos un campo a modificar');
+        }
+
+        // Validar fechas: si viene solo una, es error
+        if ((modificacion.fechaInicio && !modificacion.fechaFinal) || (!modificacion.fechaInicio && modificacion.fechaFinal)) {
+            throw new ValidationError('Para modificar fechas deben enviarse fechaInicio y fechaFinal juntas');
+        }
+
+        // Convertir los datos de entrada
+        const { cantHuespedes, rangoFechas } = this.fromDtoMod(modificacion);
+
+        // Modificar cantidad de huéspedes
+        if (quiereModificarCant) {
+            if (!alojamiento.puedenAlojarse(cantHuespedes)) {
+                throw new AlojamientoSobrepasadoError("Se ha sobrepasado la cantidad de huésped máxima", 406);
+            }
+            reserva.setCantHuespedes(cantHuespedes);
+        }
+
+        // Modificar rango de fechas
+        if (modificacion.fechaInicio && modificacion.fechaFinal) {
+            if (!alojamiento.estasDisponibleEn(rangoFechas)) {
+                throw new AlojamientoOcupadoError("En este rango de fechas ya hay una reserva.", 406);
+            }
+            reserva.setRangoFecha(rangoFechas);
+        }
+
+        return this.reservaRepository.guardarReserva(reserva.getId(), reserva);
     }
 
     listarReservas() {
@@ -61,17 +105,18 @@ export class ReservaService {
         }
     }
     fromDtoCambio(dto) {
-        const idReserva = Number(dto.reserva);
         const idUsuario = Number(dto.usuario);
-
-        const reserva = this.reservaRepository.findById(idReserva);
         const usuario = this.userRepository.findById(idUsuario);
 
         return {
-            idReserva,
-            reserva,
             motivo: dto.motivo,
             usuario
         };
+    }
+    fromDtoMod(dto){
+        return{
+            cantHuespedes: dto.cantHuespedes,
+            rangoFechas: new RangoFechas(Date.parse(dto.fechaInicio), Date.parse(dto.fechaFinal))
+        }
     }
 }

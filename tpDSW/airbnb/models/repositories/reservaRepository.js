@@ -23,7 +23,6 @@ export class ReservaRepository {
     }
 
     obtenerReservas(idUsuario) {
-        //const id = Number(idUsuario);
         const reservas = this.reservas.filter(reserva => reserva.getHuespedId() === idUsuario) // Get huesped Id devuelve string
         if(reservas.length === 0) {
             throw new Error("No existen reservas para este usuario")

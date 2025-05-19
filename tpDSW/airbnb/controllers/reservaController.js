@@ -6,9 +6,9 @@ export class ReservaController {
     crearReserva(req, res, next) {
         try {
             const filters = {
-                huespedReservador : req.body.huespedReservador, 
-                cantHuespedes : req.body.cantHuespedes, 
-                alojamiento : req.body.alojamiento, 
+                huespedReservador : req.body.huespedReservador,
+                cantHuespedes : req.body.cantHuespedes,
+                alojamiento : req.body.alojamiento,
                 fechaInicio : req.body.fechaInicio,
                 fechaFinal : req.body.fechaFinal
             }
@@ -19,13 +19,17 @@ export class ReservaController {
         }
     }
 
-    cancelarReserva(req, res) { //TODO VALIDAR ANTES DE FECHA DE INCIO // Hay que usar cambioEstadoReserva?
+    cancelarReserva(req, res, next) {
         try{
-            const reserva = this.reservaService.cancelarReserva(req.body);
+            const filters = {
+                motivo : req.body.motivo,
+                usuario : req.body.usuario
+            }
+            const idReserva = req.params.id
+            const reserva = this.reservaService.cancelarReserva(idReserva, filters);
             res.status(201).json(this.toDtoEstado(reserva))
         }catch(error){
-            console.error(error)
-            res.status(400).json
+            next(error);
         }
     }
 
@@ -40,15 +44,14 @@ export class ReservaController {
         }
     }
 
-    listarReservas2(req, res) {
+    listarReservasUsuario(req, res, next) {
         try{
             const idUsuario = req.params.id; //Devuelve un string
-            const reservas = this.reservaService.listarReservas(idUsuario);
+            const reservas = this.reservaService.listarReservasUsuario(Number(idUsuario));
             console.log(reservas)
             res.status(200).json(this.toDtos(reservas))
         }catch(error) {
-            console.error(error)
-            res.status(400).json
+            next(error);
         }
     }
 
@@ -60,6 +63,21 @@ export class ReservaController {
         }catch(error) {
             console.error(error)
             res.status(400).json
+        }
+    }
+
+    modificarReserva(req, res, next){
+        try{
+            const filters = {
+                cantHuespedes : req.body.cantHuespedes,
+                fechaInicio : req.body.fechaInicio,
+                fechaFinal : req.body.fechaFinal,
+            }
+            const idReserva = req.params.id;
+            const reservaModificada = this.reservaService.modificarReserva(Number(idReserva), filters);
+            res.status(200).json(this.toDto(reservaModificada));
+        }catch(error){
+            next(error);
         }
     }
 

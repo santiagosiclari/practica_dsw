@@ -47,7 +47,7 @@ export class Reserva{
     }
 
     getHuespedReservadorNombre(){return this.huespedReservador.getNombre()}
-    getHuespedId(){return this.huespedReservador.getId()}
+    getHuespedId(){return Number(this.huespedReservador.getId())}
 
     calcularDias(){
         const dias = this.rangoFechas.fechaFin - this.rangoFechas.fechaInicio
@@ -59,6 +59,8 @@ export class Reserva{
     comenzoReserva(fechaActual){
         return this.rangoFechas.seSuperpone(fechaActual);
     }
+    setRangoFecha(nuevoRango){this.rangoFechas = nuevoRango}
+    setCantHuespedes(nuevaCant){this.cantHuespedes = nuevaCant}
 }
 export class RangoFechas{
     fechaInicio
