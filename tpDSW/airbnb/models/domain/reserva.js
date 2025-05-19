@@ -1,3 +1,6 @@
+import { Alojamiento } from "./alojamiento.js"
+import { AlojamientoOcupadoError } from "./errors/alojamientoOcupadoError.js"
+
 export class Reserva{
     id //Agrego id para reserva
     fechaAlta
@@ -8,6 +11,9 @@ export class Reserva{
     estado
     precioPorNoche
     constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas){
+        if (!alojamiento.estasDisponibleEn(rangoFechas)) {
+            throw new AlojamientoOcupadoError("En este rango de fechas ya hay una reserva.", 406);
+        }
         this.fechaAlta = new Date();
         this.huespedReservador = huespedReservador;
         this.cantHuespedes = cantHuespedes;
@@ -51,7 +57,7 @@ export class Reserva{
         return this.rangoFechas.rangoToString()
     }
     comenzoReserva(fechaActual){
-        this.rangoFechas.seSuperpone(fechaActual);
+        return this.rangoFechas.seSuperpone(fechaActual);
     }
 }
 export class RangoFechas{
@@ -76,9 +82,10 @@ export class RangoFechas{
     }
 
     seSuperponeCon(otroRango) {
-        return this.fechaInicio < otroRango.fechaFin && this.fechaFin > otroRango.fechaInicio;
+        return this.fechaInicio <= otroRango.fechaFin && this.fechaFin >= otroRango.fechaInicio;
     }
-    seSuperpone(fecha) {
+
+    seSuperpone(fecha) { //SE USA PARA CANCELAR
         return this.fechaInicio < fecha
     }
 }

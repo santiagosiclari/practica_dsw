@@ -1,4 +1,5 @@
 import { CANCELADA, RangoFechas, Reserva , CambioEstadoReserva} from "../models/domain/reserva.js";
+import { AppError, ValidationError, NotFoundError, ConflictError } from "../errors/appError.js";
 
 export class ReservaService {
     constructor(reservaRepository, alojamientoRepository, userRepository) {
@@ -8,12 +9,16 @@ export class ReservaService {
     }
 
     crearReserva(reserva) {
+        if (!reserva.huespedReservador || typeof reserva.cantHuespedes !== "number" || !reserva.alojamiento || !reserva.fechaInicio || !reserva.fechaFinal) {
+            throw new ValidationError('Faltan campos requeridos o son inválidos');
+        }
         const { huespedReservador, cantHuespedes, alojamiento, rangoFechas } = this.fromDto(reserva)
-        //TODO Hacer validaciones de cada atributo
         const nueva = new Reserva(huespedReservador, cantHuespedes, alojamiento, rangoFechas)
         const reservaGuardada = this.reservaRepository.agregarReserva(nueva)
+        //TODO CREAR NOTIFICACION
         return reservaGuardada
     }
+
     cancelarReserva(cambioEstadoDto) {
         const { idReserva, reserva, motivo, usuario } = this.fromDtoCambio(cambioEstadoDto);
 
@@ -31,9 +36,20 @@ export class ReservaService {
 
         return this.reservaRepository.guardarReserva(idReserva, reserva);
     }
-    listarReservas(idUsuario) {
+
+    listarReservas() {
+        const reservas = this.reservaRepository.findAll();
+        return reservas
+    }
+
+    listarReservasUsuario(idUsuario) {
         const reservas = this.reservaRepository.obtenerReservas(idUsuario);
         return reservas
+    }
+
+    buscarReserva(idReserva) {
+        const reservaEncontrada = this.reservaRepository.findById(Number(idReserva));
+        return reservaEncontrada;
     }
 
     fromDto(reservaDto) {

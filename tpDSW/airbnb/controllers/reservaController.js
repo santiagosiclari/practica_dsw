@@ -3,13 +3,19 @@ export class ReservaController {
         this.reservaService = reservaService
     }
 
-    crearReserva(req, res) {
+    crearReserva(req, res, next) {
         try {
-            const reserva = this.reservaService.crearReserva(req.body)
+            const filters = {
+                huespedReservador : req.body.huespedReservador, 
+                cantHuespedes : req.body.cantHuespedes, 
+                alojamiento : req.body.alojamiento, 
+                fechaInicio : req.body.fechaInicio,
+                fechaFinal : req.body.fechaFinal
+            }
+            const reserva = this.reservaService.crearReserva(filters)
             res.status(201).json(this.toDto(reserva))
         } catch(error) {
-            console.error(error)
-            res.status(400).json
+            next(error);
         }
     }
 
@@ -25,10 +31,32 @@ export class ReservaController {
 
     listarReservas(req, res) {
         try{
+            const reservas = this.reservaService.listarReservas();
+            console.log(reservas)
+            res.status(200).json(this.toDtos(reservas))
+        }catch(error) {
+            console.error(error)
+            res.status(400).json
+        }
+    }
+
+    listarReservas2(req, res) {
+        try{
             const idUsuario = req.params.id; //Devuelve un string
             const reservas = this.reservaService.listarReservas(idUsuario);
             console.log(reservas)
             res.status(200).json(this.toDtos(reservas))
+        }catch(error) {
+            console.error(error)
+            res.status(400).json
+        }
+    }
+
+    buscarReserva(req, res) { //ENCONTRAR UNA RESERVA CON IDRESERVA
+        try {
+            const idReserva = req.params.id;
+            const reserva = this.reservaService.buscarReserva(idReserva);
+            res.status(200).json(this.toDto(reserva));
         }catch(error) {
             console.error(error)
             res.status(400).json
