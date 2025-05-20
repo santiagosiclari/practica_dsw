@@ -3,8 +3,7 @@ export class Usuario{
     nombre
     email
     tipo
-    constructor(nombre, email, tipo, id){
-        this.id = id
+    constructor(nombre, email, tipo){
         this.nombre = nombre;
         this.email = email;
         this.tipo = tipo;
@@ -12,8 +11,6 @@ export class Usuario{
     getNombre(){return this.nombre}
     getEmail(){return this.email}
     getTipo(){return this.tipo}
-    getId(){return this.id}
-    setId(idNuevo){this.id = idNuevo}
 }
 
 export class TipoUsuario{

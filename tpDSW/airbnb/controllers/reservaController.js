@@ -3,7 +3,7 @@ export class ReservaController {
         this.reservaService = reservaService
     }
 
-    crearReserva(req, res, next) {
+    async crearReserva(req, res, next) {
         try {
             const filters = {
                 huespedReservador : req.body.huespedReservador,
@@ -12,14 +12,14 @@ export class ReservaController {
                 fechaInicio : req.body.fechaInicio,
                 fechaFinal : req.body.fechaFinal
             }
-            const reserva = this.reservaService.crearReserva(filters)
+            const reserva = await this.reservaService.crearReserva(filters)
             res.status(201).json(this.toDto(reserva))
         } catch(error) {
             next(error);
         }
     }
 
-    cancelarReserva(req, res, next) {
+/*     cancelarReserva(req, res, next) {
         try{
             const filters = {
                 motivo : req.body.motivo,
@@ -31,20 +31,19 @@ export class ReservaController {
         }catch(error){
             next(error);
         }
-    }
+    } */
 
-    listarReservas(req, res) {
+    async listarReservas(req, res, next) {
         try{
-            const reservas = this.reservaService.listarReservas();
+            const reservas = await this.reservaService.listarReservas();
             console.log(reservas)
             res.status(200).json(this.toDtos(reservas))
         }catch(error) {
-            console.error(error)
-            res.status(400).json
+            next(error);
         }
     }
 
-    listarReservasUsuario(req, res, next) {
+/*     listarReservasUsuario(req, res, next) {
         try{
             const idUsuario = req.params.id; //Devuelve un string
             const reservas = this.reservaService.listarReservasUsuario(Number(idUsuario));
@@ -53,20 +52,19 @@ export class ReservaController {
         }catch(error) {
             next(error);
         }
-    }
+    } */
 
-    buscarReserva(req, res) { //ENCONTRAR UNA RESERVA CON IDRESERVA
+    async buscarReserva(req, res, next) { //ENCONTRAR UNA RESERVA CON IDRESERVA
         try {
             const idReserva = req.params.id;
-            const reserva = this.reservaService.buscarReserva(idReserva);
+            const reserva = await this.reservaService.buscarReserva(idReserva);
             res.status(200).json(this.toDto(reserva));
         }catch(error) {
-            console.error(error)
-            res.status(400).json
+            next(error);
         }
     }
 
-    modificarReserva(req, res, next){
+/*     modificarReserva(req, res, next){
         try{
             const filters = {
                 cantHuespedes : req.body.cantHuespedes,
@@ -79,15 +77,15 @@ export class ReservaController {
         }catch(error){
             next(error);
         }
-    }
+    } */
 
     toDto(reserva) {
         return {
-            id: reserva.getId(),
+            id: reserva.id,
             fechaAlta: new Date(reserva.fechaAlta).toLocaleDateString("en-US"),
-            huespedReservador: reserva.getHuespedId(),
+            huespedReservador: reserva.huespedReservador,
             cantHuespedes: reserva.getCantHuespedes(),
-            alojamiento: reserva.getAlojamientoId(),
+            alojamiento: reserva.alojamiento,
             fechaInicio: reserva.getRangoFechaInicioFormateada(),
             fechaFinal: reserva.getRangoFechaFinalFormateada(),
             precioPorNoche: reserva.getPrecioPorNoche()

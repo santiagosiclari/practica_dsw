@@ -4,7 +4,6 @@ import { Foto } from "./foto.js"
 import { Direccion } from "./direccion.js"
 
 export class Alojamiento{
-    id
     anfitrion
     nombre
     descripcion
@@ -17,8 +16,7 @@ export class Alojamiento{
     caracteristicas
     reservas
     fotos
-    constructor(anfitrion, nombre, direccion, id){
-        this.id = id
+    constructor(anfitrion, nombre, direccion){
         this.anfitrion = anfitrion;
         this.nombre = nombre;
         this.precioPorNoche = 0;
@@ -29,7 +27,6 @@ export class Alojamiento{
         this.reservas = [];
         this.fotos = [];
     }
-    setId(idNuevo){this.id = idNuevo}
     estasDisponibleEn(rangoDeFechas){
         return this.reservas.every(reserva =>
             !reserva.rangoFechas.seSuperponeCon(rangoDeFechas)
@@ -49,6 +46,5 @@ export class Alojamiento{
     }
 
     getNombre(){ return this.nombre; }
-    getId(){return this.id}
     getAnfitrion(){ return this.anfitrion; }
 }

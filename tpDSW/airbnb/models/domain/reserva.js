@@ -2,7 +2,6 @@ import { Alojamiento } from "./alojamiento.js"
 import { AlojamientoOcupadoError } from "./errors/alojamientoOcupadoError.js"
 
 export class Reserva{
-    id //Agrego id para reserva
     fechaAlta
     huespedReservador
     cantHuespedes
@@ -11,19 +10,21 @@ export class Reserva{
     estado
     precioPorNoche
     constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas){
-        if (!alojamiento.estasDisponibleEn(rangoFechas)) {
-            throw new AlojamientoOcupadoError("En este rango de fechas ya hay una reserva.", 406);
-        }
         this.fechaAlta = new Date();
         this.huespedReservador = huespedReservador;
         this.cantHuespedes = cantHuespedes;
         this.alojamiento = alojamiento;
+
+        if (!(rangoFechas instanceof RangoFechas)) {
+        console.warn("⚠️ rangoFechas no es instancia de RangoFechas, forzando creación");
+        console.log(rangoFechas)
+        rangoFechas = new RangoFechas(rangoFechas.fechaInicio, rangoFechas.fechaFin);
+        } else {
         this.rangoFechas = rangoFechas;
+        }
         this.estado = EstadoReserva.PENDIENTE;
         this.precioPorNoche = 1; //TODO
     }
-    setId(idNuevo){this.id = idNuevo}
-    getId(){return this.id}
     actualizarEstado(estadoReserva){
         this.estado = estadoReserva;
     }

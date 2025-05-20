@@ -1,46 +1,42 @@
-import { Reserva } from "../domain/reserva.js";
-import remove from "lodash-es/remove.js"
+import { ReservaModel } from "../schemas/reservaSchema.js";
 
 export class ReservaRepository {
-    reservas = [];
-
-    agregarReserva(reserva) {
-        reserva.id = this.obtenerSiguienteId()
-        this.reservas.push(reserva)
-        return reserva
+    constructor() {
+        this.model = ReservaModel;
     }
 
-    findAll() {
-        return this.reservas
+    async save(reserva) {
+        const query = reserva.id ? { _id: reserva.id } : { _id: new this.model()._id };
+        return await this.model.findOneAndUpdate(
+            query,
+            reserva,
+            { 
+                new: true, 
+                runValidators: true,
+                upsert: true
+            }
+        );
     }
 
-    findById(id) {
-        const reserva = this.reservas.find(reserva => reserva.id === id)
-        if(!reserva) {
-            throw new Error("No existe la reserva")
-        }
-        return reserva
-    }
-
-    obtenerReservas(idUsuario) {
-        const reservas = this.reservas.filter(reserva => reserva.getHuespedId() === idUsuario) // Get huesped Id devuelve string
-        if(reservas.length === 0) {
-            throw new Error("No existen reservas para este usuario")
-        }
+    async findAll() {
+        const reservas = await this.model.find()
         return reservas
     }
 
-    guardarReserva(id, reservaActualidada) {
-        remove(this.reservas, r => r.id === id)
-        this.reservas.push(reservaActualidada)
-        return reservaActualidada
+    async findById(id) {
+        return await this.model.findById(id);
     }
 
-    removerReserva(reserva) {
-        remove(this.reservas, r => r.id === reserva.id)
+    async deleteById(id) {
+        const resultado = await this.model.findByIdAndDelete(id);
+        return resultado !== null;
     }
 
-    obtenerSiguienteId() {
-        return this.reservas.length + 1
-    }
+    // obtenerReservas(idUsuario) {
+    //     const reservas = this.reservas.filter(reserva => reserva.getHuespedId() === idUsuario) // Get huesped Id devuelve string
+    //     if(reservas.length === 0) {
+    //         throw new Error("No existen reservas para este usuario")
+    //     }
+    //     return reservas
+    // }
 }

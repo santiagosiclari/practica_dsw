@@ -1,28 +1,35 @@
-import { TipoUsuario, Usuario } from "../domain/usuario.js";
+import { UsuarioModel } from "../schemas/usuarioSchema.js";
 
 export class UserRepository {
-    usuario = new Usuario("Jorge", "jorge@gmail.com", TipoUsuario.HUESPED, "1")
-    usuarios = [this.usuario];
-
-    agregarUser(usuario) {
-        usuario.id = this.obtenerSiguienteId()
-        this.usuarios.push(usuario)
+    
+    constructor() {
+        this.model = UsuarioModel;
+    }
+    
+    async save(usuario) {
+        const query = usuario.id ? { _id: usuario.id } : { _id: new this.model()._id };
+        return await this.model.findOneAndUpdate(
+            query,
+            usuario,
+            { 
+                new: true, 
+                runValidators: true,
+                upsert: true
+            }
+        );
     }
 
-    findAll() {
-        return this.usuarios
+    async findAll() {
+        const usuarios = await this.model.find()
+        return usuarios
     }
 
-    findById(id) {
-        const idStr = String(id);
-        const usuario = this.usuarios.find(u => u.id === idStr)
-        if(!usuario) {
-            throw new Error("No existe el usuario")
-        }
-        return usuario
+    async findById(id) {
+        return await this.model.findById(id);
     }
-    obtenerSiguienteId() {
-        return this.usuarios.length() + 1
-        //return (this.reservas[this.platos.length - 1]?.id || 0) + 1;
+
+    async deleteById(id) {
+        const resultado = await this.model.findByIdAndDelete(id);
+        return resultado !== null;
     }
 }

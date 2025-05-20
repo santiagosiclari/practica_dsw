@@ -13,6 +13,7 @@ export function registerReservaRoutes(app, getController) {
     app.get("/reservas/:id", (req, res, next) =>
         getController(ReservaController).buscarReserva(req, res, next) //Hallar una reserva determinada
     );
+    
     app.get("/reservas/usuario/:id", (req, res, next) =>
         getController(ReservaController).listarReservasUsuario(req, res, next)
     );
@@ -20,6 +21,7 @@ export function registerReservaRoutes(app, getController) {
     app.patch("/reservas/:id/cancelar", (req, res, next) =>
         getController(ReservaController).cancelarReserva(req, res, next)
     );
+
     app.patch("/reservas/:id", (req, res, next) =>
         getController(ReservaController).modificarReserva(req, res, next)
     );

@@ -3,6 +3,7 @@ dotenv.config();
 
 import express from "express";
 import { Server } from "./server.js";
+import { MongoDBClient } from "./airbnb/config/database.js";
 
 import healthRoute from './airbnb/rutas/healthRoute.js';
 
@@ -17,6 +18,8 @@ import { ReservaController } from "./airbnb/controllers/reservaController.js";
 const app = express();
 const port = process.env.port;
 const server = new Server(app, port);
+
+MongoDBClient.connect();
 
 app.use("/healthCheck", healthRoute);
 
