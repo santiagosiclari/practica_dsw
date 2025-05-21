@@ -47,4 +47,7 @@ export class Alojamiento{
 
     getNombre(){ return this.nombre; }
     getAnfitrion(){ return this.anfitrion; }
+    getPrecioPorNoche() {
+        return this.precioPorNoche;
+    }
 }

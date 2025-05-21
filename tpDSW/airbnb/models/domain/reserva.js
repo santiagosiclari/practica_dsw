@@ -2,6 +2,7 @@ import { Alojamiento } from "./alojamiento.js"
 import { AlojamientoOcupadoError } from "./errors/alojamientoOcupadoError.js"
 
 export class Reserva{
+    _id
     fechaAlta
     huespedReservador
     cantHuespedes
@@ -9,20 +10,22 @@ export class Reserva{
     rangoFechas
     estado
     precioPorNoche
-    constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas){
-        this.fechaAlta = new Date();
+    constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas, fechaAlta){
+        this.fechaAlta = fechaAlta ? fechaAlta : new Date();
         this.huespedReservador = huespedReservador;
         this.cantHuespedes = cantHuespedes;
         this.alojamiento = alojamiento;
         this.estado = EstadoReserva.PENDIENTE;
-        this.precioPorNoche = 1; //TODO
-        if (!rangoFechas) {
-            throw new Error("rangoFechas es requerido");
-        }
-
+        this.precioPorNoche = alojamiento.precioPorNoche;
         this.rangoFechas = rangoFechas instanceof RangoFechas
             ? rangoFechas
             : new RangoFechas(rangoFechas.fechaInicio, rangoFechas.fechaFin);
+    }
+    setId(id) {
+        this._id = id;
+    }
+    getId(){
+        return this._id;
     }
     actualizarEstado(estadoReserva){
         this.estado = estadoReserva;
@@ -39,6 +42,7 @@ export class Reserva{
 
     getRangoFechaInicio(){return this.rangoFechas.getFechaInicio()}
     getRangoFechaFinal(){return this.rangoFechas.getFechaFin()}
+    getRangoFechas(){return this.rangoFechas}
 /*    getRangoFechaInicioFormateada() {
         return this.rangoFechas.getFechaInicioFormateada();
     }
@@ -78,7 +82,7 @@ export class RangoFechas{
 /*    getFechaInicioFormateada() {
         return this.fechaInicio.toLocaleDateString("en-US");
     }
-    
+
       getFechaFinFormateada() {
         return this.fechaFin.toLocaleDateString("en-US");
     }*/

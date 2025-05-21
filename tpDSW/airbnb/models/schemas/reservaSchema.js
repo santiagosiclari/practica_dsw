@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Reserva , PENDIENTE, CONFIRMADA, CANCELADA } from '../domain/reserva.js';
+import { Reserva , PENDIENTE, CONFIRMADA, CANCELADA, RangoFechas } from '../domain/reserva.js';
 
 const reservaSchema = new mongoose.Schema({
     huespedReservador: {
@@ -20,12 +20,13 @@ const reservaSchema = new mongoose.Schema({
     fechaInicio: {
         type: Date,
         required: true,
-        trim: true,
     },
     fechaFinal: {
         type: Date,
         required: true,
-        trim: true,
+    },
+    fechaAlta: {
+        type: Date
     },
     estado: {
         type: String,
@@ -45,4 +46,38 @@ const reservaSchema = new mongoose.Schema({
 // Vincular la clase Producto con el schema
 reservaSchema.loadClass(Reserva);
 
-export const ReservaModel = mongoose.model('Reserva', reservaSchema); 
+export const ReservaModel = mongoose.model('Reserva', reservaSchema);
+
+// Reserva to DOC
+export function reservaToDocument(reserva) {
+  return {
+    huespedReservador: reserva.huespedReservador,
+    alojamiento: reserva.alojamiento,
+    cantHuespedes: reserva.cantHuespedes,
+    fechaInicio: reserva.getRangoFechaInicio(),
+    fechaFinal: reserva.getRangoFechaFinal(),
+    fechaAlta: reserva.fechaAlta,
+    estado: reserva.getEstado(),
+    precioPorNoche: reserva.precioPorNoche
+  };
+}
+
+// Reserva from Doc
+function estadoDesdeNombre(nombre) {
+  switch (nombre) {
+    case 'PENDIENTE': return PENDIENTE;
+    case 'CONFIRMADA': return CONFIRMADA;
+    case 'CANCELADA': return CANCELADA;
+    default: throw new Error('Estado desconocido: ' + nombre);
+  }
+}
+
+export function docToReserva(doc) {
+  const rango = new RangoFechas(doc.fechaInicio, doc.fechaFinal);
+  const reserva = new Reserva(doc.huespedReservador, doc.cantHuespedes, doc.alojamiento, rango, doc.fechaAlta);
+  reserva.estado = estadoDesdeNombre(doc.estado);
+  reserva.precioPorNoche = doc.precioPorNoche;
+  reserva.setId(doc._id);
+
+  return reserva;
+}

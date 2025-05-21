@@ -13,7 +13,7 @@ export function registerReservaRoutes(app, getController) {
     app.get("/reservas/:id", (req, res, next) =>
         getController(ReservaController).buscarReserva(req, res, next) //Hallar una reserva determinada
     );
-    
+
     app.get("/reservas/usuario/:id", (req, res, next) =>
         getController(ReservaController).listarReservasUsuario(req, res, next)
     );

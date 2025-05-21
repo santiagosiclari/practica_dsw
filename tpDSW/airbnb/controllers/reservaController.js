@@ -1,3 +1,5 @@
+import { Reserva, RangoFechas } from "../models/domain/reserva.js";
+
 export class ReservaController {
     constructor(reservaService) {
         this.reservaService = reservaService
@@ -79,13 +81,13 @@ export class ReservaController {
 
     toDto(reserva) {
         return {
-            id: reserva.id,
-            fechaAlta: new Date(reserva.fechaAlta).toLocaleDateString("en-US"),
+            _id: reserva._id,
+            fechaAlta: reserva.fechaAlta,
             huespedReservador: reserva.huespedReservador,
             cantHuespedes: reserva.getCantHuespedes(),
             alojamiento: reserva.alojamiento,
-            fechaInicio: reserva.fechaInicio,
-            fechaFinal: reserva.fechaFinal,
+            fechaInicio: reserva.getRangoFechaInicio(),
+            fechaFinal: reserva.getRangoFechaFinal(),
             precioPorNoche: reserva.getPrecioPorNoche()
         };
     }
@@ -95,8 +97,8 @@ export class ReservaController {
             huespedReservador: reserva.getHuespedId(),
             estado: reserva.getEstado().nombre,
             alojamiento: reserva.getAlojamientoId(),
-            fechaInicio: reserva.fechaInicio,
-            fechaFinal: reserva.fechaFinal,
+/*             fechaInicio: reserva.fechaInicio,
+            fechaFinal: reserva.fechaFinal, */
         };
     }
     toDtos(reservas){

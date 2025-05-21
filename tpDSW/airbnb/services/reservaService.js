@@ -105,7 +105,6 @@ export class ReservaService {
         if (isNaN(fechaInicio) || isNaN(fechaFinal)) {
             throw new Error("Fechas inválidas");
         }
-
         return {
             huespedReservador: await this.userRepository.findById(reservaDto.huespedReservador),
             cantHuespedes: reservaDto.cantHuespedes,

@@ -1,4 +1,4 @@
-import { ReservaModel } from "../schemas/reservaSchema.js";
+import { ReservaModel, reservaToDocument, docToReserva } from "../schemas/reservaSchema.js";
 
 export class ReservaRepository {
     constructor() {
@@ -7,29 +7,26 @@ export class ReservaRepository {
 
     async save(reserva) {
         const query = reserva.id ? { _id: reserva.id } : { _id: new this.model()._id };
-        return await this.model.findOneAndUpdate(
+        const reservaMongo = await this.model.findOneAndUpdate(
             query,
-            reserva,
-            { 
-                new: true, 
+            reservaToDocument(reserva),
+            {
+                new: true,
                 runValidators: true,
                 upsert: true
             }
         );
+        return docToReserva(reservaMongo);
     }
 
     async findAll() {
-        const reservas = await this.model.find()
-        return reservas
+        const reservas = await this.model.find();
+        return reservas.map(docToReserva);
     }
 
     async findById(id) {
-        return await this.model.findById(id);
-    }
-
-    async deleteById(id) {
-        const resultado = await this.model.findByIdAndDelete(id);
-        return resultado !== null;
+        const reserva = await this.model.findById(id);
+        return docToReserva(reserva);
     }
 
     async obtenerReservas(idUsuario) {
@@ -37,6 +34,6 @@ export class ReservaRepository {
          if(reservas.length === 0) {
              throw new Error("No existen reservas para este usuario")
          }
-         return reservas
+         return reservas.map(docToReserva);
      }
 }
