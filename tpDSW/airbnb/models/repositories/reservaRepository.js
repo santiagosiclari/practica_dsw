@@ -19,8 +19,9 @@ export class ReservaRepository {
         return docToReserva(reservaMongo);
     }
 
-    async findFechaCoincidente(fechaInicial, fechaFin){
+    async findFechaCoincidente(fechaInicial, fechaFin, alojamientoId){
         const coincidencia = await this.model.findOne({
+            alojamiento: alojamientoId,
             $and: [
                 { fechaInicio: { $lte: fechaFin } }, // Overlap condition
                 { fechaFinal: { $gte: fechaInicial } } // Overlap condition

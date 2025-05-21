@@ -18,7 +18,7 @@ export function registerReservaRoutes(app, getController) {
         getController(ReservaController).listarReservasUsuario(req, res, next)
     );
 
-    app.patch("/reservas/:id/cancelar", (req, res, next) =>
+    app.post("/reservas/:id/cambiosDeEstado", (req, res, next) =>
         getController(ReservaController).cancelarReserva(req, res, next)
     );
 

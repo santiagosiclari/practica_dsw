@@ -11,11 +11,6 @@ export class Reserva{
     estado
     precioPorNoche
     constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas, fechaAlta){
-
-/*         if (!alojamiento.estasDisponibleEn(rangoFechas)) {
-            throw new AlojamientoOcupadoError("ocupado", 400);
-        } */
-
         this.fechaAlta = fechaAlta ? fechaAlta : new Date();
         this.huespedReservador = huespedReservador;
         this.cantHuespedes = cantHuespedes;
@@ -38,13 +33,16 @@ export class Reserva{
     }
 
     actualizarEstado(estadoReserva){
-        this.estado = estadoReserva;
+        this.estado = estadoReserva.nombre || estadoReserva;
     }
     getAlojamientoNombre(){return this.alojamiento.getNombre()}
     getAlojamientoId(){return this.alojamiento.getId()}
 
     getCantHuespedes(){return this.cantHuespedes}
     getEstado(){return this.estado}
+    getEstadoNombre(){
+        return this.estado.nombre;
+    }
 
     getPrecioPorNoche(){return this.precioPorNoche}
 
@@ -69,9 +67,6 @@ export class Reserva{
     }
     mostrarRangoReserva() {
         return this.rangoFechas.rangoToString()
-    }
-    comenzoReserva(fechaActual){
-        return this.rangoFechas.seSuperpone(fechaActual);
     }
     setRangoFecha(nuevoRango){this.rangoFechas = nuevoRango}
     setCantHuespedes(nuevaCant){this.cantHuespedes = nuevaCant}

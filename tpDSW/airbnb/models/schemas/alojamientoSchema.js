@@ -37,7 +37,8 @@ const alojamientoSchema = new mongoose.Schema({
     },
     cantHuespedesMax: {
         type: Number,
-        min: 1
+        min: 1,
+        default: 4
     },
     caracteristicas: {
         type: [String],

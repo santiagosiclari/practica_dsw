@@ -21,19 +21,20 @@ export class ReservaController {
         }
     }
 
-/*     cancelarReserva(req, res, next) {
+    async cancelarReserva(req, res, next) {
         try{
             const filters = {
+                estado : req.body.estado,
+                reserva : req.body.reserva,
                 motivo : req.body.motivo,
                 usuario : req.body.usuario
             }
-            const idReserva = req.params.id
-            const reserva = this.reservaService.cancelarReserva(idReserva, filters);
-            res.status(201).json(this.toDtoEstado(reserva))
+            const reserva = await this.reservaService.cancelarReserva(filters);
+            res.status(200).json(this.toDto(reserva))
         }catch(error){
             next(error);
         }
-    } */
+    }
 
     async listarReservas(req, res, next) {
         try{
@@ -64,20 +65,20 @@ export class ReservaController {
         }
     }
 
-/*     modificarReserva(req, res, next){
+    async modificarReserva(req, res, next){
         try{
             const filters = {
+                reserva : req.body.reserva,
                 cantHuespedes : req.body.cantHuespedes,
                 fechaInicio : req.body.fechaInicio,
                 fechaFinal : req.body.fechaFinal,
             }
-            const idReserva = req.params.id;
-            const reservaModificada = this.reservaService.modificarReserva(Number(idReserva), filters);
+            const reservaModificada = await this.reservaService.modificarReserva(filters);
             res.status(200).json(this.toDto(reservaModificada));
         }catch(error){
             next(error);
         }
-    } */
+    }
 
     toDto(reserva) {
         return {
@@ -91,16 +92,17 @@ export class ReservaController {
             precioPorNoche: reserva.getPrecioPorNoche()
         };
     }
-    toDtoEstado(reserva) {
-        return {
-            id: reserva.getId(),
-            huespedReservador: reserva.getHuespedId(),
-            estado: reserva.getEstado().nombre,
-            alojamiento: reserva.getAlojamientoId(),
-/*             fechaInicio: reserva.fechaInicio,
-            fechaFinal: reserva.fechaFinal, */
-        };
-    }
+//     toDtoEstado(reserva) {
+//         return {
+//             id: reserva.getId(),
+//             huespedReservador: reserva.getHuespedId(),
+//             estado: reserva.getEstado().nombre,
+//             alojamiento: reserva.getAlojamientoId(),
+// /*             fechaInicio: reserva.fechaInicio,
+//             fechaFinal: reserva.fechaFinal, */
+//         };
+//     }
+
     toDtos(reservas){
         return reservas.map(reserva => this.toDto(reserva));
     }
