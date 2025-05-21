@@ -16,6 +16,9 @@ export class ReservaService {
             throw new ValidationError('Faltan campos requeridos o son inválidos');
         }
         const { huespedReservador, cantHuespedes, alojamiento, rangoFechas } = await this.fromDto(reserva)
+
+        console.log(rangoFechas)
+
         const nueva = new Reserva(huespedReservador, cantHuespedes, alojamiento, rangoFechas)
         const reservaGuardada = await this.reservaRepository.save(nueva)
 
@@ -107,9 +110,11 @@ export class ReservaService {
         const fechaInicio = new Date(reservaDto.fechaInicio);
         const fechaFinal = new Date(reservaDto.fechaFinal);
 
-        if (isNaN(fechaInicio) || isNaN(fechaFinal)) {
-            throw new Error("Fechas inválidas");
+        const reservasExistente = await this.reservaRepository.findFechaCoincidente(fechaInicio, fechaFinal)
+        if(reservasExistente){
+            throw new AlojamientoOcupadoError('Ya hay una reserva en este rango de fechas', 404)
         }
+
         return {
             huespedReservador: await this.userRepository.findById(reservaDto.huespedReservador),
             cantHuespedes: reservaDto.cantHuespedes,
