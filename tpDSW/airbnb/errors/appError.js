@@ -25,4 +25,10 @@ export class ConflictError extends AppError {
   constructor(message = 'Conflicto con el recurso existente') {
     super(message, 409);
   }
-} 
+}
+
+export class NoPermitoCambioEstadoReservaError extends AppError {
+  constructor(message) {
+    super(message, 400)
+  }
+}

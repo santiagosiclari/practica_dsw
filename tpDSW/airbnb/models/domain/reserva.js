@@ -2,7 +2,7 @@ import { Alojamiento } from "./alojamiento.js"
 import { AlojamientoOcupadoError } from "./errors/alojamientoOcupadoError.js"
 
 export class Reserva{
-    id //Agrego id para reserva
+    _id
     fechaAlta
     huespedReservador
     cantHuespedes
@@ -10,28 +10,39 @@ export class Reserva{
     rangoFechas
     estado
     precioPorNoche
-    constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas){
-        if (!alojamiento.estasDisponibleEn(rangoFechas)) {
-            throw new AlojamientoOcupadoError("En este rango de fechas ya hay una reserva.", 406);
-        }
-        this.fechaAlta = new Date();
+    constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas, fechaAlta){
+        this.fechaAlta = fechaAlta ? fechaAlta : new Date();
         this.huespedReservador = huespedReservador;
         this.cantHuespedes = cantHuespedes;
         this.alojamiento = alojamiento;
-        this.rangoFechas = rangoFechas;
         this.estado = EstadoReserva.PENDIENTE;
-        this.precioPorNoche = 1; //TODO
+        this.precioPorNoche = alojamiento.precioPorNoche;
+        this.rangoFechas = rangoFechas instanceof RangoFechas
+            ? rangoFechas
+            : new RangoFechas(rangoFechas.fechaInicio, rangoFechas.fechaFin);
     }
-    setId(idNuevo){this.id = idNuevo}
-    getId(){return this.id}
+    setId(id) {
+        this._id = id;
+    }
+    getId(){
+        return this._id;
+    }
+
+    seSuperponeCon(otroRango) {
+        return this.rangoFechas.seSuperponeCon(otroRango)
+    }
+
     actualizarEstado(estadoReserva){
-        this.estado = estadoReserva;
+        this.estado = estadoReserva.nombre || estadoReserva;
     }
     getAlojamientoNombre(){return this.alojamiento.getNombre()}
     getAlojamientoId(){return this.alojamiento.getId()}
 
     getCantHuespedes(){return this.cantHuespedes}
     getEstado(){return this.estado}
+    getEstadoNombre(){
+        return this.estado.nombre;
+    }
 
     getPrecioPorNoche(){return this.precioPorNoche}
 
@@ -39,15 +50,16 @@ export class Reserva{
 
     getRangoFechaInicio(){return this.rangoFechas.getFechaInicio()}
     getRangoFechaFinal(){return this.rangoFechas.getFechaFin()}
-    getRangoFechaInicioFormateada() {
+    getRangoFechas(){return this.rangoFechas}
+/*    getRangoFechaInicioFormateada() {
         return this.rangoFechas.getFechaInicioFormateada();
     }
       getRangoFechaFinalFormateada() {
         return this.rangoFechas.getFechaFinFormateada();
-    }
+    }*/
 
     getHuespedReservadorNombre(){return this.huespedReservador.getNombre()}
-    getHuespedId(){return this.huespedReservador.getId()}
+    getHuespedId(){return Number(this.huespedReservador.getId())}
 
     calcularDias(){
         const dias = this.rangoFechas.fechaFin - this.rangoFechas.fechaInicio
@@ -56,9 +68,8 @@ export class Reserva{
     mostrarRangoReserva() {
         return this.rangoFechas.rangoToString()
     }
-    comenzoReserva(fechaActual){
-        return this.rangoFechas.seSuperpone(fechaActual);
-    }
+    setRangoFecha(nuevoRango){this.rangoFechas = nuevoRango}
+    setCantHuespedes(nuevaCant){this.cantHuespedes = nuevaCant}
 }
 export class RangoFechas{
     fechaInicio
@@ -73,13 +84,13 @@ export class RangoFechas{
     getFechaInicio(){return this.fechaInicio}
     getFechaFin(){return this.fechaFin}
 
-    getFechaInicioFormateada() {
+/*    getFechaInicioFormateada() {
         return this.fechaInicio.toLocaleDateString("en-US");
     }
-    
+
       getFechaFinFormateada() {
         return this.fechaFin.toLocaleDateString("en-US");
-    }
+    }*/
 
     seSuperponeCon(otroRango) {
         return this.fechaInicio <= otroRango.fechaFin && this.fechaFin >= otroRango.fechaInicio;

@@ -1,47 +1,50 @@
-import { Reserva } from "../domain/reserva.js";
-import remove from "lodash-es/remove.js"
+import { ReservaModel, reservaToDocument, docToReserva } from "../schemas/reservaSchema.js";
 
 export class ReservaRepository {
-    reservas = [];
-
-    agregarReserva(reserva) {
-        reserva.id = this.obtenerSiguienteId()
-        this.reservas.push(reserva)
-        return reserva
+    constructor() {
+        this.model = ReservaModel;
     }
 
-    findAll() {
-        return this.reservas
+    async save(reserva) {
+        const query = reserva._id ? { _id: reserva._id } : { _id: new this.model()._id };
+        const reservaMongo = await this.model.findOneAndUpdate(
+            query,
+            reservaToDocument(reserva),
+            {
+                new: true,
+                runValidators: true,
+                upsert: true
+            }
+        );
+        return docToReserva(reservaMongo);
     }
 
-    findById(id) {
-        const reserva = this.reservas.find(reserva => reserva.id === id)
-        if(!reserva) {
-            throw new Error("No existe la reserva")
-        }
-        return reserva
+    async findFechaCoincidente(fechaInicial, fechaFin, alojamientoId){
+        const coincidencia = await this.model.findOne({
+            alojamiento: alojamientoId,
+            $and: [
+                { fechaInicio: { $lte: fechaFin } }, // Overlap condition
+                { fechaFinal: { $gte: fechaInicial } } // Overlap condition
+            ]
+        });
+        return coincidencia;
     }
 
-    obtenerReservas(idUsuario) {
-        //const id = Number(idUsuario);
-        const reservas = this.reservas.filter(reserva => reserva.getHuespedId() === idUsuario) // Get huesped Id devuelve string
-        if(reservas.length === 0) {
-            throw new Error("No existen reservas para este usuario")
-        }
-        return reservas
+    async findAll() {
+        const reservas = await this.model.find();
+        return reservas.map(docToReserva);
     }
 
-    guardarReserva(id, reservaActualidada) {
-        remove(this.reservas, r => r.id === id)
-        this.reservas.push(reservaActualidada)
-        return reservaActualidada
+    async findById(id) {
+        const reserva = await this.model.findById(id);
+        return docToReserva(reserva);
     }
 
-    removerReserva(reserva) {
-        remove(this.reservas, r => r.id === reserva.id)
-    }
-
-    obtenerSiguienteId() {
-        return this.reservas.length + 1
-    }
+    async obtenerReservas(idUsuario) {
+         const reservas = await this.model.find({ huespedReservador: idUsuario })
+         if(reservas.length === 0) {
+             throw new Error("No existen reservas para este usuario")
+         }
+         return reservas.map(docToReserva);
+     }
 }
