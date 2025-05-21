@@ -36,23 +36,21 @@ export class ReservaController {
     async listarReservas(req, res, next) {
         try{
             const reservas = await this.reservaService.listarReservas();
-            console.log(reservas)
             res.status(200).json(this.toDtos(reservas))
         }catch(error) {
             next(error);
         }
     }
 
-/*     listarReservasUsuario(req, res, next) {
+    async listarReservasUsuario(req, res, next) {
         try{
-            const idUsuario = req.params.id; //Devuelve un string
-            const reservas = this.reservaService.listarReservasUsuario(Number(idUsuario));
-            console.log(reservas)
+            const idUsuario = req.params.id;
+            const reservas = await this.reservaService.listarReservasUsuario(idUsuario);
             res.status(200).json(this.toDtos(reservas))
         }catch(error) {
             next(error);
         }
-    } */
+    }
 
     async buscarReserva(req, res, next) { //ENCONTRAR UNA RESERVA CON IDRESERVA
         try {
@@ -86,8 +84,8 @@ export class ReservaController {
             huespedReservador: reserva.huespedReservador,
             cantHuespedes: reserva.getCantHuespedes(),
             alojamiento: reserva.alojamiento,
-            fechaInicio: reserva.getRangoFechaInicioFormateada(),
-            fechaFinal: reserva.getRangoFechaFinalFormateada(),
+            fechaInicio: reserva.fechaInicio,
+            fechaFinal: reserva.fechaFinal,
             precioPorNoche: reserva.getPrecioPorNoche()
         };
     }
@@ -97,8 +95,8 @@ export class ReservaController {
             huespedReservador: reserva.getHuespedId(),
             estado: reserva.getEstado().nombre,
             alojamiento: reserva.getAlojamientoId(),
-            fechaInicio: reserva.getRangoFechaInicioFormateada(),
-            fechaFinal: reserva.getRangoFechaFinalFormateada(),
+            fechaInicio: reserva.fechaInicio,
+            fechaFinal: reserva.fechaFinal,
         };
     }
     toDtos(reservas){

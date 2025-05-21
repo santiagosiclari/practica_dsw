@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Reserva } from '../domain/reserva.js';
+import { Reserva , PENDIENTE, CONFIRMADA, CANCELADA } from '../domain/reserva.js';
 
 const reservaSchema = new mongoose.Schema({
     huespedReservador: {
@@ -7,32 +7,34 @@ const reservaSchema = new mongoose.Schema({
         required: true,
         ref: 'Usuario'
     },
+    alojamiento: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Alojamiento'
+    },
     cantHuespedes: {
         type: Number,
         required: true,
         min: 1
     },
-    alojamiento: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        trim: true,
-        ref: 'Alojamiento'
-    },
     fechaInicio: {
-        type: String,
+        type: Date,
         required: true,
         trim: true,
     },
     fechaFinal: {
-        type: String,
+        type: Date,
         required: true,
         trim: true,
     },
     estado: {
-        type: String
+        type: String,
+        enum: ['PENDIENTE', 'CONFIRMADA', 'CANCELADA'],
+        default: 'PENDIENTE'
     },
     precioPorNoche: {
         type: Number,
+        default: 1,
         min: 0
     }
 }, {

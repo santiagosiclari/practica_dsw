@@ -32,11 +32,11 @@ export class ReservaRepository {
         return resultado !== null;
     }
 
-    // obtenerReservas(idUsuario) {
-    //     const reservas = this.reservas.filter(reserva => reserva.getHuespedId() === idUsuario) // Get huesped Id devuelve string
-    //     if(reservas.length === 0) {
-    //         throw new Error("No existen reservas para este usuario")
-    //     }
-    //     return reservas
-    // }
+    async obtenerReservas(idUsuario) {
+         const reservas = await this.model.find({ huespedReservador: idUsuario })
+         if(reservas.length === 0) {
+             throw new Error("No existen reservas para este usuario")
+         }
+         return reservas
+     }
 }

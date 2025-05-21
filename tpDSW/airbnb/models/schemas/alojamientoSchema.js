@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import { DOLAR_USA, PESO_ARG, REALES} from '../domain/moneda.js';
+import { WIFI, PISCINA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO } from '../domain/caracteristica.js';
 import { Alojamiento } from '../domain/alojamiento.js';
 
 const alojamientoSchema = new mongoose.Schema({
@@ -7,43 +9,41 @@ const alojamientoSchema = new mongoose.Schema({
         required: true,
         ref: 'Usuario'
     },
-    cantHuespedesMax: {
-        type: Number,
-        min: 1
-    },
-    descripcion:{
-        type: String,
-        trim: true
-    },
     nombre: {
         type: String,
         required: true,
         trim: true
     },
-    moneda: {
+    descripcion:{
         type: String,
-        trim: true,
-    },
-    horarioCheckIn:{
-        type: String,
-        trim: true,
-    },
-    horarioCheckOut:{
-        type: String,
-        trim: true,
-    },
-    estado: {
-        type: String
+        trim: true
     },
     precioPorNoche: {
         type: Number,
         min: 0
     },
-    caracteristicas: [
-        {
-        type: String
-        }
-    ],
+    moneda: {
+        type: String,
+        trim: true,
+        default: 'DOLAR_USA'
+    },
+    horarioCheckIn:{
+        type: Date,
+        trim: true
+    },
+    horarioCheckOut:{
+        type: Date,
+        trim: true,
+    },
+    cantHuespedesMax: {
+        type: Number,
+        min: 1
+    },
+    caracteristicas: {
+        type: [String],
+        enum: ['WIFI', 'PISCINA', 'MASCOTAS_PERMITIDAS', 'ESTACIONAMIENTO'],
+        default: []
+    },
     fotos: [
         {
         type: String

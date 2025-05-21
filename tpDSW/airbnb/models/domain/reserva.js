@@ -14,16 +14,15 @@ export class Reserva{
         this.huespedReservador = huespedReservador;
         this.cantHuespedes = cantHuespedes;
         this.alojamiento = alojamiento;
-
-        if (!(rangoFechas instanceof RangoFechas)) {
-        console.warn("⚠️ rangoFechas no es instancia de RangoFechas, forzando creación");
-        console.log(rangoFechas)
-        rangoFechas = new RangoFechas(rangoFechas.fechaInicio, rangoFechas.fechaFin);
-        } else {
-        this.rangoFechas = rangoFechas;
-        }
         this.estado = EstadoReserva.PENDIENTE;
         this.precioPorNoche = 1; //TODO
+        if (!rangoFechas) {
+            throw new Error("rangoFechas es requerido");
+        }
+
+        this.rangoFechas = rangoFechas instanceof RangoFechas
+            ? rangoFechas
+            : new RangoFechas(rangoFechas.fechaInicio, rangoFechas.fechaFin);
     }
     actualizarEstado(estadoReserva){
         this.estado = estadoReserva;
@@ -40,12 +39,12 @@ export class Reserva{
 
     getRangoFechaInicio(){return this.rangoFechas.getFechaInicio()}
     getRangoFechaFinal(){return this.rangoFechas.getFechaFin()}
-    getRangoFechaInicioFormateada() {
+/*    getRangoFechaInicioFormateada() {
         return this.rangoFechas.getFechaInicioFormateada();
     }
       getRangoFechaFinalFormateada() {
         return this.rangoFechas.getFechaFinFormateada();
-    }
+    }*/
 
     getHuespedReservadorNombre(){return this.huespedReservador.getNombre()}
     getHuespedId(){return Number(this.huespedReservador.getId())}
@@ -76,13 +75,13 @@ export class RangoFechas{
     getFechaInicio(){return this.fechaInicio}
     getFechaFin(){return this.fechaFin}
 
-    getFechaInicioFormateada() {
+/*    getFechaInicioFormateada() {
         return this.fechaInicio.toLocaleDateString("en-US");
     }
     
       getFechaFinFormateada() {
         return this.fechaFin.toLocaleDateString("en-US");
-    }
+    }*/
 
     seSuperponeCon(otroRango) {
         return this.fechaInicio <= otroRango.fechaFin && this.fechaFin >= otroRango.fechaInicio;

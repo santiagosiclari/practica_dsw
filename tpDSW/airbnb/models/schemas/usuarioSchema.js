@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Usuario } from '../domain/usuario.js';
+import { Usuario , HUESPED, ANFITRION } from '../domain/usuario.js';
 
 const usuarioSchema = new mongoose.Schema({
     nombre: {
@@ -15,7 +15,8 @@ const usuarioSchema = new mongoose.Schema({
     tipo: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        enum: ['HUESPED', 'ANFITRION']
     }
 }, {
     timestamps: true,
