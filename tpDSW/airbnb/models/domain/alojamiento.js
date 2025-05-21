@@ -29,7 +29,7 @@ export class Alojamiento{
     }
     estasDisponibleEn(rangoDeFechas){
         return this.reservas.every(reserva =>
-            !reserva.rangoFechas.seSuperponeCon(rangoDeFechas)
+            !reserva.seSuperponeCon(rangoDeFechas)
         );
     }
 
@@ -49,5 +49,21 @@ export class Alojamiento{
     getAnfitrion(){ return this.anfitrion; }
     getPrecioPorNoche() {
         return this.precioPorNoche;
+    }
+
+    async agregarReserva(reserva) {
+        if (!this.reservas) {
+            this.reservas = [];
+        }
+
+        // Si la reserva es una instancia de Reserva, guardamos solo su _id
+        // Si la reserva es el id directamente, lo usamos tal cual
+        const reservaId = reserva._id ? reserva._id : reserva;
+        console.log(this.reservas)
+
+        this.reservas.push(reservaId);
+
+        // Guardar los cambios usando Mongoose (this es el documento mongoose)
+        return await this.save();
     }
 }

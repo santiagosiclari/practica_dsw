@@ -52,7 +52,7 @@ const alojamientoSchema = new mongoose.Schema({
     reservas: [
         {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Reserva' 
+        ref: 'Reserva'
         }
     ]
 

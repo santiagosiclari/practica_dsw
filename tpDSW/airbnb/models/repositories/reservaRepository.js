@@ -6,7 +6,7 @@ export class ReservaRepository {
     }
 
     async save(reserva) {
-        const query = reserva.id ? { _id: reserva.id } : { _id: new this.model()._id };
+        const query = reserva._id ? { _id: reserva._id } : { _id: new this.model()._id };
         const reservaMongo = await this.model.findOneAndUpdate(
             query,
             reservaToDocument(reserva),

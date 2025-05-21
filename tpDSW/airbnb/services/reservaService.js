@@ -2,6 +2,7 @@ import { CANCELADA, RangoFechas, Reserva , CambioEstadoReserva} from "../models/
 import { AppError, ValidationError, NotFoundError, ConflictError } from "../errors/appError.js";
 import { AlojamientoOcupadoError } from "../models/domain/errors/alojamientoOcupadoError.js";
 import { AlojamientoSobrepasadoError } from "../models/domain/errors/alojamientoSobrepasado.js";
+import { docToReserva } from "../models/schemas/reservaSchema.js";
 
 export class ReservaService {
     constructor(reservaRepository, alojamientoRepository, userRepository) {
@@ -17,6 +18,10 @@ export class ReservaService {
         const { huespedReservador, cantHuespedes, alojamiento, rangoFechas } = await this.fromDto(reserva)
         const nueva = new Reserva(huespedReservador, cantHuespedes, alojamiento, rangoFechas)
         const reservaGuardada = await this.reservaRepository.save(nueva)
+
+        //TODO: hacerlo en un alojamiento service
+        alojamiento.agregarReserva(reservaGuardada);
+        await this.alojamientoRepository.save(alojamiento);
         //TODO CREAR NOTIFICACION
         return reservaGuardada
     }

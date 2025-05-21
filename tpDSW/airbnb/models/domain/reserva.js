@@ -11,6 +11,11 @@ export class Reserva{
     estado
     precioPorNoche
     constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas, fechaAlta){
+
+/*         if (!alojamiento.estasDisponibleEn(rangoFechas)) {
+            throw new AlojamientoOcupadoError("ocupado", 400);
+        } */
+
         this.fechaAlta = fechaAlta ? fechaAlta : new Date();
         this.huespedReservador = huespedReservador;
         this.cantHuespedes = cantHuespedes;
@@ -27,6 +32,11 @@ export class Reserva{
     getId(){
         return this._id;
     }
+
+    seSuperponeCon(otroRango) {
+        return this.rangoFechas.seSuperponeCon(otroRango)
+    }
+
     actualizarEstado(estadoReserva){
         this.estado = estadoReserva;
     }
