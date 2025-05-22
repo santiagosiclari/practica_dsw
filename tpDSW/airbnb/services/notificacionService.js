@@ -4,14 +4,10 @@ export class NotificacionService {
         this.userRepository = userRepository
     }
 
-    crearNotificacionPorConfirmacion(reserva) {
-
-    }
-
-    crearNotificacionRecordatorioCheck() {
-
-    }
-
+   async crearNotificacion({ mensaje, usuario }) {
+    const noti = new Notificacion(mensaje, usuario);
+    return await this.notificacionRepository.save(noti);
+  }
     crearNotificacionEstadoReserva() {
 
     }
