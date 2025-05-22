@@ -27,26 +27,52 @@ export class ReservaService {
         //TODO CREAR NOTIFICACION
         return reservaGuardada
     }
-
-    async cancelarReserva(cambioEstado) {
-          if (!cambioEstado.motivo || !cambioEstado.usuario || !cambioEstado.estado || !cambioEstado.reserva) {
+    async cambiarEstados(cambioEstado){
+           if (!cambioEstado.motivo || !cambioEstado.usuario || !cambioEstado.estado || !cambioEstado.reserva) {
              throw new ValidationError('Faltan campos requeridos o son inválidos');
          }
-         
-        const { estado, reserva, motivo, usuario } = await this.fromDtoCambio(cambioEstado);
+          switch (cambioEstado.estado) {
+        case "CANCELADA":
+            return await this.cancelarReserva(cambioEstado);
 
-        if (reserva.getRangoFechaInicio() <= new Date()) {
-            throw new NoPermitoCambioEstadoReservaError("La reserva superó la fecha límite para ser cancelada");
+        case "CONFIRMADA":
+            return await this.confirmarReserva(cambioEstado);
+
+        default:
+            throw new ValidationError(`Estado "${cambioEstado.estado}" no es válido o no está soportado.`);
         }
-
-        const cambio = new CambioEstadoReserva(estado, reserva, motivo, usuario);
-
-        reserva.actualizarEstado(cambio.estado);
-        const reservaGuardada = await this.reservaRepository.save(reserva);
-        // TODO SI ALCANZA EL TIEMPO: const cambioGuardado = await this.cambioEstadoRepository.save() para trazabilidad
-        return reservaGuardada
+    }
+   async cancelarReserva(cambioEstado) {
+    return this._procesarCambioEstado(cambioEstado, "CANCELADA");
 }
 
+async confirmarReserva(cambioEstado) {
+    return this._procesarCambioEstado(cambioEstado, "CONFIRMADA");
+}
+
+async _procesarCambioEstado(cambioEstado, tipo) {
+    const { estado, reserva, motivo, usuario } = await this.fromDtoCambio(cambioEstado);
+
+    this._validarCambioEstado(tipo, reserva);
+
+    const cambio = new CambioEstadoReserva(estado, reserva, motivo, usuario);
+    reserva.actualizarEstado(cambio.estado);
+
+    const reservaGuardada = await this.reservaRepository.save(reserva);
+    // TODO: const cambioGuardado = await this.cambioEstadoRepository.save(cambio) para trazabilidad
+
+    return reservaGuardada;
+}
+
+_validarCambioEstado(tipo, reserva) {
+    const fechaActual = new Date();
+
+    if (reserva.getRangoFechaInicio() <= fechaActual) {
+        if (tipo === "CANCELADA") {
+            throw new NoPermitoCambioEstadoReservaError("La reserva superó la fecha límite para ser cancelada");
+        }
+    }
+}
     async modificarReserva(modificacion) {
         const reserva = await this.reservaRepository.findById(modificacion.reserva);
         const alojamiento = await this.alojamientoRepository.findById(reserva.alojamiento);
