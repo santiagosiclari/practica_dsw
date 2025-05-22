@@ -1,6 +1,7 @@
 import express from "express";
 import { registerReservaRoutes } from "./airbnb/rutas/reservaRoute.js";
 import { errorHandler } from "./airbnb/middlewares/errorHandler.js";
+import { registerNotificacionRoutes } from "./airbnb/rutas/notificacionRoute.js";
 
 export class Server {
   #controllers = {};
@@ -30,6 +31,7 @@ export class Server {
 
   configureRoutes() {
     registerReservaRoutes(this.app, this.getController.bind(this));
+    registerNotificacionRoutes(this.app, this.getController.bind(this));
 
      // Middleware para manejar rutas no encontradas
     this.#app.use((req, res, next) => {
