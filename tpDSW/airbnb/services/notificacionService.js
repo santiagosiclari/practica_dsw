@@ -21,7 +21,15 @@ export class NotificacionService {
         return notificaciones;
     }
 
-    marcarComoLeida(filters) {
+  async marcarComoLeida({ notificacion, leida }) {
+    const update = {
+        leida: leida
+    };
+    //  asignamos fechaLeida 
+  
+        update.fechaLeida = new Date();
+    
 
-    }
+    return await this.notificacionRepository.actualizarEstado(notificacion, update);
+}
 }

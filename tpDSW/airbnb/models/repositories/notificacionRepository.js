@@ -23,13 +23,22 @@ export class NotificacionRepository {
         const query = {};
 
         if (filters.usuarioId) {
-            query.usuarioId = filters.usuarioId;
+            query.usuario = filters.usuarioId;
         }
 
-        if (filters.leida !== undefined) {
-            query.leida = filters.leida === 'true'
-        }
+      if (filters.leida !== undefined) {
+    query.leida = filters.leida === 'true';  // convierte string a boolean
+}
 
         return await this.model.find(query);
     }
+
+    async actualizarEstado(idNotificacion, camposActualizar) {
+    const notiModificada = await this.model.findByIdAndUpdate(
+        idNotificacion,
+        { $set: camposActualizar },
+        { new: true, runValidators: true }
+    );
+    return notiModificada;
+}
 }

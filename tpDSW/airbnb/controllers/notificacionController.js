@@ -6,7 +6,7 @@ export class NotificacionController {
     async listarNotificaciones(req, res, next) {
         try{
             const filters = {
-                idUsuario : req.params.id,
+                usuarioId : req.params.id,
                 leida: req.query.leida
             }
             const notificaciones = await this.notificacionService.listarNotificaciones(filters);
@@ -16,13 +16,14 @@ export class NotificacionController {
         }
     }
 
-    marcarComoLeida(req, res, next) {
+    async marcarComoLeida(req, res, next) {
         try{
             const filters = {
-                notificacion : req.body.notificacion,
+                notificacion : req.params.idNoti, //no hace falta en el body si tenemos en el param
                 leida : req.body.leida
             }
-            const notiModificada = this.notificacionService.marcarComoLeida(filters);
+            
+            const notiModificada =  await this.notificacionService.marcarComoLeida(filters);
             res.status(200).json(this.toDto(notiModificada));
         }catch(error){
             next(error);
