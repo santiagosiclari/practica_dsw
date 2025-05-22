@@ -4,6 +4,7 @@ import { Foto } from "./foto.js"
 import { Direccion } from "./direccionn.js"
 
 export class Alojamiento{
+    _id
     anfitrion
     nombre
     descripcion
@@ -27,7 +28,16 @@ export class Alojamiento{
         this.reservas = [];
         this.fotos = [];
     }
+<<<<<<< Updated upstream:tpDSW/domain/alojamiento.js
 
+=======
+    setId(id) {
+        this._id = id;
+    }
+    getId(){
+        return this._id;
+    }
+>>>>>>> Stashed changes:tpDSW/airbnb/models/domain/alojamiento.js
     estasDisponibleEn(rangoDeFechas){
         return this.reservas.every(reserva =>
             !reserva.rangoFechas.seSuperponeCon(rangoDeFechas)
