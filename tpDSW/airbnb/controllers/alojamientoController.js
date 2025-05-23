@@ -8,8 +8,8 @@ export class AlojamientoController {
     async listarAlojamientos(req, res, next) {
         try{
             const filters = {
-                fechaInicio : req.query.fechaInicio || 0,
-                fechaFinal : req.query.fechaFinal || 0,
+                fechaInicio : req.query.fechaInicio,
+                fechaFinal : req.query.fechaFinal,
                 ciudad: req.query.ciudad,
                 pais: req.query.pais,
                 lat : req.query.lat,
@@ -27,7 +27,7 @@ export class AlojamientoController {
                 page: resultado.page,
                 limit: resultado.limit,
                 total: resultado.total,
-                alojamientos : this.toDtos(resultado.alojamientos)})
+                alojamientos : this.toDtos(resultado.resultAlojamientos)})
         }catch(error) {
             next(error);
         }

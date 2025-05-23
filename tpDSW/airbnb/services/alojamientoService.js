@@ -15,14 +15,20 @@ export class AlojamientoService {
     async listarAlojamientos(filters, page, limit) {
         const parametros = this.fromDto(filters);
         const alojamientos = await this.alojamientoRepository.buscarConFiltros(parametros, page, limit);
+        const total = alojamientos.total;
 
         //Filtramos usando la logica de dominio
-        //const resultAlojamientos = this.filtrarResultado(parametros, alojamientos)
+        const resultAlojamientos = this.filtrarResultado(parametros, alojamientos)
 
-        if (alojamientos.length === 0) {
+        if (resultAlojamientos.length === 0) {
             throw new NotFoundError('No se encontraron alojamientos con estos filtros');
         }
-        return alojamientos;
+        return {
+            total,
+            page,
+            limit,
+            resultAlojamientos
+        };
     }
     fromDto(dto) {
         const fechaInicio = new Date(dto.fechaInicio);
@@ -52,5 +58,26 @@ export class AlojamientoService {
                 throw new ValidationError('Característica inválida: ' + caracLimpia);
             }
         })
+    }
+    filtrarResultado(parametros, resultados){
+        const alojamientos = resultados.alojamientos
+        //Para utlizar la logica de dominio
+        /* const quiereValidarCant = parametros.cantHuespedes !== undefined;
+        const quiereValidarPrecios = parametros.precioMin !== undefined || modificacion.precioMax !== undefined;
+        const quiereValidarCarac = parametros.caracteristicas !== undefined;
+
+        const precioValido = resultados.filter(aloj =>
+            aloj.tuPrecioEstaDentroDe(parametros.precioMin, parametros.precioMax));
+        console.log(precioValido)
+
+        const conCapacidad = precioValido.filter(aloj =>
+            aloj.puedenAlojarse(parametros.cantHuespedes));
+        console.log(conCapacidad)
+
+        const conCaracteristicas = conCapacidad.filter(aloj =>
+            parametros.caracteristicas.every(carac => aloj.tenesCaracteristica(carac)));
+        console.log(conCaracteristicas) */
+        const alojDisponibles = alojamientos.filter(alojamiento => alojamiento.estasDisponibleEn(parametros.rangoFechas));
+        return alojDisponibles
     }
 }
