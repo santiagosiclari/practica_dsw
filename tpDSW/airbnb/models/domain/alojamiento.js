@@ -4,6 +4,7 @@ import { Foto } from "./foto.js"
 import { Direccion } from "./direccion.js"
 
 export class Alojamiento{
+    _id
     anfitrion
     nombre
     descripcion
@@ -21,11 +22,17 @@ export class Alojamiento{
         this.nombre = nombre;
         this.precioPorNoche = 0;
         this.moneda = Moneda.DOLAR_USA;
-        this.direccion = direccion;
+        this.direccion = new Direccion(direccion.calle, direccion.altura, direccion.ciudad, direccion.lat,direccion.long);
         this.cantHuespedesMax = 5;
         this.caracteristicas = [];
         this.reservas = [];
         this.fotos = [];
+    }
+    setId(id) {
+        this._id = id;
+    }
+    getId(){
+        return this._id;
     }
     estasDisponibleEn(rangoDeFechas){
         return this.reservas.every(reserva =>

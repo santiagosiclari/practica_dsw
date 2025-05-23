@@ -133,7 +133,7 @@ export class ReservaService {
     async fromDtoModFecha(dto, alojamiento){
         const fechaInicio = new Date(dto.fechaInicio);
         const fechaFinal = new Date(dto.fechaFinal);
-        
+
         const reservasExistente = await this.reservaRepository.findFechaCoincidente(fechaInicio, fechaFinal, alojamiento)
         if(reservasExistente){
             throw new AlojamientoOcupadoError('Ya hay una reserva en este rango de fechas', 403)
