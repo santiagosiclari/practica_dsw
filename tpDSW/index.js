@@ -17,7 +17,7 @@ import { NotificacionService } from "./airbnb/services/notificacionService.js";
 
 import { ReservaController } from "./airbnb/controllers/reservaController.js";
 import { NotificacionController } from "./airbnb/controllers/notificacionController.js";
-
+import { iniciarTareaChecks } from "./airbnb/tasks/notificacionTasks.js";
 const app = express();
 const port = process.env.port;
 const server = new Server(app, port);

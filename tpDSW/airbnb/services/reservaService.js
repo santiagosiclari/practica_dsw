@@ -19,6 +19,7 @@ import { docToReserva } from "../models/schemas/reservaSchema.js";
 import { Alojamiento } from "../models/domain/alojamiento.js";
 import { NotificacionService } from "./notificacionService.js";
 import { FactoryNotificacion } from "../models/domain/notificacion.js";
+import { iniciarTareaChecks } from "../tasks/notificacionTasks.js";
 export class ReservaService {
   constructor(reservaRepository, alojamientoRepository, userRepository) {
     (this.reservaRepository = reservaRepository),
@@ -241,6 +242,11 @@ export class ReservaService {
       rangoFechas: new RangoFechas(fechaInicio, fechaFinal),
     };
   }
+
+ async obtenerReservasProximas() {
+  const hoy = new Date();
+  return await this.reservaRepository.findReservasProximas(hoy, 1); // próximas 24hs
+}
 
   async fromDtoCambio(dto) {
     const usuarioEncontrado = await this.userRepository.findById(dto.usuario);
