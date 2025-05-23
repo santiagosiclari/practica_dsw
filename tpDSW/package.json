@@ -17,6 +17,7 @@
     "lodash-es": "^4.17.21",
     "mongodb": "^6.16.0",
     "mongoose": "^8.15.0",
+    "node-cron": "^4.0.7",
     "zod": "^3.24.2"
   },
   "keywords": [],
