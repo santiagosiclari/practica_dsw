@@ -1,0 +1,112 @@
+[
+  {
+    "nombre": "Casa del Lago",
+    "ubicacion": "Bariloche, Argentina",
+    "precioPorNoche": 75,
+    "huespedesMaximos": 4,
+    "caracteristicas": ["Wifi", "Chimenea", "Vista al lago", "No se permiten mascotas"],
+    "anfitrion": "Laura Torres",
+    "descripcion": "Cálida casa con vista directa al lago Nahuel Huapi.",
+    "checkIn": "14:00",
+    "checkOut": "10:00"
+  },
+  {
+    "nombre": "Departamento Moderno",
+    "ubicacion": "Ciudad de México, México",
+    "precioPorNoche": 60,
+    "huespedesMaximos": 2,
+    "caracteristicas": ["Wifi", "Aire acondicionado", "Ascensor", "No fumadores"],
+    "anfitrion": "Jorge Ramírez",
+    "descripcion": "Espacio moderno ideal para viajes de negocios o escapadas urbanas.",
+    "checkIn": "15:00",
+    "checkOut": "11:00"
+  },
+  {
+    "nombre": "Bungalow Tropical",
+    "ubicacion": "Tulum, México",
+    "precioPorNoche": 110,
+    "huespedesMaximos": 3,
+    "caracteristicas": ["Piscina", "Wifi", "Estacionamiento gratuito", "Se permiten mascotas"],
+    "anfitrion": "Sofía Delgado",
+    "descripcion": "Bungalow inmerso en la selva con todas las comodidades.",
+    "checkIn": "13:00",
+    "checkOut": "10:00"
+  },
+  {
+    "nombre": "Cabaña en el Bosque",
+    "ubicacion": "Villa La Angostura, Argentina",
+    "precioPorNoche": 85,
+    "huespedesMaximos": 5,
+    "caracteristicas": ["Parrilla", "Estufa a leña", "Sin Wifi", "Mascotas permitidas"],
+    "anfitrion": "Tomás Álvarez",
+    "descripcion": "Rústica cabaña ideal para desconectarse rodeado de naturaleza.",
+    "checkIn": "12:00",
+    "checkOut": "10:00"
+  },
+  {
+    "nombre": "Casa frente al mar",
+    "ubicacion": "Punta del Este, Uruguay",
+    "precioPorNoche": 150,
+    "huespedesMaximos": 6,
+    "caracteristicas": ["Wifi", "Piscina", "Vista al mar", "Aire acondicionado"],
+    "anfitrion": "Mariana Rivas",
+    "descripcion": "Casa amplia con acceso directo a la playa y todas las comodidades.",
+    "checkIn": "14:00",
+    "checkOut": "11:00"
+  },
+  {
+    "nombre": "Loft Parisino",
+    "ubicacion": "París, Francia",
+    "precioPorNoche": 95,
+    "huespedesMaximos": 2,
+    "caracteristicas": ["Wifi", "Balcón", "Lavadora", "No mascotas"],
+    "anfitrion": "Émile Laurent",
+    "descripcion": "Elegante loft con balcón a pocas cuadras de la Torre Eiffel.",
+    "checkIn": "16:00",
+    "checkOut": "10:00"
+  },
+  {
+    "nombre": "Refugio en la Montaña",
+    "ubicacion": "Mendoza, Argentina",
+    "precioPorNoche": 70,
+    "huespedesMaximos": 4,
+    "caracteristicas": ["Vista a la cordillera", "Wifi", "Parrilla", "Estacionamiento"],
+    "anfitrion": "Clara Núñez",
+    "descripcion": "Alojamiento acogedor en la montaña, ideal para aventureros.",
+    "checkIn": "13:00",
+    "checkOut": "10:00"
+  },
+  {
+    "nombre": "Estudio Urbano",
+    "ubicacion": "Nueva York, EE.UU.",
+    "precioPorNoche": 130,
+    "huespedesMaximos": 2,
+    "caracteristicas": ["Wifi", "Ascensor", "Smart TV", "No se permiten mascotas"],
+    "anfitrion": "Michael Brooks",
+    "descripcion": "Estudio compacto y moderno en el corazón de Manhattan.",
+    "checkIn": "15:00",
+    "checkOut": "11:00"
+  },
+  {
+    "nombre": "Casa Flotante",
+    "ubicacion": "Ámsterdam, Países Bajos",
+    "precioPorNoche": 120,
+    "huespedesMaximos": 3,
+    "caracteristicas": ["Wifi", "Terraza", "Cocina equipada", "Prohibido fumar"],
+    "anfitrion": "Anna van Dijk",
+    "descripcion": "Una experiencia única en una casa flotante sobre los canales.",
+    "checkIn": "14:00",
+    "checkOut": "10:00"
+  },
+  {
+    "nombre": "Rancho Familiar",
+    "ubicacion": "Córdoba, Argentina",
+    "precioPorNoche": 90,
+    "huespedesMaximos": 8,
+    "caracteristicas": ["Wifi", "Piscina", "Mascotas permitidas", "Espacio verde grande"],
+    "anfitrion": "Ricardo Medina",
+    "descripcion": "Casa de campo ideal para grupos grandes y familias.",
+    "checkIn": "12:00",
+    "checkOut": "10:00"
+  }
+]
