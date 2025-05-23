@@ -18,7 +18,7 @@ import { AlojamientoSobrepasadoError } from "../models/domain/errors/alojamiento
 import { docToReserva } from "../models/schemas/reservaSchema.js";
 import { Alojamiento } from "../models/domain/alojamiento.js";
 import { NotificacionService } from "./notificacionService.js";
-
+import { FactoryNotificacion } from "../models/domain/notificacion.js";
 export class ReservaService {
   constructor(reservaRepository, alojamientoRepository, userRepository) {
     (this.reservaRepository = reservaRepository),
@@ -69,6 +69,8 @@ export class ReservaService {
 
       case "CONFIRMADA":
         return await this.confirmarReserva(cambioEstado);
+      case "RECHAZADA":
+        return await this.rechazarReserva(cambioEstado);
 
       default:
         throw new ValidationError(
@@ -81,8 +83,10 @@ export class ReservaService {
   }
 
   async confirmarReserva(cambioEstado) {
-
     return this._procesarCambioEstado(cambioEstado, "CONFIRMADA");
+  }
+  async rechazarReserva(cambioEstado) {
+    return this._procesarCambioEstado(cambioEstado, "RECHAZADA");
   }
 
   async _procesarCambioEstado(cambioEstado, tipo) {
@@ -96,13 +100,38 @@ export class ReservaService {
     reserva.actualizarEstado(cambio.estado);
 
     const reservaGuardada = await this.reservaRepository.save(reserva);
-    // TODO: const cambioGuardado = await this.cambioEstadoRepository.save(cambio) para trazabilidad
-    if (tipo === "CONFIRMADA") {
-    await this.notificacionService.crearNotificacion({
-      mensaje: `Tu reserva con ID ${reserva.getId()} ha sido confirmada exitosamente.`,
-      usuario: usuario._id || usuario.id  // Usa el que exista, ideal validar previamente
-    });
+    // TODO: const cambioGuardado = await this.cambioEstadoRepository.save(cambio)
+
+    let notificacion;
+
+    switch (tipo) {
+      case "CONFIRMADA":
+        notificacion = this.factoryNotificacion.crearSegunAceptar(reserva);
+        break;
+      case "CANCELADA":
+        notificacion = this.factoryNotificacion.crearSegunCancelacion(
+          reserva,
+          usuario,
+          motivo
+        );
+        break;
+      case "RECHAZADA":
+        notificacion = this.factoryNotificacion.crearSegunRechazo(
+          reserva,
+          motivo
+        );
+        break;
+      default:
+        break;
     }
+
+    if (notificacion) {
+      await this.notificacionService.crearNotificacion({
+        mensaje: notificacion.mensaje,
+        usuario: notificacion.usuario,
+      });
+    }
+
     return reservaGuardada;
   }
 
