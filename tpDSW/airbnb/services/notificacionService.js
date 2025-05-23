@@ -21,6 +21,18 @@ export class NotificacionService {
     });
   }
 }
+async enviarNotificacionCheckout() {
+  const reservasPorFinalizar = await this.reservaService.obtenerReservasPorFinalizar();
+
+  for (const reserva of reservasPorFinalizar) {
+    const mensaje = `Tu estadía en "${reserva.getAlojamientoNombre()}" termina el ${reserva.getRangoFechaFinal().toLocaleDateString()}. ¡Esperamos que hayas disfrutado!`;
+
+    await this.crearNotificacion({
+      mensaje,
+      usuario: reserva.getHuespedId(),
+    });
+  }
+}
   async listarNotificaciones(filters) {
     const notificaciones = await this.notificacionRepository.findAll(filters);
     return notificaciones;

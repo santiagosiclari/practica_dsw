@@ -49,6 +49,20 @@ export class ReservaRepository {
 
     return docs.map(docToReserva);
   }
+  async findReservasPorFinalizar(fechaReferencia, dias = 1) {
+  const fechaLimite = new Date(fechaReferencia);
+  fechaLimite.setDate(fechaLimite.getDate() + dias);
+
+  const docs = await this.model.find({
+    estado: "CONFIRMADA",
+    fechaFinal: {
+      $gte: fechaReferencia,
+      $lte: fechaLimite,
+    },
+  });
+
+  return docs.map(docToReserva);
+}
   async findAll() {
     const reservas = await this.model.find();
     return reservas.map(docToReserva);

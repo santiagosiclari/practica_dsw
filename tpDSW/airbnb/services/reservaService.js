@@ -247,7 +247,10 @@ export class ReservaService {
   const hoy = new Date();
   return await this.reservaRepository.findReservasProximas(hoy, 1); // próximas 24hs
 }
-
+async obtenerReservasPorFinalizar() {
+  const hoy = new Date();
+  return await this.reservaRepository.findReservasPorFinalizar(hoy, 1);
+}
   async fromDtoCambio(dto) {
     const usuarioEncontrado = await this.userRepository.findById(dto.usuario);
     const reservaEncontrada = await this.reservaRepository.findById(
