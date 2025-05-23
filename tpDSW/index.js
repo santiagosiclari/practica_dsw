@@ -36,6 +36,9 @@ const notificacionesRepo = new NotificacionRepository();
 const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo);
 const notificacionService = new NotificacionService(notificacionesRepo, userRepo);
 
+// Cron-Jobs
+iniciarTareaChecks(notificacionService);
+
 // Controllers
 const reservaController = new ReservaController(reservaService);
 const notificacionController = new NotificacionController(notificacionService);
