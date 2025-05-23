@@ -71,7 +71,7 @@ export class FactoryNotificacion {
 
     return new Notificacion(
       mensaje,
-      usuarioCancelador._id || usuarioCancelador.id
+        reserva.getAnfitrionAlojamiento()
     );
   }
 }
