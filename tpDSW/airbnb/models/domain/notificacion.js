@@ -37,7 +37,7 @@ export class FactoryNotificacion {
   }
 
   crearSegunAceptar(reserva) {
-    mensaje =
+   let  mensaje =
       "El anfitrión de la reserva " +
       reserva.getAlojamientoNombre() +
       " ha aceptado su solicitud de reserva.";

@@ -20,12 +20,15 @@ import { Alojamiento } from "../models/domain/alojamiento.js";
 import { NotificacionService } from "./notificacionService.js";
 import { FactoryNotificacion } from "../models/domain/notificacion.js";
 import { iniciarTareaChecks } from "../tasks/notificacionTasks.js";
+
 export class ReservaService {
   constructor(reservaRepository, alojamientoRepository, userRepository) {
-    (this.reservaRepository = reservaRepository),
-      (this.alojamientoRepository = alojamientoRepository),
-      (this.userRepository = userRepository);
+    this.reservaRepository = reservaRepository;
+    this.alojamientoRepository = alojamientoRepository;
+    this.userRepository = userRepository;
+    this.factoryNotificacion = new FactoryNotificacion(); // ¡IMPORTANTE!: crear una instancia
   }
+
 
   async crearReserva(reserva) {
     if (
@@ -243,14 +246,14 @@ export class ReservaService {
     };
   }
 
- async obtenerReservasProximas() {
-  const hoy = new Date();
-  return await this.reservaRepository.findReservasProximas(hoy, 1); // próximas 24hs
-}
-async obtenerReservasPorFinalizar() {
-  const hoy = new Date();
-  return await this.reservaRepository.findReservasPorFinalizar(hoy, 1);
-}
+  async obtenerReservasProximas() {
+    const hoy = new Date();
+    return await this.reservaRepository.findReservasProximas(hoy, 1); // próximas 24hs
+  }
+  async obtenerReservasPorFinalizar() {
+    const hoy = new Date();
+    return await this.reservaRepository.findReservasPorFinalizar(hoy, 1);
+  }
   async fromDtoCambio(dto) {
     const usuarioEncontrado = await this.userRepository.findById(dto.usuario);
     const reservaEncontrada = await this.reservaRepository.findById(
