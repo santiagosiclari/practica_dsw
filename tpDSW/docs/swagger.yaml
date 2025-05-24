@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  title: API de Reservas y Notificaciones
+  version: 1.0.0
+  description: Endpoints para gestionar reservas y notificaciones
+
+servers:
+  - url: http://localhost:3000
+
+tags:
+  - name: Reservas
+  - name: Notificaciones
+
+paths:
+  /reservas:
+    post:
+      tags: [Reservas]
+      summary: Crear una nueva reserva
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservaInput'
+      responses:
+        201:
+          description: Reserva creada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reserva'
+
+    get:
+      tags: [Reservas]
+      summary: Listar todas las reservas
+      responses:
+        200:
+          description: Lista de reservas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reserva'
+
+  /reservas/{id}:
+    get:
+      tags: [Reservas]
+      summary: Obtener una reserva por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Reserva encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reserva'
+
+    patch:
+      tags: [Reservas]
+      summary: Modificar una reserva
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservaModificacion'
+      responses:
+        200:
+          description: Reserva modificada
+
+  /reservas/usuario/{id}:
+    get:
+      tags: [Reservas]
+      summary: Listar reservas por usuario
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Lista de reservas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reserva'
+
+  /reservas/{id}/cambiosDeEstado:
+    post:
+      tags: [Reservas]
+      summary: Cambiar estado de una reserva
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CambioEstado'
+      responses:
+        200:
+          description: Reserva actualizada
+
+  /usuarios/{idUser}/notificaciones:
+    get:
+      tags: [Notificaciones]
+      summary: Listar notificaciones por usuario
+      parameters:
+        - name: idUser
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: leida
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: Lista de notificaciones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notificacion'
+
+  /usuarios/{idUser}/notificaciones/{idNoti}:
+    patch:
+      tags: [Notificaciones]
+      summary: Marcar notificación como leída
+      parameters:
+        - name: idUser
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: idNoti
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                leida:
+                  type: boolean
+              required: [leida]
+      responses:
+        200:
+          description: Notificación modificada
+
+components:
+  schemas:
+    Reserva:
+      type: object
+      properties:
+        _id:
+          type: string
+        huespedReservador:
+          type: string
+        alojamiento:
+          type: string
+        cantHuespedes:
+          type: integer
+        fechaInicio:
+          type: string
+          format: date
+        fechaFinal:
+          type: string
+          format: date
+        fechaAlta:
+          type: string
+          format: date-time
+        estado:
+          type: string
+          enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+        precioPorNoche:
+          type: number
+
+    ReservaInput:
+      type: object
+      properties:
+        huespedReservador:
+          type: string
+        alojamiento:
+          type: string
+        cantHuespedes:
+          type: integer
+        fechaInicio:
+          type: string
+          format: date
+        fechaFinal:
+          type: string
+          format: date
+      required: [huespedReservador, alojamiento, cantHuespedes, fechaInicio, fechaFinal]
+
+    ReservaModificacion:
+      type: object
+      properties:
+        reserva:
+          type: string
+        cantHuespedes:
+          type: integer
+        fechaInicio:
+          type: string
+          format: date
+        fechaFinal:
+          type: string
+          format: date
+
+    CambioEstado:
+      type: object
+      properties:
+        estado:
+          type: string
+          enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+        reserva:
+          type: string
+        motivo:
+          type: string
+        usuario:
+          type: string
+      required: [estado, reserva, usuario]
+
+    Notificacion:
+      type: object
+      properties:
+        mensaje:
+          type: string
+        usuario:
+          type: string
+        fechaAlta:
+          type: string
+          format: date-time
+        leida:
+          type: boolean
+        fechaLeida:
+          type: string
+          format: date-time

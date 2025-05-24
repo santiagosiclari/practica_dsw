@@ -11,6 +11,15 @@
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
+<<<<<<< Updated upstream
+=======
+    "lodash-es": "^4.17.21",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.15.0",
+    "node-cron": "^4.0.7",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0",
+>>>>>>> Stashed changes
     "zod": "^3.24.2"
   }
 }
