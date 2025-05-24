@@ -4,7 +4,7 @@ import { Foto } from "./foto.js"
 import { Direccion } from "./direccion.js"
 
 export class Alojamiento{
-    id
+    _id
     anfitrion
     nombre
     descripcion
@@ -17,22 +17,26 @@ export class Alojamiento{
     caracteristicas
     reservas
     fotos
-    constructor(anfitrion, nombre, direccion, id){
-        this.id = id
+    constructor(anfitrion, nombre, direccion){
         this.anfitrion = anfitrion;
         this.nombre = nombre;
         this.precioPorNoche = 0;
         this.moneda = Moneda.DOLAR_USA;
-        this.direccion = direccion;
+        this.direccion = new Direccion(direccion.calle, direccion.altura, direccion.ciudad, direccion.lat,direccion.long);
         this.cantHuespedesMax = 5;
         this.caracteristicas = [];
         this.reservas = [];
         this.fotos = [];
     }
-    setId(idNuevo){this.id = idNuevo}
+    setId(id) {
+        this._id = id;
+    }
+    getId(){
+        return this._id;
+    }
     estasDisponibleEn(rangoDeFechas){
         return this.reservas.every(reserva =>
-            !reserva.rangoFechas.seSuperponeCon(rangoDeFechas)
+            !reserva.seSuperponeCon(rangoDeFechas)
         );
     }
 
@@ -49,6 +53,24 @@ export class Alojamiento{
     }
 
     getNombre(){ return this.nombre; }
-    getId(){return this.id}
     getAnfitrion(){ return this.anfitrion; }
+    getPrecioPorNoche() {
+        return this.precioPorNoche;
+    }
+
+    async agregarReserva(reserva) {
+        if (!this.reservas) {
+            this.reservas = [];
+        }
+
+        // Si la reserva es una instancia de Reserva, guardamos solo su _id
+        // Si la reserva es el id directamente, lo usamos tal cual
+        const reservaId = reserva._id ? reserva._id : reserva;
+        console.log(this.reservas)
+
+        this.reservas.push(reservaId);
+
+        // Guardar los cambios usando Mongoose (this es el documento mongoose)
+        return await this.save();
+    }
 }

@@ -1,47 +1,83 @@
-import { Reserva } from "../domain/reserva.js";
-import remove from "lodash-es/remove.js"
+import {
+  ReservaModel,
+  reservaToDocument,
+  docToReserva,
+} from "../schemas/reservaSchema.js";
 
 export class ReservaRepository {
-    reservas = [];
+  constructor() {
+    this.model = ReservaModel;
+  }
 
-    agregarReserva(reserva) {
-        reserva.id = this.obtenerSiguienteId()
-        this.reservas.push(reserva)
-        return reserva
-    }
+  async save(reserva) {
+    const query = reserva._id
+      ? { _id: reserva._id }
+      : { _id: new this.model()._id };
+    const reservaMongo = await this.model.findOneAndUpdate(
+      query,
+      reservaToDocument(reserva),
+      {
+        new: true,
+        runValidators: true,
+        upsert: true,
+      }
+    );
+    return docToReserva(reservaMongo);
+  }
 
-    findAll() {
-        return this.reservas
-    }
+  async findFechaCoincidente(fechaInicial, fechaFin, alojamientoId) {
+    const coincidencia = await this.model.findOne({
+      alojamiento: alojamientoId,
+      $and: [
+        { fechaInicio: { $lte: fechaFin } }, // Overlap condition
+        { fechaFinal: { $gte: fechaInicial } }, // Overlap condition
+      ],
+    });
+    return coincidencia;
+  }
+  async findReservasProximas(fechaReferencia, dias = 1) {
+    const fechaLimite = new Date(fechaReferencia);
+    fechaLimite.setDate(fechaLimite.getDate() + dias);
 
-    findById(id) {
-        const reserva = this.reservas.find(reserva => reserva.id === id)
-        if(!reserva) {
-            throw new Error("No existe la reserva")
-        }
-        return reserva
-    }
+    const docs = await this.model.find({
+      estado: "CONFIRMADA",
+      fechaInicio: {
+        $gte: fechaReferencia,
+        $lte: fechaLimite,
+      },
+    });
 
-    obtenerReservas(idUsuario) {
-        //const id = Number(idUsuario);
-        const reservas = this.reservas.filter(reserva => reserva.getHuespedId() === idUsuario) // Get huesped Id devuelve string
-        if(reservas.length === 0) {
-            throw new Error("No existen reservas para este usuario")
-        }
-        return reservas
-    }
+    return docs.map(docToReserva);
+  }
+  async findReservasPorFinalizar(fechaReferencia, dias = 1) {
+  const fechaLimite = new Date(fechaReferencia);
+  fechaLimite.setDate(fechaLimite.getDate() + dias);
 
-    guardarReserva(id, reservaActualidada) {
-        remove(this.reservas, r => r.id === id)
-        this.reservas.push(reservaActualidada)
-        return reservaActualidada
-    }
+  const docs = await this.model.find({
+    estado: "CONFIRMADA",
+    fechaFinal: {
+      $gte: fechaReferencia,
+      $lte: fechaLimite,
+    },
+  });
 
-    removerReserva(reserva) {
-        remove(this.reservas, r => r.id === reserva.id)
-    }
+  return docs.map(docToReserva);
+}
+  async findAll() {
+    const reservas = await this.model.find();
+    return reservas.map(docToReserva);
+  }
 
-    obtenerSiguienteId() {
-        return this.reservas.length + 1
+  async findById(id) {
+    const reserva = await this.model.findById(id);
+    return docToReserva(reserva);
+  }
+
+  async obtenerReservas(idUsuario) {
+    const reservas = await this.model.find({ huespedReservador: idUsuario });
+    if (reservas.length === 0) {
+      throw new Error("No existen reservas para este usuario");
     }
+    return reservas.map(docToReserva);
+  }
 }

@@ -5,6 +5,6 @@ export class Ciudad{
     pais
     constructor(nombre, pais){
         this.nombre = nombre;
-        this.pais = new Pais(); //Lo dejamos vacio se define al momento que hagamos la creación como lo parseamos
+        this.pais = new Pais(pais.nombre);
     }
 }

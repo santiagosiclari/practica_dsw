@@ -1,0 +1,83 @@
+import { AppError, ValidationError, NotFoundError, ConflictError, NoPermitoCambioEstadoReservaError } from "../errors/appError.js";
+import { Alojamiento } from "../models/domain/alojamiento.js";
+import { RangoFechas } from "../models/domain/reserva.js";
+import { AlojamientoRepository } from "../models/repositories/alojamientoRepository.js";
+import { WIFI, PISCINA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO } from '../models/domain/caracteristica.js';
+
+
+export class AlojamientoService {
+    constructor(reservaRepository, alojamientoRepository, userRepository) {
+        this.reservaRepository = reservaRepository,
+            this.alojamientoRepository = alojamientoRepository,
+            this.userRepository = userRepository
+    }
+
+    async listarAlojamientos(filters, page, limit) {
+        const parametros = this.fromDto(filters);
+        const alojamientos = await this.alojamientoRepository.buscarConFiltros(parametros, page, limit);
+        const total = alojamientos.total;
+
+        //Filtramos usando la logica de dominio
+        const resultAlojamientos = this.filtrarResultado(parametros, alojamientos)
+
+        if (resultAlojamientos.length === 0) {
+            throw new NotFoundError('No se encontraron alojamientos con estos filtros');
+        }
+        return {
+            total,
+            page,
+            limit,
+            resultAlojamientos
+        };
+    }
+    fromDto(dto) {
+        const fechaInicio = new Date(dto.fechaInicio);
+        const fechaFinal = new Date(dto.fechaFinal);
+
+        return {
+            ciudad: dto.ciudad,
+            pais: dto.pais,
+            precioMin: dto.precioMin,
+            precioMax: dto.precioMax,
+            cantHuespedes: dto.cantHuespedes,
+            caracteristicas: dto.caracteristicas?.length ? this.matchearCaracteristica(dto.caracteristicas) : [],
+            rangoFechas: new RangoFechas(fechaInicio, fechaFinal)
+        };
+    }
+    matchearCaracteristica(caracteristicasDto = []) {
+        return caracteristicasDto.map(caracteristica => {
+            const caracLimpia = caracteristica.trim().toUpperCase()
+            if (
+                caracLimpia === 'WIFI' ||
+                caracLimpia === 'ESTACIONAMIENTO' ||
+                caracLimpia === 'MASCOTAS_PERMITIDAS' ||
+                caracLimpia === 'PISCINA'
+            ) {
+                return caracLimpia; // Retorna el string
+            } else {
+                throw new ValidationError('Característica inválida: ' + caracLimpia);
+            }
+        })
+    }
+    filtrarResultado(parametros, resultados){
+        const alojamientos = resultados.alojamientos
+        //Para utlizar la logica de dominio
+        /* const quiereValidarCant = parametros.cantHuespedes !== undefined;
+        const quiereValidarPrecios = parametros.precioMin !== undefined || modificacion.precioMax !== undefined;
+        const quiereValidarCarac = parametros.caracteristicas !== undefined;
+
+        const precioValido = resultados.filter(aloj =>
+            aloj.tuPrecioEstaDentroDe(parametros.precioMin, parametros.precioMax));
+        console.log(precioValido)
+
+        const conCapacidad = precioValido.filter(aloj =>
+            aloj.puedenAlojarse(parametros.cantHuespedes));
+        console.log(conCapacidad)
+
+        const conCaracteristicas = conCapacidad.filter(aloj =>
+            parametros.caracteristicas.every(carac => aloj.tenesCaracteristica(carac)));
+        console.log(conCaracteristicas) */
+        const alojDisponibles = alojamientos.filter(alojamiento => alojamiento.estasDisponibleEn(parametros.rangoFechas));
+        return alojDisponibles
+    }
+}
