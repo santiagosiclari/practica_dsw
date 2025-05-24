@@ -9,7 +9,7 @@ export class ReservaController {
         try {
             const filters = {
                 huespedReservador : req.body.huespedReservador,
-                cantHuespedes : req.body.cantHuespedes,
+                cantHuespedes : req.bodycambiarEstados.cantHuespedes,
                 alojamiento : req.body.alojamiento,
                 fechaInicio : req.body.fechaInicio,
                 fechaFinal : req.body.fechaFinal
@@ -21,7 +21,7 @@ export class ReservaController {
         }
     }
 
-    async cancelarReserva(req, res, next) {
+    async cambiarEstados(req, res, next) {
         try{
             const filters = {
                 estado : req.body.estado,
@@ -29,7 +29,7 @@ export class ReservaController {
                 motivo : req.body.motivo,
                 usuario : req.body.usuario
             }
-            const reserva = await this.reservaService.cancelarReserva(filters);
+            const reserva = await this.reservaService.cambiarEstados(filters);
             res.status(200).json(this.toDto(reserva))
         }catch(error){
             next(error);

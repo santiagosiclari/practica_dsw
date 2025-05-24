@@ -1,50 +1,83 @@
-import { ReservaModel, reservaToDocument, docToReserva } from "../schemas/reservaSchema.js";
+import {
+  ReservaModel,
+  reservaToDocument,
+  docToReserva,
+} from "../schemas/reservaSchema.js";
 
 export class ReservaRepository {
-    constructor() {
-        this.model = ReservaModel;
-    }
+  constructor() {
+    this.model = ReservaModel;
+  }
 
-    async save(reserva) {
-        const query = reserva._id ? { _id: reserva._id } : { _id: new this.model()._id };
-        const reservaMongo = await this.model.findOneAndUpdate(
-            query,
-            reservaToDocument(reserva),
-            {
-                new: true,
-                runValidators: true,
-                upsert: true
-            }
-        );
-        return docToReserva(reservaMongo);
-    }
+  async save(reserva) {
+    const query = reserva._id
+      ? { _id: reserva._id }
+      : { _id: new this.model()._id };
+    const reservaMongo = await this.model.findOneAndUpdate(
+      query,
+      reservaToDocument(reserva),
+      {
+        new: true,
+        runValidators: true,
+        upsert: true,
+      }
+    );
+    return docToReserva(reservaMongo);
+  }
 
-    async findFechaCoincidente(fechaInicial, fechaFin, alojamientoId){
-        const coincidencia = await this.model.findOne({
-            alojamiento: alojamientoId,
-            $and: [
-                { fechaInicio: { $lte: fechaFin } }, // Overlap condition
-                { fechaFinal: { $gte: fechaInicial } } // Overlap condition
-            ]
-        });
-        return coincidencia;
-    }
+  async findFechaCoincidente(fechaInicial, fechaFin, alojamientoId) {
+    const coincidencia = await this.model.findOne({
+      alojamiento: alojamientoId,
+      $and: [
+        { fechaInicio: { $lte: fechaFin } }, // Overlap condition
+        { fechaFinal: { $gte: fechaInicial } }, // Overlap condition
+      ],
+    });
+    return coincidencia;
+  }
+  async findReservasProximas(fechaReferencia, dias = 1) {
+    const fechaLimite = new Date(fechaReferencia);
+    fechaLimite.setDate(fechaLimite.getDate() + dias);
 
-    async findAll() {
-        const reservas = await this.model.find();
-        return reservas.map(docToReserva);
-    }
+    const docs = await this.model.find({
+      estado: "CONFIRMADA",
+      fechaInicio: {
+        $gte: fechaReferencia,
+        $lte: fechaLimite,
+      },
+    });
 
-    async findById(id) {
-        const reserva = await this.model.findById(id);
-        return docToReserva(reserva);
-    }
+    return docs.map(docToReserva);
+  }
+  async findReservasPorFinalizar(fechaReferencia, dias = 1) {
+  const fechaLimite = new Date(fechaReferencia);
+  fechaLimite.setDate(fechaLimite.getDate() + dias);
 
-    async obtenerReservas(idUsuario) {
-         const reservas = await this.model.find({ huespedReservador: idUsuario })
-         if(reservas.length === 0) {
-             throw new Error("No existen reservas para este usuario")
-         }
-         return reservas.map(docToReserva);
-     }
+  const docs = await this.model.find({
+    estado: "CONFIRMADA",
+    fechaFinal: {
+      $gte: fechaReferencia,
+      $lte: fechaLimite,
+    },
+  });
+
+  return docs.map(docToReserva);
+}
+  async findAll() {
+    const reservas = await this.model.find();
+    return reservas.map(docToReserva);
+  }
+
+  async findById(id) {
+    const reserva = await this.model.findById(id);
+    return docToReserva(reserva);
+  }
+
+  async obtenerReservas(idUsuario) {
+    const reservas = await this.model.find({ huespedReservador: idUsuario });
+    if (reservas.length === 0) {
+      throw new Error("No existen reservas para este usuario");
+    }
+    return reservas.map(docToReserva);
+  }
 }

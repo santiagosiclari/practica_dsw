@@ -19,7 +19,7 @@ export function registerReservaRoutes(app, getController) {
     );
 
     app.post("/reservas/:id/cambiosDeEstado", (req, res, next) =>
-        getController(ReservaController).cancelarReserva(req, res, next)
+        getController(ReservaController).cambiarEstados(req, res, next)
     );
 
     app.patch("/reservas/:id", (req, res, next) =>
