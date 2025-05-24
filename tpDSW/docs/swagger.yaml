@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  title: API de Reservas, Notificaciones y Alojamientos
+  version: 1.0.0
+  description: Gestión de alojamientos, reservas y notificaciones
+
+servers:
+  - url: http://localhost:3000
+
+tags:
+  - name: Reservas
+  - name: Notificaciones
+  - name: Alojamientos
+
+paths:
+  /alojamientos:
+    get:
+      tags: [Alojamientos]
+      summary: Listar alojamientos disponibles
+      description: Retorna una lista de alojamientos filtrados por ubicación, fechas, precio, características, etc.
+      parameters:
+        - name: ciudad
+          in: query
+          schema:
+            type: string
+        - name: pais
+          in: query
+          schema:
+            type: string
+        - name: lat
+          in: query
+          schema:
+            type: string
+        - name: long
+          in: query
+          schema:
+            type: string
+        - name: precioMin
+          in: query
+          schema:
+            type: number
+        - name: precioMax
+          in: query
+          schema:
+            type: number
+        - name: cantHuespedes
+          in: query
+          schema:
+            type: integer
+        - name: caracteristicas
+          in: query
+          schema:
+            type: string
+          description: Características separadas por coma. Ej: WIFI,PISCINA
+        - name: fechaInicio
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: fechaFinal
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          schema:
+            type: integer
+          default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          default: 10
+      responses:
+        200:
+          description: Lista de alojamientos con paginación
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                  limit:
+                    type: integer
+                  total:
+                    type: integer
+                  alojamientos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Alojamiento'
+
+components:
+  schemas:
+    Alojamiento:
+      type: object
+      properties:
+        _id:
+          type: string
+        anfitrion:
+          type: string
+        nombre:
+          type: string
+        descripcion:
+          type: string
+        precioPorNoche:
+          type: number
+        direccion:
+          $ref: '#/components/schemas/Direccion'
+        caracteristicas:
+          type: array
+          items:
+            type: string
+            enum: [WIFI, PISCINA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO]
+        fotos:
+          type: array
+          items:
+            type: string
+        horarioCheckIn:
+          type: string
+          format: date-time
+        horarioCheckOut:
+          type: string
+          format: date-time
+
+    Direccion:
+      type: object
+      properties:
+        calle:
+          type: string
+        altura:
+          type: string
+        ciudad:
+          type: object
+          properties:
+            nombre:
+              type: string
+            pais:
+              type: object
+              properties:
+                nombre:
+                  type: string
+        lat:
+          type: string
+        long:
+          type: string

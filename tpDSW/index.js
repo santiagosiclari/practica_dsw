@@ -17,6 +17,9 @@ import { AlojamientoService } from "./airbnb/services/alojamientoService.js";
 import { ReservaController } from "./airbnb/controllers/reservaController.js";
 import { AlojamientoController } from "./airbnb/controllers/alojamientoController.js";
 
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+
 const app = express();
 const port = process.env.port;
 const server = new Server(app, port);
@@ -42,6 +45,10 @@ const alojamientoController = new AlojamientoController(alojamientoService);
 // Registro de controllers en el server
 server.setController(ReservaController, reservaController);
 server.setController(AlojamientoController, alojamientoController);
+
+//Swagger
+const swaggerDocument = YAML.load('./docs/swagger.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Lanzamiento
 server.configureRoutes();
