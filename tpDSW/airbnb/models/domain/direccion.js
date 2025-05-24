@@ -10,7 +10,7 @@ export class Direccion{
     constructor(calle, altura, ciudad, lat, long){
         this.calle = calle;
         this.altura = altura;
-        this.ciudad = new Ciudad()//Lo dejamos vacio se define al momento que hagamos la creación como lo parseamos;
+        this.ciudad = new Ciudad(ciudad.nombre, ciudad.pais)
         this.lat = lat;
         this.long = long;
     }
