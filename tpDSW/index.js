@@ -40,8 +40,8 @@ const alojamientoRepo = new AlojamientoRepository();
 const notificacionesRepo = new NotificacionRepository();
 
 // Services
-const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo);
 const notificacionService = new NotificacionService(notificacionesRepo, userRepo);
+const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo, notificacionService);
 const alojamientoService = new AlojamientoService(reservaRepo, alojamientoRepo, userRepo);
 
 // Cron-Jobs

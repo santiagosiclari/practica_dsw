@@ -22,10 +22,11 @@ import { FactoryNotificacion } from "../models/domain/notificacion.js";
 import { iniciarTareaChecks } from "../tasks/notificacionTasks.js";
 
 export class ReservaService {
-  constructor(reservaRepository, alojamientoRepository, userRepository) {
+  constructor(reservaRepository, alojamientoRepository, userRepository, notificacionService) {
     this.reservaRepository = reservaRepository;
     this.alojamientoRepository = alojamientoRepository;
     this.userRepository = userRepository;
+    this.notificacionService = notificacionService;
     this.factoryNotificacion = new FactoryNotificacion(); // ¡IMPORTANTE!: crear una instancia
   }
 
@@ -51,7 +52,6 @@ export class ReservaService {
     );
     const reservaGuardada = await this.reservaRepository.save(nueva);
 
-    //TODO: hacerlo en un alojamiento service
     alojamiento.agregarReserva(reservaGuardada);
     await this.alojamientoRepository.save(alojamiento);
     //TODO CREAR NOTIFICACION
@@ -104,7 +104,6 @@ export class ReservaService {
     reserva.actualizarEstado(cambio.estado);
 
     const reservaGuardada = await this.reservaRepository.save(reserva);
-    // TODO: const cambioGuardado = await this.cambioEstadoRepository.save(cambio)
 
     let notificacion;
 

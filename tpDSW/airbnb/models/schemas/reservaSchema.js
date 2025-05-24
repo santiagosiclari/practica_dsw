@@ -57,7 +57,7 @@ export function reservaToDocument(reserva) {
     fechaInicio: reserva.getRangoFechaInicio(),
     fechaFinal: reserva.getRangoFechaFinal(),
     fechaAlta: reserva.fechaAlta,
-    estado: reserva.estado,
+    estado: reserva.estado.nombre,
     precioPorNoche: reserva.precioPorNoche
   };
 }

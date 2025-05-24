@@ -1,3 +1,5 @@
+import { Notificacion } from "../models/domain/notificacion.js";
+
 export class NotificacionService {
   constructor(notificacionRepository, userRepository) {
     this.notificacionRepository = notificacionRepository;

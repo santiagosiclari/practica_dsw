@@ -9,7 +9,7 @@ export class ReservaController {
         try {
             const filters = {
                 huespedReservador : req.body.huespedReservador,
-                cantHuespedes : req.bodycambiarEstados.cantHuespedes,
+                cantHuespedes : req.body.cantHuespedes,
                 alojamiento : req.body.alojamiento,
                 fechaInicio : req.body.fechaInicio,
                 fechaFinal : req.body.fechaFinal

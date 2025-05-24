@@ -1,3 +1,5 @@
+import { Reserva } from "./reserva.js";
+
 export class Notificacion {
   mensaje;
   usuario;
@@ -6,13 +8,13 @@ export class Notificacion {
   constructor(mensaje, usuario) {
     this.mensaje = mensaje;
     this.usuario = usuario;
-    this.fechaAlta = new Date.now();
+    this.fechaAlta = Date.now();
     this.leida = false;
     this.fechaLeida = null;
   }
   marcarComoLeida() {
     this.leida = true;
-    this.fechaLeida = new Date.now();
+    this.fechaLeida = Date.now();
   }
 }
 export class FactoryNotificacion {
@@ -63,7 +65,7 @@ export class FactoryNotificacion {
     return notificacion;
   }
   crearSegunCancelacion(reserva, usuarioCancelador, motivoCancelacion = null) {
-    let mensaje = `Tu reserva sobre el alojamiento "${reserva.getAlojamientoNombre()}" ha sido cancelada.`;
+    let mensaje = `Tu reserva sobre el alojamiento "${reserva.alojamiento.nombre}" ha sido cancelada.`;
 
     if (motivoCancelacion) {
       mensaje += ` Motivo: "${motivoCancelacion}".`;
@@ -71,7 +73,7 @@ export class FactoryNotificacion {
 
     return new Notificacion(
       mensaje,
-        reserva.getAnfitrionAlojamiento()
+        reserva.alojamiento.anfitrion
     );
   }
 }
