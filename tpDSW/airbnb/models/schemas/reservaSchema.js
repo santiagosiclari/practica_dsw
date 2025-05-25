@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Reserva , PENDIENTE, CONFIRMADA, CANCELADA, RangoFechas } from '../domain/reserva.js';
+import {Reserva, PENDIENTE, CONFIRMADA, CANCELADA, RangoFechas, EstadoReserva} from '../domain/reserva.js';
 
 const reservaSchema = new mongoose.Schema({
     huespedReservador: {
@@ -65,9 +65,9 @@ export function reservaToDocument(reserva) {
 // Reserva from Doc
 function estadoDesdeNombre(nombre) {
   switch (nombre) {
-    case 'PENDIENTE': return PENDIENTE;
-    case 'CONFIRMADA': return CONFIRMADA;
-    case 'CANCELADA': return CANCELADA;
+    case 'PENDIENTE': return EstadoReserva.PENDIENTE;
+    case 'CONFIRMADA': return EstadoReserva.CONFIRMADA;
+    case 'CANCELADA': return EstadoReserva.CANCELADA;
     default: throw new Error('Estado desconocido: ' + nombre);
   }
 }
@@ -75,7 +75,7 @@ function estadoDesdeNombre(nombre) {
 export function docToReserva(doc) {
   const rango = new RangoFechas(doc.fechaInicio, doc.fechaFinal);
   const reserva = new Reserva(doc.huespedReservador, doc.cantHuespedes, doc.alojamiento, rango, doc.fechaAlta);
-  reserva.estado = estadoDesdeNombre(doc.estado);
+  reserva.estado = doc.estado;
   reserva.precioPorNoche = doc.precioPorNoche;
   reserva.setId(doc._id);
 

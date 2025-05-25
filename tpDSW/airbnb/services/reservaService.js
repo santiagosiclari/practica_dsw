@@ -4,7 +4,7 @@ import {
   CambioEstadoReserva,
   CANCELADA,
   CONFIRMADA,
-  PENDIENTE,
+  PENDIENTE, EstadoReserva,
 } from "../models/domain/reserva.js";
 import {
   AppError,
@@ -50,6 +50,7 @@ export class ReservaService {
       alojamiento,
       rangoFechas
     );
+    new FactoryNotificacion().crearSegunReserva(nueva)
     const reservaGuardada = await this.reservaRepository.save(nueva);
 
     alojamiento.agregarReserva(reservaGuardada);
@@ -68,12 +69,11 @@ export class ReservaService {
       throw new ValidationError("Faltan campos requeridos o son inválidos");
     }
     switch (cambioEstado.estado) {
-      case "CANCELADA":
+      case 'CANCELADA':
         return await this.cancelarReserva(cambioEstado);
-
-      case "CONFIRMADA":
+      case 'CONFIRMADA':
         return await this.confirmarReserva(cambioEstado);
-      case "RECHAZADA":
+      case 'RECHAZADA':
         return await this.rechazarReserva(cambioEstado);
 
       default:
@@ -83,14 +83,14 @@ export class ReservaService {
     }
   }
   async cancelarReserva(cambioEstado) {
-    return this._procesarCambioEstado(cambioEstado, "CANCELADA");
+    return this._procesarCambioEstado(cambioEstado, EstadoReserva.CANCELADA);
   }
 
   async confirmarReserva(cambioEstado) {
-    return this._procesarCambioEstado(cambioEstado, "CONFIRMADA");
+    return this._procesarCambioEstado(cambioEstado, EstadoReserva.CONFIRMADA);
   }
   async rechazarReserva(cambioEstado) {
-    return this._procesarCambioEstado(cambioEstado, "RECHAZADA");
+    return this._procesarCambioEstado(cambioEstado, EstadoReserva.RECHAZADA);
   }
 
   async _procesarCambioEstado(cambioEstado, tipo) {
@@ -105,7 +105,7 @@ export class ReservaService {
 
     const reservaGuardada = await this.reservaRepository.save(reserva);
 
-    let notificacion;
+    /*let notificacion;
 
     switch (tipo) {
       case "CONFIRMADA":
@@ -127,13 +127,12 @@ export class ReservaService {
       default:
         break;
     }
-
     if (notificacion) {
       await this.notificacionService.crearNotificacion({
         mensaje: notificacion.mensaje,
         usuario: notificacion.usuario,
       });
-    }
+    }*/
 
     return reservaGuardada;
   }
@@ -142,7 +141,7 @@ export class ReservaService {
     const fechaActual = new Date();
 
     if (reserva.getRangoFechaInicio() <= fechaActual) {
-      if (tipo === "CANCELADA") {
+      if (tipo === EstadoReserva.CANCELADA) {
         throw new NoPermitoCambioEstadoReservaError(
           "La reserva superó la fecha límite para ser cancelada"
         );
@@ -259,7 +258,7 @@ export class ReservaService {
       dto.reserva
     );
     return {
-      estado: this.matchearEstado(dto.estado),
+      estado: dto.estado,
       reserva: reservaEncontrada,
       motivo: dto.motivo,
       usuario: usuarioEncontrado,

@@ -19,9 +19,9 @@ export class Notificacion {
 }
 export class FactoryNotificacion {
   crearSegunReserva(reserva) {
-    mensaje =
+    const mensaje =
       "El cliente " +
-      reserva.getHuespedReservadorNombre() +
+      reserva.getHuespedNombre() +
       " realizó una reserva desde el día " +
       reserva.getRangoFechaInicio().toDateString() +
       " hasta el día " +
@@ -35,6 +35,7 @@ export class FactoryNotificacion {
       mensaje,
       reserva.getAnfitrionAlojamiento()
     );
+    console.log(notificacion);
     return notificacion;
   }
 

@@ -58,7 +58,7 @@ export class Reserva{
         return this.rangoFechas.getFechaFinFormateada();
     }*/
 
-    getHuespedReservadorNombre(){return this.huespedReservador.getNombre()}
+    getHuespedNombre(){return this.huespedReservador.getNombre()}
     getHuespedId(){return Number(this.huespedReservador.getId())}
 
     calcularDias(){

@@ -1,4 +1,5 @@
 import { Reserva, RangoFechas } from "../models/domain/reserva.js";
+import {FactoryNotificacion} from "../models/domain/notificacion.js";
 
 export class ReservaController {
     constructor(reservaService) {
@@ -15,6 +16,7 @@ export class ReservaController {
                 fechaFinal : req.body.fechaFinal
             }
             const reserva = await this.reservaService.crearReserva(filters)
+            console.log(reserva);
             res.status(201).json(this.toDto(reserva))
         } catch(error) {
             next(error);
@@ -24,7 +26,7 @@ export class ReservaController {
     async cambiarEstados(req, res, next) {
         try{
             const filters = {
-                estado : req.body.estado,
+                estado : req.body.estado, //STRING
                 reserva : req.body.reserva,
                 motivo : req.body.motivo,
                 usuario : req.body.usuario
