@@ -22,12 +22,13 @@ import { FactoryNotificacion } from "../models/domain/notificacion.js";
 import { iniciarTareaChecks } from "../tasks/notificacionTasks.js";
 
 export class ReservaService {
-  constructor(reservaRepository, alojamientoRepository, userRepository, notificacionService) {
+  constructor(reservaRepository, alojamientoRepository, userRepository, notificacionService, notificacionRepository, factoryNotificacion) {
     this.reservaRepository = reservaRepository;
     this.alojamientoRepository = alojamientoRepository;
     this.userRepository = userRepository;
+    this.notificacionRepository = notificacionRepository;
     this.notificacionService = notificacionService;
-    this.factoryNotificacion = new FactoryNotificacion(); // ¡IMPORTANTE!: crear una instancia
+    this.factoryNotificacion = factoryNotificacion; // ¡IMPORTANTE!: crear una instancia
   }
 
 
@@ -50,12 +51,12 @@ export class ReservaService {
       alojamiento,
       rangoFechas
     );
-    new FactoryNotificacion().crearSegunReserva(nueva)
+    const notificacion = this.factoryNotificacion.crearSegunReserva(nueva)
     const reservaGuardada = await this.reservaRepository.save(nueva);
-
     alojamiento.agregarReserva(reservaGuardada);
+
+    this.notificacionService.crearNotificacion(notificacion)
     await this.alojamientoRepository.save(alojamiento);
-    //TODO CREAR NOTIFICACION
     return reservaGuardada;
   }
 
@@ -68,72 +69,32 @@ export class ReservaService {
     ) {
       throw new ValidationError("Faltan campos requeridos o son inválidos");
     }
-    switch (cambioEstado.estado) {
-      case 'CANCELADA':
-        return await this.cancelarReserva(cambioEstado);
-      case 'CONFIRMADA':
-        return await this.confirmarReserva(cambioEstado);
-      case 'RECHAZADA':
-        return await this.rechazarReserva(cambioEstado);
-
-      default:
-        throw new ValidationError(
-          `Estado "${cambioEstado.estado}" no es válido o no está soportado.`
-        );
-    }
-  }
-  async cancelarReserva(cambioEstado) {
-    return this._procesarCambioEstado(cambioEstado, EstadoReserva.CANCELADA);
+    return await this._procesarCambioEstado(cambioEstado);
   }
 
-  async confirmarReserva(cambioEstado) {
-    return this._procesarCambioEstado(cambioEstado, EstadoReserva.CONFIRMADA);
-  }
-  async rechazarReserva(cambioEstado) {
-    return this._procesarCambioEstado(cambioEstado, EstadoReserva.RECHAZADA);
-  }
-
-  async _procesarCambioEstado(cambioEstado, tipo) {
+  async _procesarCambioEstado(cambioEstado) {
     const { estado, reserva, motivo, usuario } = await this.fromDtoCambio(
       cambioEstado
     );
-
-    this._validarCambioEstado(tipo, reserva);
+    this._validarCambioEstado(estado, reserva);
 
     const cambio = new CambioEstadoReserva(estado, reserva, motivo, usuario);
     reserva.actualizarEstado(cambio.estado);
-
-    const reservaGuardada = await this.reservaRepository.save(reserva);
-
-    /*let notificacion;
-
-    switch (tipo) {
-      case "CONFIRMADA":
-        notificacion = this.factoryNotificacion.crearSegunAceptar(reserva);
+    const reservaGuardada = await this.reservaRepository.save(cambio.reserva);
+    switch (estado) {
+      case 'CONFIRMADA':
+        this.notificacionService.crearNotificacion(this.factoryNotificacion.crearSegunAceptar(reserva))
         break;
-      case "CANCELADA":
-        notificacion = this.factoryNotificacion.crearSegunCancelacion(
-          reserva,
-          usuario,
-          motivo
-        );
-        break;
-      case "RECHAZADA":
-        notificacion = this.factoryNotificacion.crearSegunRechazo(
-          reserva,
-          motivo
-        );
+      case 'CANCELADA':
+        this.notificacionService.crearNotificacion(this.factoryNotificacion.crearSegunCancelacion(
+            reserva,
+            usuario,
+            motivo
+        ));
         break;
       default:
         break;
     }
-    if (notificacion) {
-      await this.notificacionService.crearNotificacion({
-        mensaje: notificacion.mensaje,
-        usuario: notificacion.usuario,
-      });
-    }*/
-
     return reservaGuardada;
   }
 

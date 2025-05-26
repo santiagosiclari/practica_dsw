@@ -6,9 +6,8 @@ export class NotificacionService {
     this.userRepository = userRepository;
   }
 
-  async crearNotificacion({ mensaje, usuario }) {
-    const noti = new Notificacion(mensaje, usuario);
-    return await this.notificacionRepository.save(noti);
+  async crearNotificacion(notificacion) {
+    return await this.notificacionRepository.save(notificacion);
   }
 
  async enviarNotificacionCheck() {
@@ -36,21 +35,18 @@ async enviarNotificacionCheckout() {
   }
 }
   async listarNotificaciones(filters) {
-    const notificaciones = await this.notificacionRepository.findAll(filters);
-    return notificaciones;
+    return await this.notificacionRepository.findAll(filters);
   }
 
-  async marcarComoLeida({ notificacion, leida }) {
+  async marcarComoLeida(parametros) {
     const update = {
-      leida: leida,
+      leida: parametros.leida,
     };
-    //  asignamos fechaLeida
-
     update.fechaLeida = new Date();
-
     return await this.notificacionRepository.actualizarEstado(
-      notificacion,
-      update
+        parametros.notificacion,
+        parametros.usuario,
+        update
     );
   }
 }

@@ -24,6 +24,7 @@ import { iniciarTareaChecks } from "./airbnb/tasks/notificacionTasks.js";
 
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
+import {FactoryNotificacion} from "./airbnb/models/domain/notificacion.js";
 
 const app = express();
 const port = process.env.port;
@@ -39,9 +40,11 @@ const userRepo = new UserRepository();
 const alojamientoRepo = new AlojamientoRepository();
 const notificacionesRepo = new NotificacionRepository();
 
+const factoryNotificacion = new FactoryNotificacion();
+
 // Services
 const notificacionService = new NotificacionService(notificacionesRepo, userRepo);
-const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo, notificacionService);
+const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo, notificacionService, notificacionesRepo, factoryNotificacion);
 const alojamientoService = new AlojamientoService(reservaRepo, alojamientoRepo, userRepo);
 
 // Cron-Jobs

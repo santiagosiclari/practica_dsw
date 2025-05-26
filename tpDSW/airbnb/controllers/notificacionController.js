@@ -6,8 +6,8 @@ export class NotificacionController {
     async listarNotificaciones(req, res, next) {
         try{
             const filters = {
-                usuarioId : req.params.id,
-                leida: req.query.leida
+                usuario : req.params.idUser,
+                leida: req.body.leida
             }
             const notificaciones = await this.notificacionService.listarNotificaciones(filters);
             res.status(200).json(this.toDtos(notificaciones))
@@ -18,12 +18,12 @@ export class NotificacionController {
 
     async marcarComoLeida(req, res, next) {
         try{
-            const filters = {
-                notificacion : req.params.idNoti, //no hace falta en el body si tenemos en el param
+            const parametros = {
+                usuario : req.params.idUser,
+                notificacion : req.params.idNoti,
                 leida : req.body.leida
             }
-            
-            const notiModificada =  await this.notificacionService.marcarComoLeida(filters);
+            const notiModificada =  await this.notificacionService.marcarComoLeida(parametros);
             res.status(200).json(this.toDto(notiModificada));
         }catch(error){
             next(error);
@@ -32,11 +32,12 @@ export class NotificacionController {
 
     toDto(notificacion) {
         return {
-        mensaje: notificacion.mensaje,
-        usuario: notificacion.usuario._id,
-        fechaAlta: notificacion.fechaAlta,
-        leida: notificacion.leida,
-        fechaLeida: notificacion.fechaLeida
+            _id: notificacion._id,
+            mensaje: notificacion.mensaje,
+            usuario: notificacion.usuario,
+            fechaAlta: notificacion.fechaAlta,
+            leida: notificacion.leida,
+            fechaLeida: notificacion.fechaLeida
         };
     }
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import {Reserva, PENDIENTE, CONFIRMADA, CANCELADA, RangoFechas, EstadoReserva} from '../domain/reserva.js';
-
+import {docToUsuario} from './usuarioSchema.js';
 const reservaSchema = new mongoose.Schema({
     huespedReservador: {
         type: mongoose.Schema.Types.ObjectId,
@@ -43,7 +43,7 @@ const reservaSchema = new mongoose.Schema({
     collection: 'reservas'
 });
 
-// Vincular la clase Producto con el schema
+// Vincular la clase Reserva con el schema
 reservaSchema.loadClass(Reserva);
 
 export const ReservaModel = mongoose.model('Reserva', reservaSchema);
@@ -74,7 +74,10 @@ function estadoDesdeNombre(nombre) {
 
 export function docToReserva(doc) {
   const rango = new RangoFechas(doc.fechaInicio, doc.fechaFinal);
-  const reserva = new Reserva(doc.huespedReservador, doc.cantHuespedes, doc.alojamiento, rango, doc.fechaAlta);
+  const huesped = typeof doc.huespedReservador.getNombre === 'function'
+      ? doc.huespedReservador
+      : docToUsuario(doc.huespedReservador);
+  const reserva = new Reserva(huesped, doc.cantHuespedes, doc.alojamiento, rango, doc.fechaAlta);
   reserva.estado = doc.estado;
   reserva.precioPorNoche = doc.precioPorNoche;
   reserva.setId(doc._id);

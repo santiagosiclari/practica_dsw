@@ -1,4 +1,4 @@
-import { UsuarioModel } from "../schemas/usuarioSchema.js";
+import { UsuarioModel, docToUsuario } from "../schemas/usuarioSchema.js";
 
 export class UserRepository {
     
@@ -25,7 +25,8 @@ export class UserRepository {
     }
 
     async findById(id) {
-        return await this.model.findById(id);
+        const userDoc = await this.model.findById(id);
+        return docToUsuario(userDoc);
     }
 
     async deleteById(id) {

@@ -59,14 +59,11 @@ export class Reserva{
     }*/
 
     getHuespedNombre(){return this.huespedReservador.getNombre()}
-    getHuespedId(){return Number(this.huespedReservador.getId())}
+    getHuespedId(){return this.huespedReservador.getId()}
 
     calcularDias(){
         const dias = this.rangoFechas.fechaFin - this.rangoFechas.fechaInicio
         return Math.ceil(dias / (1000 * 60 * 60 * 24));
-    }
-    mostrarRangoReserva() {
-        return this.rangoFechas.rangoToString()
     }
     setRangoFecha(nuevoRango){this.rangoFechas = nuevoRango}
     setCantHuespedes(nuevaCant){this.cantHuespedes = nuevaCant}

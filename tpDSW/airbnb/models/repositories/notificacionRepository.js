@@ -1,5 +1,5 @@
-import { NotificacionModel } from "../schemas/notificacionSchema.js";
-
+import {docToNotificacion, NotificacionModel, notificacionToDocument} from "../schemas/notificacionSchema.js";
+import { ValidationError } from "../../errors/appError.js";
 export class NotificacionRepository {
     constructor() {
         this.model = NotificacionModel;
@@ -9,36 +9,35 @@ export class NotificacionRepository {
         const query = notificacion._id ? { _id: notificacion._id } : { _id: new this.model()._id };
         const notiMongo = await this.model.findOneAndUpdate(
             query,
-            notificacion,
+            notificacionToDocument(notificacion),
             {
                 new: true,
                 runValidators: true,
                 upsert: true
             }
         );
-        return notiMongo;
+        return docToNotificacion(notiMongo);
     }
 
     async findAll(filters = {}) {
-        const query = {};
-
-        if (filters.usuarioId) {
-            query.usuario = filters.usuarioId;
+        const notificaciones = await this.model.find({
+            usuario: filters.usuario,
+            leida: filters.leida});
+        if(notificaciones.length === 0){
+            throw new ValidationError("No se encontraron notificaciones")
         }
-
-      if (filters.leida !== undefined) {
-    query.leida = filters.leida === 'true';  // convierte string a boolean
-}
-
-        return await this.model.find(query);
+        return notificaciones.map(docToNotificacion);
     }
 
-    async actualizarEstado(idNotificacion, camposActualizar) {
-    const notiModificada = await this.model.findByIdAndUpdate(
-        idNotificacion,
-        { $set: camposActualizar },
+    async actualizarEstado(idNotificacion, idUser, camposActualizar) {
+        const notiModificada = await this.model.findOneAndUpdate(
+        {_id: idNotificacion, usuario: idUser},
+        { $set: camposActualizar},
         { new: true, runValidators: true }
     );
-    return notiModificada;
+        if (!notiModificada) {
+            throw new ValidationError("No se encontro la notificacion o el usuario es incorrecto")
+        }
+        return notiModificada;
 }
 }

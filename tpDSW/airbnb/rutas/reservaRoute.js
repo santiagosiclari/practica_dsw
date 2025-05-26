@@ -14,7 +14,7 @@ export function registerReservaRoutes(app, getController) {
         getController(ReservaController).buscarReserva(req, res, next) //Hallar una reserva determinada
     );
 
-    app.get("/reservas/usuario/:id", (req, res, next) =>
+    app.get("/usuario/:id/reservas", (req, res, next) =>
         getController(ReservaController).listarReservasUsuario(req, res, next)
     );
 

@@ -6,13 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="9dd78ad2-21bb-4e46-bd69-b5a974a33481" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/controllers/notificacionController.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/controllers/notificacionController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/controllers/reservaController.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/controllers/reservaController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/notificacion.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/notificacion.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/reserva.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/reserva.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/usuario.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/usuario.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/notificacionRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/notificacionRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/reservaRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/reservaRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/userRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/userRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/alojamientoSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/alojamientoSchema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/notificacionSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/notificacionSchema.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/reservaSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/reservaSchema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/usuarioSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/usuarioSchema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/rutas/reservaRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/rutas/reservaRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/services/notificacionService.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/services/notificacionService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/services/reservaService.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/services/reservaService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +165,9 @@
       <workItem from="1747794130797" duration="476000" />
       <workItem from="1747849166298" duration="2133000" />
       <workItem from="1748133911396" duration="1089000" />
-      <workItem from="1748181537623" duration="3858000" />
+      <workItem from="1748181537623" duration="3956000" />
+      <workItem from="1748201931811" duration="1584000" />
+      <workItem from="1748214477255" duration="10103000" />
     </task>
     <servers />
   </component>

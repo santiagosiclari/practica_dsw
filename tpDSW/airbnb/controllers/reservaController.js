@@ -16,7 +16,6 @@ export class ReservaController {
                 fechaFinal : req.body.fechaFinal
             }
             const reserva = await this.reservaService.crearReserva(filters)
-            console.log(reserva);
             res.status(201).json(this.toDto(reserva))
         } catch(error) {
             next(error);
