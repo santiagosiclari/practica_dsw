@@ -1,3 +1,5 @@
+import { ValidationError } from "../errors/appError.js";
+
 export class NotificacionController {
     constructor(notificacionService) {
         this.notificacionService = notificacionService;
@@ -23,11 +25,17 @@ export class NotificacionController {
                 notificacion : req.params.idNoti,
                 leida : req.body.leida
             }
-            const notiModificada =  await this.notificacionService.marcarComoLeida(parametros);
+            const notiModificada =  await this.notificacionService.marcarComoLeida(this.validar(parametros));
             res.status(200).json(this.toDto(notiModificada));
         }catch(error){
             next(error);
         }
+    }
+    validar(parametros){
+        if(!parametros.usuario || !parametros.notificacion || !parametros.leida){
+            throw new ValidationError("Datos de validación inválidos")
+        }
+        return parametros;
     }
 
     toDto(notificacion) {

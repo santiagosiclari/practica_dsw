@@ -4,7 +4,7 @@ import {
   CambioEstadoReserva,
   CANCELADA,
   CONFIRMADA,
-  PENDIENTE, EstadoReserva,
+  PENDIENTE, RECHAZADA, EstadoReserva
 } from "../models/domain/reserva.js";
 import {
   AppError,
@@ -32,17 +32,8 @@ export class ReservaService {
   }
 
 
-  async crearReserva(reserva) {
-    if (
-      !reserva.huespedReservador ||
-      typeof reserva.cantHuespedes !== "number" ||
-      !reserva.alojamiento ||
-      !reserva.fechaInicio ||
-      !reserva.fechaFinal
-    ) {
-      throw new ValidationError("Faltan campos requeridos o son inválidos");
-    }
-    const { huespedReservador, cantHuespedes, alojamiento, rangoFechas } =
+  async crearReserva(reserva, rangoFechas) {
+    const { huespedReservador, cantHuespedes, alojamiento } =
       await this.fromDto(reserva);
 
     const nueva = new Reserva(
@@ -51,50 +42,25 @@ export class ReservaService {
       alojamiento,
       rangoFechas
     );
-    const notificacion = this.factoryNotificacion.crearSegunReserva(nueva)
     const reservaGuardada = await this.reservaRepository.save(nueva);
-    alojamiento.agregarReserva(reservaGuardada);
-
-    this.notificacionService.crearNotificacion(notificacion)
+    await alojamiento.agregarReserva(reservaGuardada);
     await this.alojamientoRepository.save(alojamiento);
+    this.notificacionService.crearNotificacion(nueva.notificacionAlCrear())
+
     return reservaGuardada;
   }
 
   async cambiarEstados(cambioEstado) {
-    if (
-      !cambioEstado.motivo ||
-      !cambioEstado.usuario ||
-      !cambioEstado.estado ||
-      !cambioEstado.reserva
-    ) {
-      throw new ValidationError("Faltan campos requeridos o son inválidos");
-    }
-    return await this._procesarCambioEstado(cambioEstado);
-  }
-
-  async _procesarCambioEstado(cambioEstado) {
     const { estado, reserva, motivo, usuario } = await this.fromDtoCambio(
-      cambioEstado
+        cambioEstado
     );
     this._validarCambioEstado(estado, reserva);
 
     const cambio = new CambioEstadoReserva(estado, reserva, motivo, usuario);
-    reserva.actualizarEstado(cambio.estado);
+    const notificacion = reserva.actualizarEstado(cambio.estado, motivo);
     const reservaGuardada = await this.reservaRepository.save(cambio.reserva);
-    switch (estado) {
-      case 'CONFIRMADA':
-        this.notificacionService.crearNotificacion(this.factoryNotificacion.crearSegunAceptar(reserva))
-        break;
-      case 'CANCELADA':
-        this.notificacionService.crearNotificacion(this.factoryNotificacion.crearSegunCancelacion(
-            reserva,
-            usuario,
-            motivo
-        ));
-        break;
-      default:
-        break;
-    }
+    await this.notificacionService.crearNotificacion(notificacion);
+
     return reservaGuardada;
   }
 
@@ -160,39 +126,36 @@ export class ReservaService {
   }
 
   async listarReservas() {
-    const reservas = await this.reservaRepository.findAll();
-    return reservas;
+    return await this.reservaRepository.findAll();
   }
 
   async listarReservasUsuario(idUsuario) {
-    const reservas = await this.reservaRepository.obtenerReservas(idUsuario);
-    return reservas;
+    return await this.reservaRepository.obtenerReservas(idUsuario);
   }
 
   async buscarReserva(idReserva) {
     const reservaEncontrada = await this.reservaRepository.findById(idReserva);
     if (!reservaEncontrada) {
-      throw new NotFoundError(`Reserva con id ${id} no encontrado`);
+      throw new NotFoundError(`Reserva con id ${idReserva} no encontrado`);
     }
     return reservaEncontrada;
   }
 
-  async fromDto(reservaDto) {
-    const fechaInicio = new Date(reservaDto.fechaInicio);
-    const fechaFinal = new Date(reservaDto.fechaFinal);
-
+  async validarReservaExistente(fechaInicio, fechaFinal, alojamiento) {
     const reservasExistente = await this.reservaRepository.findFechaCoincidente(
-      fechaInicio,
-      fechaFinal,
-      reservaDto.alojamiento
+        fechaInicio,
+        fechaFinal,
+        alojamiento
     );
     if (reservasExistente) {
       throw new AlojamientoOcupadoError(
-        "Ya hay una reserva en este rango de fechas",
-        403
+          "Ya hay una reserva en este rango de fechas",
+          403
       );
     }
+  }
 
+  async fromDto(reservaDto) {
     return {
       huespedReservador: await this.userRepository.findById(
         reservaDto.huespedReservador
@@ -200,8 +163,7 @@ export class ReservaService {
       cantHuespedes: reservaDto.cantHuespedes,
       alojamiento: await this.alojamientoRepository.findById(
         reservaDto.alojamiento
-      ),
-      rangoFechas: new RangoFechas(fechaInicio, fechaFinal),
+      )
     };
   }
 

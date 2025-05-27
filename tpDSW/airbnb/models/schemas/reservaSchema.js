@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {Reserva, PENDIENTE, CONFIRMADA, CANCELADA, RangoFechas, EstadoReserva} from '../domain/reserva.js';
+import {Reserva, RECHAZADA, PENDIENTE, CONFIRMADA, CANCELADA, RangoFechas, EstadoReserva} from '../domain/reserva.js';
 import {docToUsuario} from './usuarioSchema.js';
 const reservaSchema = new mongoose.Schema({
     huespedReservador: {
@@ -30,7 +30,7 @@ const reservaSchema = new mongoose.Schema({
     },
     estado: {
         type: String,
-        enum: ['PENDIENTE', 'CONFIRMADA', 'CANCELADA'],
+        enum: ['PENDIENTE', 'CONFIRMADA', 'CANCELADA', 'RECHAZADA'],
         default: 'PENDIENTE'
     },
     precioPorNoche: {
@@ -68,6 +68,7 @@ function estadoDesdeNombre(nombre) {
     case 'PENDIENTE': return EstadoReserva.PENDIENTE;
     case 'CONFIRMADA': return EstadoReserva.CONFIRMADA;
     case 'CANCELADA': return EstadoReserva.CANCELADA;
+    case 'RECHAZADA': return EstadoReserva.RECHAZADA
     default: throw new Error('Estado desconocido: ' + nombre);
   }
 }

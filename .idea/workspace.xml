@@ -8,19 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/controllers/notificacionController.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/controllers/notificacionController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/controllers/reservaController.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/controllers/reservaController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/alojamiento.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/alojamiento.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/notificacion.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/notificacion.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/reserva.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/reserva.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/notificacionRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/notificacionRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/reservaRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/reservaRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/userRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/userRepository.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/alojamientoSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/alojamientoSchema.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/notificacionSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/notificacionSchema.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/reservaSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/reservaSchema.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/usuarioSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/usuarioSchema.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/rutas/reservaRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/rutas/reservaRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/services/notificacionService.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/services/notificacionService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/services/reservaService.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/services/reservaService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +159,8 @@
       <workItem from="1748133911396" duration="1089000" />
       <workItem from="1748181537623" duration="3956000" />
       <workItem from="1748201931811" duration="1584000" />
-      <workItem from="1748214477255" duration="10103000" />
+      <workItem from="1748214477255" duration="10497000" />
+      <workItem from="1748298636078" duration="5757000" />
     </task>
     <servers />
   </component>
