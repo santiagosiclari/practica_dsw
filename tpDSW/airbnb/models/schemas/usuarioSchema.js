@@ -26,4 +26,10 @@ const usuarioSchema = new mongoose.Schema({
 // Vincular la clase Producto con el schema
 usuarioSchema.loadClass(Usuario);
 
-export const UsuarioModel = mongoose.model('Usuario', usuarioSchema); 
+export const UsuarioModel = mongoose.model('Usuario', usuarioSchema);
+
+export function docToUsuario(doc) {
+    const usuario = new Usuario(doc.nombre, doc.mail, doc.tipo);
+    usuario.setId(doc._id);
+    return usuario;
+}

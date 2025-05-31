@@ -1,4 +1,7 @@
+import { Reserva } from "./reserva.js";
+
 export class Notificacion {
+  _id
   mensaje;
   usuario;
   fechaAlta;
@@ -6,20 +9,26 @@ export class Notificacion {
   constructor(mensaje, usuario) {
     this.mensaje = mensaje;
     this.usuario = usuario;
-    this.fechaAlta = new Date.now();
+    this.fechaAlta = Date.now();
     this.leida = false;
     this.fechaLeida = null;
   }
   marcarComoLeida() {
     this.leida = true;
-    this.fechaLeida = new Date.now();
+    this.fechaLeida = Date.now();
+  }
+  getId() {
+    return this._id;
+  }
+  setId(id) {
+    this._id = id;
   }
 }
 export class FactoryNotificacion {
   crearSegunReserva(reserva) {
-    mensaje =
+    const mensaje =
       "El cliente " +
-      reserva.getHuespedReservadorNombre() +
+      reserva.getHuespedNombre() +
       " realizó una reserva desde el día " +
       reserva.getRangoFechaInicio().toDateString() +
       " hasta el día " +
@@ -29,38 +38,34 @@ export class FactoryNotificacion {
       " días sobre el alojamiento " +
       reserva.getAlojamientoNombre() +
       ".";
-    const notificacion = new Notificacion(
+    return new Notificacion(
       mensaje,
       reserva.getAnfitrionAlojamiento()
     );
-    return notificacion;
   }
-
   crearSegunAceptar(reserva) {
-   let  mensaje =
+    let  mensaje =
       "El anfitrión de la reserva " +
-      reserva.getAlojamientoNombre() +
+      reserva.getId() +
       " ha aceptado su solicitud de reserva.";
-    const notificacion = new Notificacion(
-      mensaje,
-      reserva.getHuespedReservador()
+    return new Notificacion(
+        mensaje,
+        reserva.getHuespedId()
     );
-    return notificacion;
   }
   crearSegunRechazo(reserva, motivoCancelacion = null) {
-    mensaje =
+    let mensaje =
       "El cliente " +
-      reserva.getHuespedReservadorNombre() +
-      " ha cancelado su reserva sobre " +
+      reserva.getHuespedNombre() +
+      " ha rechazado su reserva sobre " +
       reserva.getAlojamientoNombre();
     if (motivoCancelacion) {
       mensaje += " debido al siguiente motivo: '" + motivoCancelacion + "'.";
     }
-    const notificacion = new Notificacion(
+    return new Notificacion(
       mensaje,
       reserva.getAnfitrionAlojamiento()
     );
-    return notificacion;
   }
   crearSegunCancelacion(reserva, usuarioCancelador, motivoCancelacion = null) {
     let mensaje = `Tu reserva sobre el alojamiento "${reserva.getAlojamientoNombre()}" ha sido cancelada.`;
@@ -68,9 +73,8 @@ export class FactoryNotificacion {
     if (motivoCancelacion) {
       mensaje += ` Motivo: "${motivoCancelacion}".`;
     }
-
     return new Notificacion(
-      mensaje,
+        mensaje,
         reserva.getAnfitrionAlojamiento()
     );
   }

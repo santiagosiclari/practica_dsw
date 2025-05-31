@@ -145,3 +145,78 @@ components:
           type: string
         long:
           type: string
+
+    Reserva:
+      type: object
+      required:
+        - huespedReservador
+        - alojamiento
+        - cantHuespedes
+        - fechaInicio
+        - fechaFinal
+      properties:
+        _id:
+          type: string
+          format: uuid
+        huespedReservador:
+          type: string
+          format: uuid
+          description: ID del usuario que hace la reserva
+        alojamiento:
+          type: string
+          format: uuid
+          description: ID del alojamiento reservado
+        cantHuespedes:
+          type: integer
+          minimum: 1
+        fechaInicio:
+          type: string
+          format: date
+        fechaFinal:
+          type: string
+          format: date
+        fechaAlta:
+          type: string
+          format: date-time
+        estado:
+          type: string
+          enum: [PENDIENTE, CONFIRMADA, CANCELADA]
+        precioPorNoche:
+          type: number
+          minimum: 0
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Notificacion:
+      type: object
+      required:
+        - mensaje
+        - usuario
+      properties:
+        _id:
+          type: string
+          format: uuid
+        mensaje:
+          type: string
+        usuario:
+          type: string
+          format: uuid
+          description: ID del usuario que recibe la notificación
+        fechaAlta:
+          type: string
+          format: date-time
+        leida:
+          type: boolean
+        fechaLeida:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time

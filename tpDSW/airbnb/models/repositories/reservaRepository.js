@@ -69,7 +69,7 @@ export class ReservaRepository {
   }
 
   async findById(id) {
-    const reserva = await this.model.findById(id);
+    const reserva = await this.model.findById(id).populate("alojamiento").populate("huespedReservador");
     return docToReserva(reserva);
   }
 

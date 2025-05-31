@@ -77,7 +77,7 @@ const alojamientoSchema = new mongoose.Schema({
     collection: 'alojamientos'
 });
 
-// Vincular la clase Producto con el schema
+// Vincular la clase Alojamiento con el schema
 alojamientoSchema.loadClass(Alojamiento);
 
 export const AlojamientoModel = mongoose.model('Alojamiento', alojamientoSchema);
