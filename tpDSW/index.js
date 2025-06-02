@@ -65,5 +65,5 @@ const swaggerDocument = YAML.load('./docs/swagger.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Lanzamiento
-server.configureRoutes();
+server.configureRoutes(reservaController, notificacionController, alojamientoController);
 server.launch();

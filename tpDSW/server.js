@@ -22,18 +22,10 @@ export class Server {
     this.#controllers[controllerClass.name] = controller;
   }
 
-  getController(controllerClass) {
-    const controller = this.#controllers[controllerClass.name];
-    if (!controller) {
-      throw new Error("Falta el controller de esa ruta.");
-    }
-    return controller;
-  }
-
-  configureRoutes() {
-    registerReservaRoutes(this.app, this.getController.bind(this));
-    registerNotificacionRoutes(this.app, this.getController.bind(this));
-    registerAlojamientoRoutes(this.app, this.getController.bind(this));
+  configureRoutes(reservaController, notificacionController, alojamientoController) {
+    registerReservaRoutes(this.app, reservaController);
+    registerNotificacionRoutes(this.app, notificacionController);
+    registerAlojamientoRoutes(this.app, alojamientoController);
 
      // Middleware para manejar rutas no encontradas
     this.#app.use((req, res, next) => {
