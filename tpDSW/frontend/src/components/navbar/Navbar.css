@@ -1,98 +1,80 @@
 .navbar-bg {
   width: 100%;
-  background: white;
-  border-bottom: 1px solid #ccc;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  padding: 0.8rem 2rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
-.navbar {
+.navbar-content {
+  max-width: 1300px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 90%;     
-  margin: 0 auto;        
-  box-sizing: border-box;
-  width: 100%;
-  font-family: sans-serif;
 }
 
-.navbar-section {
+/* Logo a la izquierda */
+.navbar-logo img {
+  height: 2.5rem;
+  width: auto;
+}
+
+/* Centro: barra de búsqueda */
+.search-box {
   display: flex;
   align-items: center;
-}
-
-.left {
-  gap: 1rem;
-}
-
-.center {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
   justify-content: center;
-  align-items: center;
-  width: max-content;
-  margin-top: 0.3rem;
-}
-.right {
-  gap: rem;
-}
-
-.search-bar {
-  position: relative;
-  display: flex;
-  align-items: center;
+  flex: 1;
+  max-width: 600px;
+  padding: 0.4rem;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  margin: 0 2rem;
+  gap: 0.5rem;
+  background-color: #fff;
 }
 
-.search-bar input {
-  padding: 0.5rem 2.2rem 0.5rem 1rem; 
-  border: 1px solid #ccc;
-  border-radius: 2rem;
-  outline: none;
-  font-size: 1rem;
-}
-
-.search-icon {
-  position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
+.search-input {
+  flex: 1;
+  min-width: 80px;
   border: none;
   outline: none;
-  cursor: pointer;
-  font-size: 1rem;
-  color: #333;
-  padding: 0;
-  height: 1.5rem;
-  width: 1.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background-color: transparent;
+  font-size: 0.9rem;
+}
+
+/* Botón de búsqueda */
+.search-btn {
+  background-color: #ff385c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 0.4rem;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
-.brand-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-}
-
-.navbar-logo {
+/* Derecha */
+.navbar-right {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  gap: 1.2rem;
+  font-size: 0.95rem;
 }
 
-.navbar-logo img {
-  height: 3.5rem;     /* Aumentá esto según necesidad */
-  max-height: 4rem;   /* Límite superior para evitar exageraciones */
-  width: auto;
-  object-fit: contain;
-}
-
-@media (min-width: 768px) {
-  .navbar-logo img {
-    height: 4rem;
-  }
+.profile-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
 }

@@ -3,31 +3,28 @@ import './Navbar.css';
 const Navbar = () => {
     return (
         <header className="navbar-bg">
-            <div className="navbar-logo">
-                <img src="/images/logoBirbnb.png" alt="logo" />
+            <div className="navbar-content">
+
+                <div className="navbar-logo">
+                    <img src="/images/logoBirbnb.png" alt="Birbnb logo" />
+                </div>
+
+                <form className="search-box">
+                    <input type="text" className="search-input" placeholder="Ubicación" />
+                    <input type="text" className="search-input" placeholder="Fechas" />
+                    <input type="number" className="search-input" placeholder="Huéspedes" />
+                    <button className="search-btn">🔍</button>
+                </form>
+
+                <div className="navbar-right">
+                    <span>Become a Host</span>
+                    <span>🔔</span>
+                    <div className="profile-toggle">
+                        <span>☰</span>
+                        <span>👤</span>
+                    </div>
+                </div>
             </div>
-            <nav className="navbar">
-                <div className="navbar-section left">
-                    <button className="menu-icon">☰</button>
-                    <div className="search-bar">
-                        <input type="text" placeholder="Buscar" />
-                        <button className="search-icon">🔍</button>
-                    </div>
-                </div>
-
-                <div className="navbar-section center">
-                    <div className="brand">
-                        <h1 className="brand-text"> 🍀 ESTO ES Birbnb</h1>
-                    </div>
-                </div>
-
-                <div className="navbar-section right">
-                    <button className="cart">
-                        👜
-                        <span className="cart-count">0</span>
-                    </button>
-                </div>
-            </nav>
         </header>
     );
 };
