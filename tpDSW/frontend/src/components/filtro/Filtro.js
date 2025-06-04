@@ -1,5 +1,17 @@
 import './Filtro.css';
 import { useState } from 'react';
+import { PlaceholderDoble } from '../placeholder_input/PlaceholderInput';
+
+const Caracteristica = ({caracteristica, simbolo}) => {
+    const [seleccionado, setSeleccionado] = useState(false);
+
+    const toggleSeleccion= () => setSeleccionado(!seleccionado);
+
+    return <div className={seleccionado ? "opcion selected" : "opcion"}
+            onClick={toggleSeleccion}>
+                {simbolo}<span>{caracteristica}</span>
+            </div>
+}
 
 const Filtro = () => {
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -23,38 +35,26 @@ const Filtro = () => {
                         <section>
                             <h4>Recomendaciones para vos</h4>
                             <div className="opciones-row">
-                                <div className="opcion">🅿️<span>Estacionamiento</span></div>
-                                <div className="opcion">🏊‍♂️<span>Piscina</span></div>
-                                <div className="opcion">🐶<span>Mascotas Permitidas</span></div>
-                                <div className="opcion">🛜<span>Wifi</span></div>
+                                <Caracteristica caracteristica={"Estacionamiento"} simbolo={"🅿️"} />
+                                <Caracteristica caracteristica={"Pisina"} simbolo={"🏊‍♂️"} />
+                                <Caracteristica caracteristica={"Mascotas Permitidas"} simbolo={"🐶"} />
+                                <Caracteristica caracteristica={"Wifi"} simbolo={"🛜"} />
                             </div>
                         </section>
 
                         <section>
                             <h4>Rango de precios</h4>
-                            <div className="rango">
-                                <input type="number" placeholder="Mínimo" />
-                                <span>-</span>
-                                <input type="number" placeholder="Máximo" />
-                            </div>
+                            <PlaceholderDoble tipo={"number"} placeInicial={"Minimo"} placeFinal={"Maximo"}/>
                         </section>
 
                         <section>
                             <h4>Rango de fechas</h4>
-                            <div className="rango">
-                                <input type="date" placeholder="Fecha inicial" />
-                                <span>-</span>
-                                <input type="date" placeholder="Fecha final" />
-                            </div>
+                            <PlaceholderDoble tipo={"date"} placeInicial={"Fecha inicial"} placeFinal={"Fecha final"}/>
                         </section>
 
                         <section>
                             <h4>Coordenadas</h4>
-                            <div className="rango">
-                                <input type="number" placeholder="latitud" />
-                                <span>-</span>
-                                <input type="number" placeholder="longitud" />
-                            </div>
+                            <PlaceholderDoble tipo={"number"} placeInicial={"latitud"} placeFinal={"longitud"}/>
                         </section>
 
                         <div className="acciones">

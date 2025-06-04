@@ -58,6 +58,8 @@
 }
 
 .opciones-row {
+    flex-direction: row;
+    align-items: center;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -76,6 +78,9 @@
     cursor: pointer;
     transition: 0.2s;
 }
+.selected {
+    border: 3px solid black;
+}
 
 .opcion:hover {
     background-color: #f6f6f6;
@@ -92,12 +97,6 @@
 
 .pill:hover {
     background-color: #f2f2f2;
-}
-
-.rango {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
 }
 
 .rango input {

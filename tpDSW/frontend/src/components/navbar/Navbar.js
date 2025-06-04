@@ -1,6 +1,9 @@
 import './Navbar.css';
+import { PlaceholderSimple } from '../placeholder_input/PlaceholderInput';
+import UserBoton from '../user_boton/UserBoton';
 
 const Navbar = () => {
+
     return (
         <header className="navbar-bg">
             <div className="navbar-content">
@@ -10,18 +13,17 @@ const Navbar = () => {
                 </div>
 
                 <form className="search-box">
-                    <input type="text" className="search-input" placeholder="Ubicación" />
-                    <input type="text" className="search-input" placeholder="Fechas" />
-                    <input type="number" className="search-input" placeholder="Huéspedes" />
+                    <PlaceholderSimple tipo={"text"} placeInicial={"Ubicación"}/>
+                    <PlaceholderSimple tipo={"date"} placeInicial={"Fechas"}/>
+                    <PlaceholderSimple tipo={"number"} placeInicial={"Huéspedes"}/>
                     <button className="search-btn">🔍</button>
                 </form>
 
                 <div className="navbar-right">
                     <span>Become a Host</span>
-                    <span>🔔</span>
                     <div className="profile-toggle">
-                        <span>☰</span>
-                        <span>👤</span>
+                        <button className="notificaciones-options">🔔</button>
+                        <UserBoton />
                     </div>
                 </div>
             </div>

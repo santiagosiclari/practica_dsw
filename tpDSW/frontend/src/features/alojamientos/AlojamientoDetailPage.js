@@ -5,7 +5,7 @@ const AlojamientoDetailPage = () => {
     const { title } = useParams();
     const alojamiento = alojamientos.find(p => p.title.toLowerCase() === title.toLowerCase());
 
-    if (!alojamiento) return <div>Producto no encontrado</div>;
+    if (!alojamiento) return <div>Alojamiento no encontrado</div>;
 
     return (
         <div>

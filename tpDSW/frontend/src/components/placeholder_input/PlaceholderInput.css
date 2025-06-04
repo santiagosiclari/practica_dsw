@@ -1,0 +1,16 @@
+.search-input {
+    flex: 1;
+    min-width: 80px;
+    border: none;
+    outline: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    background-color: transparent;
+    font-size: 0.9rem;
+}
+
+.rango {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
