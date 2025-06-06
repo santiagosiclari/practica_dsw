@@ -1,22 +1,42 @@
 import { useState } from 'react';
 import './UserBoton.css';
-import UserSidebar from '../user_side_bar/UserSideBar';
+
+const Lista = ({etiqueta}) => {
+    return <li>{etiqueta}</li>
+}
 
 const UserBoton = () => {
-    const [mostrarSideBar, setMostrarSideBar] = useState(false);
+    const [mostrarMenu, setMostrarMenu] = useState(false);
 
-    const toggleSeleccion = () => setMostrarSideBar(!mostrarSideBar);
+    const toggleMenu = () => {
+        setMostrarMenu(!mostrarMenu);
+    };
+
+    const cerrarMenu = () => {
+        setMostrarMenu(false);
+    };
 
     return (
-        <>
-            <button
-                className={mostrarSideBar ? "user-options selected" : "user-options"}
-                onClick={toggleSeleccion}
-            >
-                🧍🏻‍♂️
-            </button>
-            <UserSidebar visible={mostrarSideBar} onClose={() => setMostrarSideBar(false)} />
-        </>
+        <div className="user-boton-wrapper">
+            <button className="user-options" onClick={toggleMenu}>🧍🏻‍♂️</button>
+
+            {mostrarMenu && (
+                <div className="user-dropdown-overlay" onClick={cerrarMenu}>
+                    <div className="user-dropdown-menu" onClick={(e) => e.stopPropagation()}>
+                        <div className="user-dropdown-header">
+                            <h4>Mi cuenta</h4>
+                            <button className="cerrar-btn" onClick={cerrarMenu}>✖</button>
+                        </div>
+                        <ul>
+                            <Lista etiqueta={"📌 Reservas"} onClick={cerrarMenu}/>
+                            <Lista etiqueta={"💬 Mensajes"} onClick={cerrarMenu}/>
+                            <Lista etiqueta={"🛠 Configuración"} onClick={cerrarMenu}/>
+                            <Lista etiqueta={"🚪 Cerrar sesión"} onClick={cerrarMenu}/>
+                        </ul>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 };
 
