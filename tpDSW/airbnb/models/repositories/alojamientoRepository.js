@@ -28,7 +28,18 @@ export class AlojamientoRepository {
     }
 
     async findById(id) {
-        const alojamiento = await this.model.findById(id).populate('reservas');
+        const alojamiento = await this.model.findById(id).populate({
+            path: 'reservas',
+            populate: [
+            { path: 'huespedReservador' },
+            { path: 'alojamiento' }
+            ]
+        });
+
+        console.log("estoy en aloj repo")
+        console.log(alojamiento.reservas[0]);
+
+
         if (alojamiento && alojamiento.reservas) {
             alojamiento.reservas = alojamiento.reservas.map(docToReserva);
         }
@@ -55,7 +66,6 @@ export class AlojamientoRepository {
         const total = await this.model.countDocuments(query);
 
         const alojamientos = resultados.map(docToAlojamiento)
-
                return {
                     total,
                     page,

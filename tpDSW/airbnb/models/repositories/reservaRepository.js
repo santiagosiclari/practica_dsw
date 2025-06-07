@@ -69,7 +69,20 @@ export class ReservaRepository {
   }
 
   async findById(id) {
-    const reserva = await this.model.findById(id).populate("alojamiento").populate("huespedReservador");
+    const reserva = await this.model.findById(id)
+      .populate({
+        path: 'alojamiento',
+        populate: {
+          path: 'reservas',
+          populate: [
+            { path: 'alojamiento' }, // para que la reserva dentro tenga también su alojamiento
+            { path: 'huespedReservador' } // para que esa reserva tenga su huesped
+          ]
+        }
+      })
+      .populate('huespedReservador'); 
+
+    console.log("Reserva con populate anidado:", JSON.stringify(reserva, null, 2));
     return docToReserva(reserva);
   }
 

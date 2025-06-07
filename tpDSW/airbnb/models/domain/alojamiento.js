@@ -35,6 +35,11 @@ export class Alojamiento{
         return this._id;
     }
     estasDisponibleEn(rangoDeFechas){
+        console.log('Reservas del alojamiento:', this.reservas);
+        this.reservas.forEach((r, i) => {
+        console.log(`Reserva #${i}:`, r);
+        console.log(`Tiene método seSuperponeCon:`, typeof r?.seSuperponeCon === 'function');
+        });
         return this.reservas.every(reserva =>
             !reserva.seSuperponeCon(rangoDeFechas)
         );

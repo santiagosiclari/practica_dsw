@@ -83,17 +83,23 @@ alojamientoSchema.loadClass(Alojamiento);
 export const AlojamientoModel = mongoose.model('Alojamiento', alojamientoSchema);
 
 export function docToAlojamiento(doc) {
-    const alojamiento = new Alojamiento(doc.anfitrion, doc.nombre, doc.direccion);
-    alojamiento.precioPorNoche = doc.precioPorNoche;
-    alojamiento.caracteristicas = caracteristicaDesdeNombre(doc.caracteristicas)
-    alojamiento.descripcion = doc.descripcion
-    alojamiento.fotos = doc.fotos
-    if (doc.reservas) {
+    const direccion = docToDireccion(doc.direccion);
+    const alojamiento = new Alojamiento(direccion, doc.nombre, doc.descripcion, doc.precioPorNoche, doc.moneda, doc.cantHuespedesMax);
+
+    alojamiento.setId(doc._id);
+    alojamiento.caracteristicas = doc.caracteristicas;
+    alojamiento.fotos = doc.fotos;
+    alojamiento.horarioCheckIn = doc.horarioCheckIn;
+    alojamiento.horarioCheckOut = doc.horarioCheckOut;
+    alojamiento.anfitrion = doc.anfitrion;
+
+    // 🔥 ESTE BLOQUE es CLAVE
+    if (doc.reservas && Array.isArray(doc.reservas)) {
         alojamiento.reservas = doc.reservas.map(docToReserva);
     }
-    alojamiento.horarioCheckIn = doc.horarioCheckIn
-    alojamiento.horarioCheckOut = doc.horarioCheckOut
-    alojamiento.setId(doc._id);
+
+    console.log("doc.reservas:", doc.reservas);
+    console.log("alojamiento.reservas instanceof Reserva:", alojamiento.reservas[0] instanceof Reserva);
 
     return alojamiento;
 }

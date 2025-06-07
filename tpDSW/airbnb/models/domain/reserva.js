@@ -1,5 +1,7 @@
 import {FactoryNotificacion} from "./notificacion.js";
 import {NoPermitoCambioEstadoReservaError, ValidationError} from "../../errors/appError.js";
+import { AlojamientoOcupadoError } from "./errors/alojamientoOcupadoError.js";
+import { AlojamientoSobrepasadoError } from "./errors/alojamientoSobrepasado.js";
 
 export class Reserva{
     _id
@@ -10,6 +12,8 @@ export class Reserva{
     rangoFechas
     estado
     precioPorNoche
+    cambiosDeEstado
+
     constructor(huespedReservador, cantHuespedes, alojamiento, rangoFechas, fechaAlta){
         this.fechaAlta = fechaAlta ? fechaAlta : new Date();
         this.huespedReservador = huespedReservador;
@@ -20,7 +24,9 @@ export class Reserva{
         this.rangoFechas = rangoFechas instanceof RangoFechas
             ? rangoFechas
             : new RangoFechas(rangoFechas.fechaInicio, rangoFechas.fechaFin);
+        this.cambiosDeEstado = []
     }
+
     notificacionAlCrear(){
         return new FactoryNotificacion().crearSegunReserva(this);
     }
@@ -42,21 +48,24 @@ export class Reserva{
     seSuperponeCon(otroRango) {
         return this.rangoFechas.seSuperponeCon(otroRango)
     }
-    actualizarEstado(estadoReserva, motivo){
-/*        if(this.getRangoFechaInicio() <= new Date() &&
-            estadoReserva.nombre === 'CANCELADA' ){
+    actualizarEstado(cambioEstado){
+       if(this.getRangoFechaInicio() <= new Date() &&
+            cambioEstado.estado === 'CANCELADA' ){
                 throw new NoPermitoCambioEstadoReservaError(
                     "La reserva superó la fecha límite para ser cancelada"
                 );
-        }*/
-        this.estado = estadoReserva.nombre || estadoReserva;
+        }
+       
+        this.cambiosDeEstado.push(cambioEstado);
+        this.estado = cambioEstado.estado
+    
         switch (this.estado) {
             case 'CONFIRMADA':
                 return this.notificacionAlAceptar();
             case 'CANCELADA':
-                return this.notificacionAlCancelar(motivo);
+                return this.notificacionAlCancelar(cambioEstado.motivo);
             case 'RECHAZADA':
-                return this.notificacionAlRechazar(motivo);
+                return this.notificacionAlRechazar(cambioEstado.motivo);
             default:
                 throw new ValidationError("Datos de Estado inválidos")
                 break;
@@ -92,8 +101,19 @@ export class Reserva{
         const dias = this.rangoFechas.fechaFin - this.rangoFechas.fechaInicio
         return Math.ceil(dias / (1000 * 60 * 60 * 24));
     }
-    setRangoFecha(nuevoRango){this.rangoFechas = nuevoRango}
-    setCantHuespedes(nuevaCant){this.cantHuespedes = nuevaCant}
+    setRangoFecha(nuevoRango) {
+        if (!this.alojamiento.estasDisponibleEn(nuevoRango)) {
+            throw new AlojamientoOcupadoError("Ya hay una reserva en este rango de fechas", 403);
+        }
+        this.rangoFechas = nuevoRango
+    }
+
+    setCantHuespedes(nuevaCant) {
+        if(!this.alojamiento.puedenAlojarse(nuevaCant)) {
+            throw new AlojamientoSobrepasadoError("La cantidad de huespedes supera el maximo permitido por el alojamiento", 400);
+        }
+        this.cantHuespedes = nuevaCant
+    }
 }
 export class RangoFechas{
     fechaInicio

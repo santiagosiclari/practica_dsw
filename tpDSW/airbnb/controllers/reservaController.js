@@ -20,11 +20,12 @@ export class ReservaController {
             const rangoFecha = this.crearRangoFecha(parametros.fechaInicio, parametros.fechaFinal);
             const reserva = await this.reservaService.crearReserva(this.validarCrear(parametros), rangoFecha)
 
-            res.status(201).json(this.toDto(reserva))
+            res.status(201).json(this.reservaToDto(reserva))
         } catch(error) {
             next(error);
         }
     }
+
     validarCrear(parametros){
         if (
             !parametros.huespedReservador ||
@@ -37,6 +38,7 @@ export class ReservaController {
         }
         return parametros;
     }
+
     validarCambiarEstado(parametros){
         if (
             !parametros.motivo ||
@@ -49,20 +51,21 @@ export class ReservaController {
 
         return parametros;
     }
+    
     crearRangoFecha(fechaInicio, fechaFinal){
         return new RangoFechas(fechaInicio, fechaFinal);
     }
 
     async cambiarEstados(req, res, next) {
         try{
-            const filters = {
+            const parametros = {
                 estado : req.body.estado, //STRING
                 reserva : req.body.reserva,
                 motivo : req.body.motivo,
                 usuario : req.body.usuario
             }
-            const reserva = await this.reservaService.cambiarEstados(this.validarCambiarEstado(filters));
-            res.status(200).json(this.toDto(reserva))
+            const reserva = await this.reservaService.cambiarEstados(this.validarCambiarEstado(parametros));
+            res.status(200).json(this.reservaToDto(reserva))
         }catch(error){
             next(error);
         }
@@ -71,7 +74,7 @@ export class ReservaController {
     async listarReservas(req, res, next) {
         try{
             const reservas = await this.reservaService.listarReservas();
-            res.status(200).json(this.toDtos(reservas))
+            res.status(200).json(this.reservasToDtos(reservas))
         }catch(error) {
             next(error);
         }
@@ -81,7 +84,7 @@ export class ReservaController {
         try{
             const idUsuario = req.params.id;
             const reservas = await this.reservaService.listarReservasUsuario(idUsuario);
-            res.status(200).json(this.toDtos(reservas))
+            res.status(200).json(reservasToDtos(reservas))
         }catch(error) {
             next(error);
         }
@@ -91,7 +94,7 @@ export class ReservaController {
         try {
             const idReserva = req.params.id;
             const reserva = await this.reservaService.buscarReserva(idReserva);
-            res.status(200).json(this.toDto(reserva));
+            res.status(200).json(this.reservaToDto(reserva));
         }catch(error) {
             next(error);
         }
@@ -99,33 +102,35 @@ export class ReservaController {
 
     async modificarReserva(req, res, next){
         try{
-            const filters = {
+            const parametros = {
                 reserva : req.body.reserva,
                 cantHuespedes : req.body.cantHuespedes,
                 fechaInicio : req.body.fechaInicio,
                 fechaFinal : req.body.fechaFinal,
             }
-            const reservaModificada = await this.reservaService.modificarReserva(filters);
-            res.status(200).json(this.toDto(reservaModificada));
+            const reservaModificada = await this.reservaService.modificarReserva(parametros);
+            res.status(200).json(this.reservaToDto(reservaModificada));
         }catch(error){
             next(error);
         }
     }
 
-    toDto(reserva) {
+    //DTO
+
+    reservaToDto(reserva) {
         return {
             _id: reserva._id,
             fechaAlta: reserva.fechaAlta,
-            huespedReservador: reserva.huespedReservador,
+            huespedReservador: reserva.huespedReservador._id,
             cantHuespedes: reserva.getCantHuespedes(),
-            alojamiento: reserva.alojamiento,
+            alojamiento: reserva.alojamiento._id,
             fechaInicio: reserva.getRangoFechaInicio(),
             fechaFinal: reserva.getRangoFechaFinal(),
             precioPorNoche: reserva.getPrecioPorNoche()
         };
     }
-
-    toDtos(reservas){
+    
+    reservasToDtos(reservas){
         return reservas.map(reserva => this.toDto(reserva));
     }
 }

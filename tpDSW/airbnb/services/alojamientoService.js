@@ -61,22 +61,7 @@ export class AlojamientoService {
     }
     filtrarResultado(parametros, resultados){
         const alojamientos = resultados.alojamientos
-        //Para utlizar la logica de dominio
-        /* const quiereValidarCant = parametros.cantHuespedes !== undefined;
-        const quiereValidarPrecios = parametros.precioMin !== undefined || modificacion.precioMax !== undefined;
-        const quiereValidarCarac = parametros.caracteristicas !== undefined;
 
-        const precioValido = resultados.filter(aloj =>
-            aloj.tuPrecioEstaDentroDe(parametros.precioMin, parametros.precioMax));
-        console.log(precioValido)
-
-        const conCapacidad = precioValido.filter(aloj =>
-            aloj.puedenAlojarse(parametros.cantHuespedes));
-        console.log(conCapacidad)
-
-        const conCaracteristicas = conCapacidad.filter(aloj =>
-            parametros.caracteristicas.every(carac => aloj.tenesCaracteristica(carac)));
-        console.log(conCaracteristicas) */
         const alojDisponibles = alojamientos.filter(alojamiento => alojamiento.estasDisponibleEn(parametros.rangoFechas));
         return alojDisponibles
     }
