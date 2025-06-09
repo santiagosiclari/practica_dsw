@@ -68,7 +68,6 @@ export class Reserva{
                 return this.notificacionAlRechazar(cambioEstado.motivo);
             default:
                 throw new ValidationError("Datos de Estado inválidos")
-                break;
         }
     }
     getAlojamientoNombre(){return this.alojamiento.getNombre()}

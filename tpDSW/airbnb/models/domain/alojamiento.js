@@ -22,7 +22,7 @@ export class Alojamiento{
         this.nombre = nombre;
         this.precioPorNoche = 0;
         this.moneda = Moneda.DOLAR_USA;
-        this.direccion = new Direccion(direccion.calle, direccion.altura, direccion.ciudad, direccion.lat,direccion.long);
+        this.direccion = new Direccion(direccion.calle, direccion.altura, direccion.ciudad, direccion.lat,direccion.longitud);
         this.cantHuespedesMax = 5;
         this.caracteristicas = [];
         this.reservas = [];
@@ -35,11 +35,6 @@ export class Alojamiento{
         return this._id;
     }
     estasDisponibleEn(rangoDeFechas){
-        console.log('Reservas del alojamiento:', this.reservas);
-        this.reservas.forEach((r, i) => {
-        console.log(`Reserva #${i}:`, r);
-        console.log(`Tiene método seSuperponeCon:`, typeof r?.seSuperponeCon === 'function');
-        });
         return this.reservas.every(reserva =>
             !reserva.seSuperponeCon(rangoDeFechas)
         );

@@ -54,6 +54,7 @@ const alojamientoSchema = new mongoose.Schema({
     direccion: {
         calle : {
             type: String,
+            required: true
         },
         altura : String,
         ciudad : {
@@ -63,7 +64,7 @@ const alojamientoSchema = new mongoose.Schema({
             },
         },
         lat : String,
-        long : String,
+        longitud : String,
     },
     reservas: [
         {
@@ -83,8 +84,7 @@ alojamientoSchema.loadClass(Alojamiento);
 export const AlojamientoModel = mongoose.model('Alojamiento', alojamientoSchema);
 
 export function docToAlojamiento(doc) {
-    const direccion = docToDireccion(doc.direccion);
-    const alojamiento = new Alojamiento(direccion, doc.nombre, doc.descripcion, doc.precioPorNoche, doc.moneda, doc.cantHuespedesMax);
+    const alojamiento = new Alojamiento(doc.anfitrion, doc.nombre, doc.direccion);
 
     alojamiento.setId(doc._id);
     alojamiento.caracteristicas = doc.caracteristicas;
@@ -92,15 +92,13 @@ export function docToAlojamiento(doc) {
     alojamiento.horarioCheckIn = doc.horarioCheckIn;
     alojamiento.horarioCheckOut = doc.horarioCheckOut;
     alojamiento.anfitrion = doc.anfitrion;
+    alojamiento.cantHuespedesMax = doc.cantHuespedesMax;
+    alojamiento.precioPorNoche = doc.precioPorNoche;
 
     // 🔥 ESTE BLOQUE es CLAVE
     if (doc.reservas && Array.isArray(doc.reservas)) {
         alojamiento.reservas = doc.reservas.map(docToReserva);
     }
-
-    console.log("doc.reservas:", doc.reservas);
-    console.log("alojamiento.reservas instanceof Reserva:", alojamiento.reservas[0] instanceof Reserva);
-
     return alojamiento;
 }
 

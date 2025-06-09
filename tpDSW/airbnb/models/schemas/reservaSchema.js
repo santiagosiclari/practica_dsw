@@ -76,6 +76,7 @@ function estadoDesdeNombre(nombre) {
 }
 
 export function docToReserva(doc) {
+    console.log(doc);
     if (!doc) return undefined;
 
     const rango = new RangoFechas(doc.fechaInicio, doc.fechaFinal);

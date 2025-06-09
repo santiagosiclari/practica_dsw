@@ -36,10 +36,6 @@ export class AlojamientoRepository {
             ]
         });
 
-        console.log("estoy en aloj repo")
-        console.log(alojamiento.reservas[0]);
-
-
         if (alojamiento && alojamiento.reservas) {
             alojamiento.reservas = alojamiento.reservas.map(docToReserva);
         }
