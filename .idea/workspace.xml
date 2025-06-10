@@ -6,13 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="9dd78ad2-21bb-4e46-bd69-b5a974a33481" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/controllers/reservaController.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/controllers/reservaController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/alojamiento.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/alojamiento.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/direccion.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/direccion.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/reserva.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/domain/reserva.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/alojamientoRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/alojamientoRepository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/reservaRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/reservaRepository.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/alojamientoSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/alojamientoSchema.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/reservaSchema.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/schemas/reservaSchema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/services/reservaService.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/services/reservaService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +68,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
     "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -161,7 +165,8 @@
       <workItem from="1748201931811" duration="1584000" />
       <workItem from="1748214477255" duration="10497000" />
       <workItem from="1748298636078" duration="5757000" />
-      <workItem from="1749502237434" duration="3615000" />
+      <workItem from="1749502237434" duration="3888000" />
+      <workItem from="1749567943089" duration="5882000" />
     </task>
     <servers />
   </component>
@@ -169,6 +174,21 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/correcciones_e2" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -179,7 +199,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/cancelar_modificar_listar_reserva" />
+                        <option value="origin/correcciones_e2" />
                       </list>
                     </value>
                   </entry>

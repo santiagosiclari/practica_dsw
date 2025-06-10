@@ -76,18 +76,12 @@ function estadoDesdeNombre(nombre) {
 }
 
 export function docToReserva(doc) {
-    console.log(doc);
-    if (!doc) return undefined;
-
+    if (!doc || !doc.fechaInicio || !doc.fechaFinal || !doc.huespedReservador || !doc.alojamiento) {
+        return undefined;
+    }
     const rango = new RangoFechas(doc.fechaInicio, doc.fechaFinal);
-
-    const huesped = typeof doc.huespedReservador?.getNombre === 'function'
-        ? doc.huespedReservador
-        : docToUsuario(doc.huespedReservador);
-
-    const alojamiento = typeof doc.alojamiento?.getNombre === 'function'
-        ? doc.alojamiento
-        : docToAlojamiento(doc.alojamiento);
+    const huesped = docToUsuario(doc.huespedReservador);
+    const alojamiento = docToAlojamiento(doc.alojamiento);
 
     const reserva = new Reserva(huesped, doc.cantHuespedes, alojamiento, rango, doc.fechaAlta);
     reserva.estado = doc.estado;

@@ -17,8 +17,8 @@ export class ReservaController {
                 fechaFinal : req.body.fechaFinal
             }
             await this.reservaService.validarReservaExistente(parametros.fechaInicio, parametros.fechaFinal, parametros.alojamiento);
-            const rangoFecha = this.crearRangoFecha(parametros.fechaInicio, parametros.fechaFinal);
-            const reserva = await this.reservaService.crearReserva(this.validarCrear(parametros), rangoFecha)
+            const rangoFechas = new RangoFechas(parametros.fechaInicio, parametros.fechaFinal);
+            const reserva = await this.reservaService.crearReserva(this.validarCrear(parametros), rangoFechas)
 
             res.status(201).json(this.reservaToDto(reserva))
         } catch(error) {
@@ -51,11 +51,6 @@ export class ReservaController {
 
         return parametros;
     }
-    
-    crearRangoFecha(fechaInicio, fechaFinal){
-        return new RangoFechas(fechaInicio, fechaFinal);
-    }
-
     async cambiarEstados(req, res, next) {
         try{
             const parametros = {
@@ -84,7 +79,7 @@ export class ReservaController {
         try{
             const idUsuario = req.params.id;
             const reservas = await this.reservaService.listarReservasUsuario(idUsuario);
-            res.status(200).json(reservasToDtos(reservas))
+            res.status(200).json(this.reservasToDtos(reservas))
         }catch(error) {
             next(error);
         }
@@ -131,6 +126,6 @@ export class ReservaController {
     }
     
     reservasToDtos(reservas){
-        return reservas.map(reserva => this.toDto(reserva));
+        return reservas.map(reserva => this.reservaToDto(reserva));
     }
 }

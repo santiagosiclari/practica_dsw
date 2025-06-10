@@ -2,6 +2,7 @@ import {FactoryNotificacion} from "./notificacion.js";
 import {NoPermitoCambioEstadoReservaError, ValidationError} from "../../errors/appError.js";
 import { AlojamientoOcupadoError } from "./errors/alojamientoOcupadoError.js";
 import { AlojamientoSobrepasadoError } from "./errors/alojamientoSobrepasado.js";
+import dayjs from "dayjs";
 
 export class Reserva{
     _id
@@ -21,10 +22,8 @@ export class Reserva{
         this.alojamiento = alojamiento;
         this.estado = EstadoReserva.PENDIENTE;
         this.precioPorNoche = alojamiento.precioPorNoche;
-        this.rangoFechas = rangoFechas instanceof RangoFechas
-            ? rangoFechas
-            : new RangoFechas(rangoFechas.fechaInicio, rangoFechas.fechaFin);
-        this.cambiosDeEstado = []
+        this.rangoFechas = rangoFechas;
+        this.cambiosDeEstado = [];
     }
 
     notificacionAlCrear(){
@@ -46,8 +45,12 @@ export class Reserva{
         return this._id;
     }
     seSuperponeCon(otroRango) {
-        return this.rangoFechas.seSuperponeCon(otroRango)
+        if (!this.rangoFechas || typeof this.rangoFechas.seSuperponeCon !== 'function') {
+            throw new Error("Reserva sin rango de fechas correctamente inicializado");
+        }
+        return this.rangoFechas.seSuperponeCon(otroRango);
     }
+
     actualizarEstado(cambioEstado){
        if(this.getRangoFechaInicio() <= new Date() &&
             cambioEstado.estado === 'CANCELADA' ){
@@ -96,10 +99,10 @@ export class Reserva{
     getHuespedNombre(){return this.huespedReservador.getNombre()}
     getHuespedId(){return this.huespedReservador.getId()}
 
-    calcularDias(){
-        const dias = this.rangoFechas.fechaFin - this.rangoFechas.fechaInicio
-        return Math.ceil(dias / (1000 * 60 * 60 * 24));
+    calcularDias() {
+        return this.rangoFechas.fechaFin.diff(this.rangoFechas.fechaInicio, 'day');
     }
+
     setRangoFecha(nuevoRango) {
         if (!this.alojamiento.estasDisponibleEn(nuevoRango)) {
             throw new AlojamientoOcupadoError("Ya hay una reserva en este rango de fechas", 403);
@@ -119,24 +122,18 @@ export class RangoFechas{
     fechaFin
 
     constructor(fechaInicio, fechaFin) {
-        this.fechaInicio = fechaInicio instanceof Date ? fechaInicio : new Date(fechaInicio);
-        this.fechaFin = fechaFin instanceof Date ? fechaFin : new Date(fechaFin);
+        this.fechaInicio = dayjs(fechaInicio)
+        this.fechaFin = dayjs(fechaFin)
+
+        if (!this.fechaInicio.isValid() || !this.fechaFin.isValid()) {
+            throw new Error("Fechas inválidas");
+        }
     }
-
-
-    getFechaInicio(){return this.fechaInicio}
-    getFechaFin(){return this.fechaFin}
-
-/*    getFechaInicioFormateada() {
-        return this.fechaInicio.toLocaleDateString("en-US");
-    }
-
-      getFechaFinFormateada() {
-        return this.fechaFin.toLocaleDateString("en-US");
-    }*/
+    getFechaInicio(){return this.fechaInicio.toDate()}
+    getFechaFin(){return this.fechaFin.toDate()}
 
     seSuperponeCon(otroRango) {
-        return this.fechaInicio <= otroRango.fechaFin && this.fechaFin >= otroRango.fechaInicio;
+        return this.fechaInicio.isBefore(otroRango.getFechaFin()) && this.fechaFin.isAfter(otroRango.getFechaInicio());
     }
 }
 export class EstadoReserva{

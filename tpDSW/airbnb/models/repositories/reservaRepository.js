@@ -21,7 +21,16 @@ export class ReservaRepository {
         runValidators: true,
         upsert: true,
       }
-    ).populate('alojamiento');
+    ).populate({
+      path: 'alojamiento',
+      populate: {
+        path: 'reservas',
+        populate: [
+          { path: 'alojamiento', select: 'direccion nombre' },
+          { path: 'huespedReservador' }
+        ]
+      }
+    }).populate('huespedReservador');
     return docToReserva(reservaMongo);
   }
 
@@ -64,9 +73,20 @@ export class ReservaRepository {
   return docs.map(docToReserva);
 }
   async findAll() {
-    const reservas = await this.model.find();
-    return reservas.map(docToReserva);
+    const reservas = await this.model.find()
+        .populate({
+          path: 'alojamiento',
+          // populate solo si necesitás campos referenciados como 'anfitrión', pero no 'reservas'
+          select: 'nombre direccion precioPorNoche cantHuespedesMax caracteristicas'
+        })
+        .populate('huespedReservador'); // Cargamos también el huésped
+
+    // Filtramos reservas inválidas y las convertimos
+    return reservas
+        .map(docToReserva)
+        .filter(r => r !== undefined);
   }
+
 
   async findById(id) {
     const reserva = await this.model.findById(id)
@@ -78,7 +98,7 @@ export class ReservaRepository {
               { path: 'alojamiento', select: 'direccion nombre' },
               { path: 'huespedReservador' }
             ]
-          }
+          },
         })
         .populate('huespedReservador');
 
@@ -86,10 +106,20 @@ export class ReservaRepository {
   }
 
   async obtenerReservas(idUsuario) {
-    const reservas = await this.model.find({ huespedReservador: idUsuario });
+    const reservas = await this.model.find({ huespedReservador: idUsuario })
+        .populate({
+          path: 'alojamiento',
+          select: 'nombre direccion precioPorNoche cantHuespedesMax caracteristicas'
+        })
+        .populate('huespedReservador');
+
     if (reservas.length === 0) {
       throw new Error("No existen reservas para este usuario");
     }
-    return reservas.map(docToReserva);
+
+    return reservas
+        .map(docToReserva)
+        .filter(r => r !== undefined);
   }
+
 }

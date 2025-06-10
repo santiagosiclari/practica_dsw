@@ -1,26 +1,38 @@
 import { AlojamientoModel, docToAlojamiento} from "../schemas/alojamientoSchema.js";
 import { docToReserva } from "../schemas/reservaSchema.js";
+import { alojamientoToDocument } from "../schemas/alojamientoSchema.js"; // asegurate de implementar esto
+
 
 export class AlojamientoRepository {
     constructor() {
         this.model = AlojamientoModel
     }
 
-    async save(alojamiento) {
-        const query = alojamiento.id ? { _id: alojamiento.id } : { _id: new this.model()._id };
-        return await this.model.findOneAndUpdate(
-            query,
-            alojamiento,
-            {
-                new: true,
-                runValidators: true,
-                upsert: true
-            }
-        );
-    }
+async save(alojamiento) {
+    const query = alojamiento.id ? { _id: alojamiento.id } : { _id: new this.model()._id };
+    const updateData = alojamientoToDocument(alojamiento); // sin _id
+
+    return await this.model.findOneAndUpdate(
+        query,
+        updateData,
+        {
+            new: true,
+            runValidators: true,
+            upsert: true
+        }
+    );
+}
+
 
     async findAll() {
-        const alojamientos = await this.model.find().populate('reservas')
+        const alojamientos = await this.model.find().populate({
+            path: 'reservas',
+            populate: [
+                { path: 'huespedReservador' },
+                { path: 'alojamiento' }
+            ]
+        })
+
         return alojamientos.map(a => {
             a.reservas = a.reservas.map(docToReserva);
             return a;
@@ -28,19 +40,21 @@ export class AlojamientoRepository {
     }
 
     async findById(id) {
-        const alojamiento = await this.model.findById(id).populate({
+        const alojamientoDoc = await this.model.findById(id).populate({
             path: 'reservas',
             populate: [
-            { path: 'huespedReservador' },
-            { path: 'alojamiento' }
+                { path: 'huespedReservador' },
+                { path: 'alojamiento' }
             ]
         });
 
-        if (alojamiento && alojamiento.reservas) {
-            alojamiento.reservas = alojamiento.reservas.map(docToReserva);
-        }
-        return alojamiento;
+        if (!alojamientoDoc) return null;
+
+        const reservas = (alojamientoDoc.reservas || []).map(docToReserva).filter(r => r !== undefined);
+
+        return docToAlojamiento(alojamientoDoc, reservas); // ← pasás las reservas listas
     }
+
 
     async deleteById(id) {
         const resultado = await this.model.findByIdAndDelete(id);
