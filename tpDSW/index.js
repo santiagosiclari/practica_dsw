@@ -45,7 +45,7 @@ const factoryNotificacion = new FactoryNotificacion();
 // Services
 const notificacionService = new NotificacionService(notificacionesRepo, userRepo);
 const reservaService = new ReservaService(reservaRepo, alojamientoRepo, userRepo, notificacionService, notificacionesRepo, factoryNotificacion);
-const alojamientoService = new AlojamientoService(reservaRepo, alojamientoRepo, userRepo);
+const alojamientoService = new AlojamientoService(alojamientoRepo);
 
 // Cron-Jobs
 iniciarTareaChecks(notificacionService);

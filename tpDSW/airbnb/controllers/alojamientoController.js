@@ -27,13 +27,13 @@ export class AlojamientoController {
                 page: resultado.page,
                 limit: resultado.limit,
                 total: resultado.total,
-                alojamientos : this.toDtos(resultado.resultAlojamientos)})
+                alojamientos : this.alojamientosToDtos(resultado.resultAlojamientos)})
         }catch(error) {
             next(error);
         }
     }
 
-    toDto(alojamiento) {
+    alojamientoToDto(alojamiento) {
         return {
             _id: alojamiento._id,
             anfitrion: alojamiento.anfitrion,
@@ -44,7 +44,7 @@ export class AlojamientoController {
             precioPorNoche: alojamiento.getPrecioPorNoche()
         };
     }
-    toDtos(alojamientos){
-        return alojamientos.map(alojamiento => this.toDto(alojamiento));
+    alojamientosToDtos(alojamientos){
+        return alojamientos.map(alojamiento => this.alojamientoToDto(alojamiento));
     }
 }

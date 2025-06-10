@@ -6,10 +6,8 @@ import { WIFI, PISCINA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO } from '../models/d
 
 
 export class AlojamientoService {
-    constructor(reservaRepository, alojamientoRepository, userRepository) {
-        this.reservaRepository = reservaRepository,
-            this.alojamientoRepository = alojamientoRepository,
-            this.userRepository = userRepository
+    constructor(alojamientoRepository) {
+            this.alojamientoRepository = alojamientoRepository
     }
 
     async listarAlojamientos(filters, page, limit) {
@@ -31,9 +29,6 @@ export class AlojamientoService {
         };
     }
     fromDto(dto) {
-        const fechaInicio = new Date(dto.fechaInicio);
-        const fechaFinal = new Date(dto.fechaFinal);
-
         return {
             ciudad: dto.ciudad,
             pais: dto.pais,
@@ -41,7 +36,7 @@ export class AlojamientoService {
             precioMax: dto.precioMax,
             cantHuespedes: dto.cantHuespedes,
             caracteristicas: dto.caracteristicas?.length ? this.matchearCaracteristica(dto.caracteristicas) : [],
-            rangoFechas: new RangoFechas(fechaInicio, fechaFinal)
+            rangoFechas: new RangoFechas(dto.fechaInicio, dto.fechaFinal)
         };
     }
     matchearCaracteristica(caracteristicasDto = []) {
@@ -61,8 +56,6 @@ export class AlojamientoService {
     }
     filtrarResultado(parametros, resultados){
         const alojamientos = resultados.alojamientos
-
-        const alojDisponibles = alojamientos.filter(alojamiento => alojamiento.estasDisponibleEn(parametros.rangoFechas));
-        return alojDisponibles
+        return alojamientos.filter(alojamiento => alojamiento.estasDisponibleEn(parametros.rangoFechas));
     }
 }

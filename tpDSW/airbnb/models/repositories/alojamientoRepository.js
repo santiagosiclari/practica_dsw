@@ -47,9 +47,7 @@ async save(alojamiento) {
                 { path: 'alojamiento' }
             ]
         });
-
         if (!alojamientoDoc) return null;
-
         const reservas = (alojamientoDoc.reservas || []).map(docToReserva).filter(r => r !== undefined);
 
         return docToAlojamiento(alojamientoDoc, reservas); // ← pasás las reservas listas
@@ -63,24 +61,51 @@ async save(alojamiento) {
 
     async buscarConFiltros(filtros, page, limit) {
         const query = {};
-        if(filtros.ciudad){ query['direccion.ciudad.nombre'] = filtros.ciudad }
+
+        // Construcción del filtro MongoDB
+        if (filtros.ciudad) query['direccion.ciudad.nombre'] = filtros.ciudad;
         if (filtros.pais) query['direccion.ciudad.pais.nombre'] = filtros.pais;
         if (filtros.lat) query['direccion.lat'] = filtros.lat;
         if (filtros.long) query['direccion.long'] = filtros.long;
-        if (!isNaN(filtros.precioMin) && !isNaN(filtros.precioMax)) query.precioPorNoche = { $gte: filtros.precioMin, $lte: filtros.precioMax };
-        if (!isNaN(filtros.cantHuespedes)) query.cantHuespedesMax = { $gte: filtros.cantHuespedes };
-        if (filtros.caracteristicas?.length) query.caracteristicas = { $all: filtros.caracteristicas };
+        if (!isNaN(filtros.precioMin) && !isNaN(filtros.precioMax)) {
+            query.precioPorNoche = { $gte: filtros.precioMin, $lte: filtros.precioMax };
+        }
+        if (!isNaN(filtros.cantHuespedes)) {
+            query.cantHuespedesMax = { $gte: filtros.cantHuespedes };
+        }
+        if (filtros.caracteristicas?.length) {
+            query.caracteristicas = { $all: filtros.caracteristicas };
+        }
+
         const skip = (page - 1) * limit;
-
-        const resultados = await this.model.find(query).populate('reservas').skip(skip).limit(limit);
+        const docs = await this.model.find(query)
+            .populate({
+                path: 'reservas',
+                populate: [
+                    { path: 'huespedReservador' },
+                    { path: 'alojamiento' }
+                ]
+            })
+            .skip(skip)
+            .limit(limit);
         const total = await this.model.countDocuments(query);
+        // Mapeo a instancias de dominio
+        const alojamientos = docs.map(doc => {
+            const reservas = (doc.reservas || [])
+                .map(docToReserva)
+                .filter(r => r !== undefined);
+            const alojamiento = docToAlojamiento(doc);
+            if (alojamiento) alojamiento.reservas = reservas;
 
-        const alojamientos = resultados.map(docToAlojamiento)
-               return {
-                    total,
-                    page,
-                    limit,
-                    alojamientos
-                };
+            return alojamiento;
+        }).filter(a => a !== undefined); // Filtra nulos en caso de errores de datos
+
+        return {
+            total,
+            page,
+            limit,
+            alojamientos
+        };
     }
+
 }

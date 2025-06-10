@@ -32,7 +32,6 @@ export class ReservaService {
   }
 
   async crearReserva(reserva, rangoFechas) {
-    //const { huespedReservador, cantHuespedes, alojamiento } = reserva;
     const huespedReservador = reserva.huespedReservador;
     const cantHuespedes = reserva.cantHuespedes;
     const alojamiento = reserva.alojamiento;
@@ -46,8 +45,6 @@ export class ReservaService {
       alojamientoEncontrado,
       rangoFechas
     );
-/*    console.log('rangoFechas recibido en crearReserva:', rangoFechas);
-    console.log('Reserva creada:', nueva);*/
 
     const reservaGuardada = await this.reservaRepository.save(nueva);
     await alojamientoEncontrado.agregarReserva(reservaGuardada);
