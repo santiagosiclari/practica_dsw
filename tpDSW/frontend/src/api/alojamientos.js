@@ -8,8 +8,7 @@ export const getAlojamientosFromApi = async () => {
     try{
         const alojamientos = await alojamientosApi.get('/alojamientos')
             .then(r => r.data);
-        const imagenes = await alojamientosApi.get('/images')
-            .then(r => r.data);
+
         return alojamientos.map(p => ({
             ...p,
             imagen: p.image,

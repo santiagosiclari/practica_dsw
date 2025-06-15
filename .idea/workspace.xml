@@ -5,34 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dd78ad2-21bb-4e46-bd69-b5a974a33481" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/api/alojamientos.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/api/api.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/notificaciones/NotificacionItem.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/notificaciones/NotificacionItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/reservas/ReservaItem.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/reservas/ReservaItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/context/AlojamientosProvider.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/context/NotificacionesProvider.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/context/ReservasProvider.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/alojamientos.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/notificacion/NotificacionDetailPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/notificacion/notificacion.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/reservas/ReservaDetailPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/reservas/reserva.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/routes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoItem.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/carousel/Carousel.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/carousel/Carousel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/AlojamientoDetailPage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/home/HomePage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/layout/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/layout/Layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/mockData/alojamientos.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/api/alojamientos.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/api/alojamientos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoItem.css" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoDetailPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoDetailPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/navbar/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/navbar/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/placeholder_input/PlaceholderInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/placeholder_input/PlaceholderInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/search/Search.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/search/Search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/alojamientos.css" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/alojamientos.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,24 +67,25 @@
     <option name="showLibraryContents" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;react-vistas&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/santiagosiclari/Documents/GitHub/practica_dsw/tpDSW/frontend/src/components/alojamientos&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.AlojamientoItem.js.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "react-vistas",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/santiagosiclari/Documents/GitHub/practica_dsw/tpDSW/frontend/src/components/alojamientos",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos" />
@@ -179,6 +163,14 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <method v="2" />
     </configuration>
+    <configuration name="AlojamientoDetailPage.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoDetailPage.js" working-dir="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.AlojamientoDetailPage.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -219,7 +211,7 @@
       <workItem from="1749232901245" duration="1003000" />
       <workItem from="1749234004411" duration="723000" />
       <workItem from="1749234745634" duration="230000" />
-      <workItem from="1749942228920" duration="13743000" />
+      <workItem from="1749942228920" duration="19848000" />
     </task>
     <servers />
   </component>
