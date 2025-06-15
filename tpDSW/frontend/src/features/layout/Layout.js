@@ -7,7 +7,6 @@ const Layout = () => {
           <Header username="Alumno/a de DDSO"></Header>
           <Navbar></Navbar>
           <Outlet />
-
         </>
     )
   

@@ -5,10 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dd78ad2-21bb-4e46-bd69-b5a974a33481" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/api/alojamientos.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/api/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/notificaciones/NotificacionItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/notificaciones/NotificacionItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/reservas/ReservaItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/reservas/ReservaItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/context/AlojamientosProvider.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/context/NotificacionesProvider.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/context/ReservasProvider.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/alojamientos.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/notificacion/NotificacionDetailPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/notificacion/notificacion.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/reservas/ReservaDetailPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/reservas/reserva.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/routes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/navbar/Navbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/navbar/Navbar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/user_boton/UserBoton.css" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/user_boton/UserBoton.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/user_boton/UserBoton.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/user_boton/UserBoton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/carousel/Carousel.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/carousel/Carousel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/AlojamientoDetailPage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/home/HomePage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/layout/Layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/layout/Layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/mockData/alojamientos.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +45,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -159,7 +183,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
       </set>
     </attachedChunks>
   </component>
@@ -195,6 +219,7 @@
       <workItem from="1749232901245" duration="1003000" />
       <workItem from="1749234004411" duration="723000" />
       <workItem from="1749234745634" duration="230000" />
+      <workItem from="1749942228920" duration="13743000" />
     </task>
     <servers />
   </component>
