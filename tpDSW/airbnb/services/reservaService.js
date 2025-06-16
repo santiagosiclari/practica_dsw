@@ -28,63 +28,55 @@ export class ReservaService {
     this.userRepository = userRepository;
     this.notificacionRepository = notificacionRepository;
     this.notificacionService = notificacionService;
-    this.factoryNotificacion = factoryNotificacion; // ¡IMPORTANTE!: crear una instancia
+    this.factoryNotificacion = factoryNotificacion;
   }
 
-
   async crearReserva(reserva, rangoFechas) {
-    const { huespedReservador, cantHuespedes, alojamiento } =
-      await this.fromDto(reserva);
+    const huespedReservador = reserva.huespedReservador;
+    const cantHuespedes = reserva.cantHuespedes;
+    const alojamiento = reserva.alojamiento;
+
+    const huespedEncontrado = await this.userRepository.findById(huespedReservador);
+    const alojamientoEncontrado = await this.alojamientoRepository.findById(alojamiento);
 
     const nueva = new Reserva(
-      huespedReservador,
+      huespedEncontrado,
       cantHuespedes,
-      alojamiento,
+      alojamientoEncontrado,
       rangoFechas
     );
+
     const reservaGuardada = await this.reservaRepository.save(nueva);
-    await alojamiento.agregarReserva(reservaGuardada);
-    await this.alojamientoRepository.save(alojamiento);
-    this.notificacionService.crearNotificacion(nueva.notificacionAlCrear())
+    await alojamientoEncontrado.agregarReserva(reservaGuardada);
+    await this.alojamientoRepository.save(alojamientoEncontrado);
+    this.notificacionService.crearNotificacion(nueva.notificacionAlCrear()) //GUARDA la notificacion que creamos nivel dominio
 
     return reservaGuardada;
   }
 
   async cambiarEstados(cambioEstado) {
-    const { estado, reserva, motivo, usuario } = await this.fromDtoCambio(
-        cambioEstado
-    );
-    this._validarCambioEstado(estado, reserva);
+    const { estado, reserva, motivo, usuario } = cambioEstado;
 
-    const cambio = new CambioEstadoReserva(estado, reserva, motivo, usuario);
-    const notificacion = reserva.actualizarEstado(cambio.estado, motivo);
+    const usuarioEncontrado = await this.userRepository.findById(usuario);
+    const reservaEncontrada = await this.reservaRepository.findById(reserva);
+
+    const cambio = new CambioEstadoReserva(estado, reservaEncontrada, motivo, usuarioEncontrado);
+    const notificacion = reservaEncontrada.actualizarEstado(cambio);
     const reservaGuardada = await this.reservaRepository.save(cambio.reserva);
     await this.notificacionService.crearNotificacion(notificacion);
 
     return reservaGuardada;
   }
 
-  _validarCambioEstado(tipo, reserva) {
-    const fechaActual = new Date();
-
-    if (reserva.getRangoFechaInicio() <= fechaActual) {
-      if (tipo === EstadoReserva.CANCELADA) {
-        throw new NoPermitoCambioEstadoReservaError(
-          "La reserva superó la fecha límite para ser cancelada"
-        );
-      }
-    }
-  }
   async modificarReserva(modificacion) {
-    const reserva = await this.reservaRepository.findById(modificacion.reserva);
-    const alojamiento = await this.alojamientoRepository.findById(
-      reserva.alojamiento
-    );
+    const {reserva, cantHuespedes, fechaInicio, fechaFinal} = modificacion;
 
-    const quiereModificarCant = modificacion.cantHuespedes !== undefined;
+    const reservaEncontrada = await this.reservaRepository.findById(reserva);
+
+    const quiereModificarCant = cantHuespedes !== undefined;
     const quiereModificarFechas =
-      modificacion.fechaInicio !== undefined ||
-      modificacion.fechaFinal !== undefined;
+      fechaInicio !== undefined ||
+      fechaFinal !== undefined;
 
     if (!quiereModificarCant && !quiereModificarFechas) {
       throw new ValidationError(
@@ -94,35 +86,24 @@ export class ReservaService {
 
     // Validar fechas: si viene solo una, es error
     if (
-      (modificacion.fechaInicio && !modificacion.fechaFinal) ||
-      (!modificacion.fechaInicio && modificacion.fechaFinal)
+      (fechaInicio && !fechaFinal) ||
+      (!fechaInicio && fechaFinal)
     ) {
-      throw new ValidationError(
-        "Para modificar fechas deben enviarse fechaInicio y fechaFinal juntas"
-      );
+      throw new ValidationError("Para modificar fechas deben enviarse fechaInicio y fechaFinal juntas");
     }
 
     // Modificar cantidad de huéspedes
     if (quiereModificarCant) {
-      const { cantHuespedes } = this.fromDtoModCant(modificacion);
-      if (!alojamiento.puedenAlojarse(cantHuespedes)) {
-        throw new AlojamientoSobrepasadoError(
-          "Se ha sobrepasado la cantidad de huésped máxima",
-          406
-        );
-      }
-      reserva.setCantHuespedes(cantHuespedes);
+      reservaEncontrada.setCantHuespedes(cantHuespedes);
     }
 
     // Modificar rango de fechas
-    if (modificacion.fechaInicio && modificacion.fechaFinal) {
-      const { rangoFechas } = await this.fromDtoModFecha(
-        modificacion,
-        alojamiento
-      );
-      reserva.setRangoFecha(rangoFechas);
+    if (fechaInicio && fechaFinal) {
+      const rango = new RangoFechas(fechaInicio, fechaFinal);
+      reservaEncontrada.setRangoFecha(rango);
     }
-    return await this.reservaRepository.save(reserva);
+
+    return await this.reservaRepository.save(reservaEncontrada);
   }
 
   async listarReservas() {
@@ -155,18 +136,6 @@ export class ReservaService {
     }
   }
 
-  async fromDto(reservaDto) {
-    return {
-      huespedReservador: await this.userRepository.findById(
-        reservaDto.huespedReservador
-      ),
-      cantHuespedes: reservaDto.cantHuespedes,
-      alojamiento: await this.alojamientoRepository.findById(
-        reservaDto.alojamiento
-      )
-    };
-  }
-
   async obtenerReservasProximas() {
     const hoy = new Date();
     return await this.reservaRepository.findReservasProximas(hoy, 1); // próximas 24hs
@@ -174,43 +143,6 @@ export class ReservaService {
   async obtenerReservasPorFinalizar() {
     const hoy = new Date();
     return await this.reservaRepository.findReservasPorFinalizar(hoy, 1);
-  }
-  async fromDtoCambio(dto) {
-    const usuarioEncontrado = await this.userRepository.findById(dto.usuario);
-    const reservaEncontrada = await this.reservaRepository.findById(
-      dto.reserva
-    );
-    return {
-      estado: dto.estado,
-      reserva: reservaEncontrada,
-      motivo: dto.motivo,
-      usuario: usuarioEncontrado,
-    };
-  }
-  fromDtoModCant(dto) {
-    return {
-      cantHuespedes: dto.cantHuespedes,
-    };
-  }
-  async fromDtoModFecha(dto, alojamiento) {
-    const fechaInicio = new Date(dto.fechaInicio);
-    const fechaFinal = new Date(dto.fechaFinal);
-
-    const reservasExistente = await this.reservaRepository.findFechaCoincidente(
-      fechaInicio,
-      fechaFinal,
-      alojamiento
-    );
-    if (reservasExistente) {
-      throw new AlojamientoOcupadoError(
-        "Ya hay una reserva en este rango de fechas",
-        403
-      );
-    }
-
-    return {
-      rangoFechas: new RangoFechas(fechaInicio, fechaFinal),
-    };
   }
 
   matchearEstado(estadoDto) {
