@@ -2,10 +2,7 @@ import "./alojamientos.css"
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlojamientosContext } from "../../context/AlojamientosProvider";
-
-export const Titulo = ({ texto }) => {
-    return <h1 className="title">{texto}</h1>
-}
+import Filtro from "../../components/filtro/Filtro";
 
 const CardAlojamiento = ({ nombre, imagen, precio, seleccionado, alSeleccionarAlojamiento }) => {
     return <div
@@ -50,7 +47,7 @@ const Alojamientos = () => {
             return coincideCiudad && admiteHuespedes;
         });
 
-        setAlojamientos(filtrados); // 👈 acá ya no volvés a todosLosAlojamientos si no hay matches
+        setAlojamientos(filtrados);
     }, [searchParams, todosLosAlojamientos]);
 
 
@@ -60,8 +57,8 @@ const Alojamientos = () => {
 
     return (
         <section className="home">
+            <Filtro />
             <div className="content">
-                <Titulo texto="Alojamientos" />
                 <div>{banner}</div>
                 {alojamientos.length === 0 ? (
                     <div className="no-results">

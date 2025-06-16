@@ -5,6 +5,8 @@ import {BrowserRouter} from "react-router";
 import {useContext} from "react";
 import {AlojamientosContext} from "./context/AlojamientosProvider";
 import AlojamientoDetailPage from "./components/alojamientos/AlojamientoDetailPage";
+import ReservaDetailPage from "./components/reservas/ReservaDetailPage";
+
 
 export const AppRoutes = () => {
     const {alojamientos, alojamientosLoading} = useContext(AlojamientosContext);
@@ -13,8 +15,7 @@ export const AppRoutes = () => {
             <Route path="/" element={<Layout/>}>
                 {<Route path="/alojamientos" element={alojamientosLoading ? "Cargando..." : <Alojamientos/>}/>}
                 <Route path="/alojamiento/:id" element={<AlojamientoDetailPage />} />
-                {/*<Route path="/notificaciones" element={notificaciones.length === 0 ? "Cargando..." : <Notificacion/>}/>*/}
-                {/*<Route path="/reservas" element={<ReservaDetailPage/>}/>*/}
+                <Route path="/checkout/:id" element={<ReservaDetailPage />} />
             </Route>
         </Routes>
     </BrowserRouter>

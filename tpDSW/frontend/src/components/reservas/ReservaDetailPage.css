@@ -1,0 +1,75 @@
+.checkout-container {
+    padding: 2rem;
+    max-width: 600px;
+    margin: auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-info p,
+.fechas label {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #333;
+}
+
+.fechas {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-confirmar {
+    padding: 0.5rem 1rem;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-confirmar:hover {
+    background-color: #006f98;
+}
+
+.reserva-confirmada {
+    text-align: center;
+    padding: 2rem;
+    background-color: #e6ffe6;
+    border: 1px solid #00a100;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.reserva-confirmada p {
+    color: #006600;
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}

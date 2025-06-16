@@ -1,5 +1,3 @@
-import { ReservaController } from '../controllers/reservaController.js';
-
 export function registerReservaRoutes(app, reservaController) {
 
     app.post("/reservas", (req, res, next) =>
