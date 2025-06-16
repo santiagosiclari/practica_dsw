@@ -24,20 +24,14 @@ export class Reserva{
         this.precioPorNoche = alojamiento.precioPorNoche;
         this.rangoFechas = rangoFechas;
         this.cambiosDeEstado = [];
+
+        this.notificacionAlCrear();
     }
 
-    notificacionAlCrear(){
+    notificacionAlCrear() {
         return new FactoryNotificacion().crearSegunReserva(this);
     }
-    notificacionAlAceptar(){
-        return new FactoryNotificacion().crearSegunAceptar(this);
-    }
-    notificacionAlRechazar(motivo){
-        return new FactoryNotificacion().crearSegunRechazo(this, motivo);
-    }
-    notificacionAlCancelar(motivo){
-        return new FactoryNotificacion().crearSegunCancelacion(this, this.huespedReservador, motivo);
-    }
+    
     setId(id) {
         this._id = id;
     }
@@ -64,11 +58,11 @@ export class Reserva{
     
         switch (this.estado) {
             case 'CONFIRMADA':
-                return this.notificacionAlAceptar();
+                return new FactoryNotificacion().crearSegunReserva(this);
             case 'CANCELADA':
-                return this.notificacionAlCancelar(cambioEstado.motivo);
+                return new FactoryNotificacion().crearSegunCancelacion(this, this.huespedReservador, cambioEstado.motivo);
             case 'RECHAZADA':
-                return this.notificacionAlRechazar(cambioEstado.motivo);
+                return new FactoryNotificacion().crearSegunRechazo(this, cambioEstado.motivo);
             default:
                 throw new ValidationError("Datos de Estado inválidos")
         }

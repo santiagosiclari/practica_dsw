@@ -49,7 +49,7 @@ export class ReservaService {
     const reservaGuardada = await this.reservaRepository.save(nueva);
     await alojamientoEncontrado.agregarReserva(reservaGuardada);
     await this.alojamientoRepository.save(alojamientoEncontrado);
-    this.notificacionService.crearNotificacion(nueva.notificacionAlCrear())
+    this.notificacionService.crearNotificacion(nueva.notificacionAlCrear()) //GUARDA la notificacion que creamos nivel dominio
 
     return reservaGuardada;
   }
