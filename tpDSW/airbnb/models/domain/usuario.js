@@ -1,4 +1,5 @@
 export class Usuario{
+    _id
     nombre
     email
     tipo
@@ -7,6 +8,8 @@ export class Usuario{
         this.email = email;
         this.tipo = tipo;
     }
+    getId(){return this._id}
+    setId(id){this._id = id}
     getNombre(){return this.nombre}
     getEmail(){return this.email}
     getTipo(){return this.tipo}
