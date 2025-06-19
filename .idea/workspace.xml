@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dd78ad2-21bb-4e46-bd69-b5a974a33481" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/reservas/ReservaDetailPage.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/reservas/ReservaDetailPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/CardItem/CardItem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/CardItem/CardItem.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/backend/airbnb/rutas/reservaRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/backend/airbnb/rutas/reservaRoute.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/reservas/ReservaItem.css" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/ModalReservaConfirmada/ModalReservaConfirmada.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/reservas/ReservaItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/ModalReservaConfirmada/ModalReservaConfirmada.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,6 +206,7 @@
       <workItem from="1749234745634" duration="230000" />
       <workItem from="1749942228920" duration="20093000" />
       <workItem from="1750030785831" duration="4140000" />
+      <workItem from="1750346126516" duration="1183000" />
     </task>
     <servers />
   </component>
