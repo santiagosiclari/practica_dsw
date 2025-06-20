@@ -1,14 +1,17 @@
+/* Fondo blanco con borde y sombra */
 .navbar-bg {
   width: 100%;
   background-color: white;
   border-bottom: 1px solid #ddd;
-  padding: 0.8rem 2rem;
+  padding: 0.3rem 2rem;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
+/* Contenido centrado y limitado */
 .navbar-content {
-  max-width: 1300px;
-  margin: 0 auto;
+  /*max-width: 1300px;*/
+  margin: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,40 +21,18 @@
 .navbar-logo img {
   height: 2.5rem;
   width: auto;
-}
-
-/* Centro: barra de búsqueda */
-.search-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  max-width: 600px;
-  padding: 0.4rem;
-  border: 1px solid #ddd;
-  border-radius: 999px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  margin: 0 2rem;
-  gap: 0.5rem;
-  background-color: #fff;
-}
-
-/* Botón de búsqueda */
-.search-btn {
-  background-color: #ff385c;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  padding: 0.4rem;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
 }
 
-/* Derecha */
+/* Menú central */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-size: 0.95rem;
+}
+
+/* Opciones a la derecha */
 .navbar-right {
   display: flex;
   align-items: center;
@@ -59,7 +40,17 @@
   font-size: 0.95rem;
 }
 
+/* Botón del perfil */
 .profile-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.4rem 0.8rem;
+}
+
+/* Botón de notificaciones */
+.notificaciones-options {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -68,6 +59,51 @@
   padding: 0.4rem 0.8rem;
 }
 
-.notificaciones-options {
+/* Responsive para pantallas chicas */
+@media (max-width: 768px) {
+  .navbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 
+  .navbar-center,
+  .navbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.navbar-center button {
+  background: transparent;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+/* Efecto subrayado animado */
+.navbar-center button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 8px;
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.navbar-center button:hover {
+  color: #000;
+}
+
+.navbar-center button:hover::after {
+  transform: scaleX(1);
 }
