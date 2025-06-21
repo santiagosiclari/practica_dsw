@@ -16,7 +16,7 @@ export const AppRoutes = () => {
             <Route path="/" element={<Layout/>}>
                 {<Route index element={<HomePage/>}/>}
                 {<Route path="/alojamientos" element={alojamientosLoading ? "Cargando..." : <Alojamientos/>}/>}
-                <Route path="/alojamiento/:id" element={<AlojamientoDetailPage />} />
+                <Route path="/alojamientos/:id" element={<AlojamientoDetailPage />} />
                 <Route path="/checkout/:id" element={<ReservaDetailPage />} />
             </Route>
         </Routes>

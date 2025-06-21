@@ -31,13 +31,13 @@ export class NotificacionRepository {
 
     async actualizarEstado(idNotificacion, idUser, camposActualizar) {
         const notiModificada = await this.model.findOneAndUpdate(
-        {_id: idNotificacion, usuario: idUser},
-        { $set: camposActualizar},
-        { new: true, runValidators: true }
-    );
+            {_id: idNotificacion, usuario: idUser},
+            { $set: camposActualizar},
+            { new: true, runValidators: true }
+        );
         if (!notiModificada) {
             throw new ValidationError("No se encontro la notificacion o el usuario es incorrecto")
         }
         return notiModificada;
-}
+    }
 }

@@ -8,21 +8,21 @@ import {SearchBar} from "../../components/SearchBar/SearchBar";
 
 const ListaAlojamientos = ({ alojamientos }) => {
     const navigate = useNavigate();
-    return <div className="alojamientos">{
-        alojamientos.map((a) => (
+    return <div className="alojamientos">
+        {alojamientos.map((a) => (
             <ActionAreaCard
-                key={a.id}
+                key={a._id}
                 nombre={a.nombre}
-                imagen={a.imagen || a.image}
-                precio={a.precio || a.precioPorNoche}
-                alSeleccionarItem={() => navigate("/alojamiento/" + a.id)} // ✅ este onClick
+                imagen={a.fotos?.[0]?.path}
+                precio={a.precioPorNoche}
+                alSeleccionarItem={() => navigate(`/alojamientos/${a._id}`)}
             />
-        ))
-    }</div>
+        ))}
+    </div>
 }
 
 const Alojamientos = () => {
-    const { alojamientos: todosLosAlojamientos, banner, error } = useContext(AlojamientosContext);
+    const { alojamientos: todosLosAlojamientos = [], banner, error } = useContext(AlojamientosContext);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
@@ -31,7 +31,8 @@ const Alojamientos = () => {
     const cantHuespedes = parseInt(searchParams.get("cantHuespedes")) || 0;
 
     const alojamientosFiltrados = todosLosAlojamientos.filter(a => {
-        const coincideCiudad = a.ciudad?.toLowerCase().includes(ciudadFiltro);
+        const ciudad = a.direccion?.ciudad?.nombre?.toLowerCase() || "";
+        const coincideCiudad = ciudad.includes(ciudadFiltro);
         const admiteHuespedes = !cantHuespedes || a.cantHuespedesMax >= cantHuespedes;
         return coincideCiudad && admiteHuespedes;
     });

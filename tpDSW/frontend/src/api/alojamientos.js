@@ -6,7 +6,8 @@ const alojamientosApi = axios.create({
 
 export const getAlojamientos = async () => {
     const { data } = await alojamientosApi.get("/alojamientos");
-    return data;
+    console.log("🧪 Backend respondió:", data);
+    return data.alojamientos; // ✅ extrae directamente el array
 };
 
 export const getAlojamientoById = async (id) => {

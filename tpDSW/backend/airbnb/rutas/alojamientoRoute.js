@@ -4,4 +4,7 @@ export function registerAlojamientoRoutes(app, alojamientoController) {
         alojamientoController.listarAlojamientos(req, res, next)
     );
 
+    app.get("/alojamientos/:id", (req, res, next) =>
+        alojamientoController.obtenerAlojamiento(req, res, next)
+    );
 }

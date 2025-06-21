@@ -1,18 +1,18 @@
 import { UsuarioModel, docToUsuario } from "../schemas/usuarioSchema.js";
 
 export class UserRepository {
-    
+
     constructor() {
         this.model = UsuarioModel;
     }
-    
+
     async save(usuario) {
         const query = usuario.id ? { _id: usuario.id } : { _id: new this.model()._id };
         return await this.model.findOneAndUpdate(
             query,
             usuario,
-            { 
-                new: true, 
+            {
+                new: true,
                 runValidators: true,
                 upsert: true
             }

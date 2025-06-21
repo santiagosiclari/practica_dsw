@@ -3,6 +3,7 @@ import { DOLAR_USA, PESO_ARG, REALES} from '../domain/moneda.js';
 import { WIFI, PISCINA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO } from '../domain/caracteristica.js';
 import { Alojamiento } from '../domain/alojamiento.js';
 import { docToReserva } from './reservaSchema.js';
+import * as path from "node:path";
 
 const alojamientoSchema = new mongoose.Schema({
     anfitrion: {
@@ -48,8 +49,9 @@ const alojamientoSchema = new mongoose.Schema({
     },
     fotos: [
         {
-            type: String
-        }
+            descripcion : {type: String, trim: true},
+                path : {type : String, trim: true},
+    }
     ],
     direccion: {
         calle : {
@@ -82,37 +84,38 @@ alojamientoSchema.loadClass(Alojamiento);
 
 export const AlojamientoModel = mongoose.model('Alojamiento', alojamientoSchema);
 
-export function docToAlojamiento(doc) {
+export function docToAlojamiento(doc, reservas = []) {
     const alojamiento = new Alojamiento(doc.anfitrion, doc.nombre, doc.direccion);
-    alojamiento.precioPorNoche = doc.precioPorNoche;
-    alojamiento.caracteristicas = caracteristicaDesdeNombre(doc.caracteristicas)
-    alojamiento.descripcion = doc.descripcion
-    alojamiento.fotos = doc.fotos
-    if (doc.reservas) {
-        alojamiento.reservas = doc.reservas.map(docToReserva);
-    }
-    alojamiento.horarioCheckIn = doc.horarioCheckIn
-    alojamiento.horarioCheckOut = doc.horarioCheckOut
-    alojamiento.setId(doc._id);
 
+    alojamiento.setId(doc._id);
+    alojamiento.caracteristicas = doc.caracteristicas;
+    alojamiento.fotos = doc.fotos;
+    alojamiento.horarioCheckIn = doc.horarioCheckIn;
+    alojamiento.horarioCheckOut = doc.horarioCheckOut;
+    alojamiento.anfitrion = doc.anfitrion;
+    alojamiento.cantHuespedesMax = doc.cantHuespedesMax;
+    alojamiento.precioPorNoche = doc.precioPorNoche;
+
+    alojamiento.reservas = reservas; // ← ya vienen convertidas
     return alojamiento;
 }
 
-/*export function alojamientoToDocument(alojamiento) {
+export function alojamientoToDocument(alojamiento) {
     return {
-        anfitrion : alojamiento.getAnfitrion()
-        nombre : alojamiento.getNombre()
-        descripcion : alojamiento.descripcion
-        precioPorNoche : alojamiento.getPrecioPorNoche()
-        moneda : alojamiento.moneda
-        horarioCheckIn : alojamiento.horarioCheckIn
-        horarioCheckOut : alojamiento.horarioCheckOut
-        direccion : alojamiento.direccion
-        cantHuespedesMax : alojamiento.cantHuespedesMax
-        caracteristicas : alojamiento.caracteristicas
-        fotos : alojamiento.fotos
+        anfitrion : alojamiento.getAnfitrion(),
+        nombre : alojamiento.getNombre(),
+        descripcion : alojamiento.descripcion,
+        precioPorNoche : alojamiento.getPrecioPorNoche(),
+        moneda : alojamiento.moneda,
+        horarioCheckIn : alojamiento.horarioCheckIn,
+        horarioCheckOut : alojamiento.horarioCheckOut,
+        direccion : alojamiento.direccion,
+        cantHuespedesMax : alojamiento.cantHuespedesMax,
+        caracteristicas : alojamiento.caracteristicas,
+        fotos : alojamiento.fotos,
+        reservas : alojamiento.reservas.map(r => r._id ?? r) // ids solamente
     };
-}*/
+}
 
 function caracteristicaDesdeNombre(nombres) {
     return nombres.map(nombre => {

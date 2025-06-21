@@ -10,7 +10,9 @@ export const AlojamientosProvider = ({children}) => {
     const [alojamientosLoading, setAlojamientosLoading] = useState(false);
 
     const cargarAlojamientos = async () => {
-        setAlojamientos(await getAlojamientos());
+        console.log("📂 ALOJAMIENTOS desde contexto:", alojamientos, typeof alojamientos);
+        const result = await getAlojamientos();
+        setAlojamientos(result); // ✅ Extraé solo el array
     }
     const cargarBanner = async () => {
         setBanner(await getBanner())

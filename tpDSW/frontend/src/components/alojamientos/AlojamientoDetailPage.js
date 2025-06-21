@@ -41,8 +41,8 @@ const AlojamientoDetailPage = () => {
                     alojamiento.fotos.map((foto, index) => (
                         <img
                             key={index}
-                            src={foto}
-                            alt={`Imagen ${index + 1} de ${alojamiento.nombre}`}
+                            src={typeof foto === "string" ? foto : foto.path}
+                            alt={foto.descripcion || `Imagen ${index + 1} de ${alojamiento.nombre}`}
                             className="alojamiento-detail-img"
                         />
                     ))

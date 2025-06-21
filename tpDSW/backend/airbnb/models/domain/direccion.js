@@ -5,13 +5,13 @@ export class Direccion{
     altura
     ciudad
     lat
-    long
+    longitud
 
-    constructor(calle, altura, ciudad, lat, long){
+    constructor(calle, altura, ciudad, lat, longitud){
         this.calle = calle;
         this.altura = altura;
         this.ciudad = new Ciudad(ciudad.nombre, ciudad.pais)
         this.lat = lat;
-        this.long = long;
+        this.longitud = longitud;
     }
 }

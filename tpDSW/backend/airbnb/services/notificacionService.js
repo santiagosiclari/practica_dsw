@@ -1,5 +1,3 @@
-import { Notificacion } from "../models/domain/notificacion.js";
-
 export class NotificacionService {
   constructor(notificacionRepository, userRepository) {
     this.notificacionRepository = notificacionRepository;
@@ -10,30 +8,30 @@ export class NotificacionService {
     return await this.notificacionRepository.save(notificacion);
   }
 
- async enviarNotificacionCheck() {
-  const reservasProximas = await this.reservaService.obtenerReservasProximas(); // <--- LLAMADA
+  async enviarNotificacionCheck() {
+    const reservasProximas = await this.reservaService.obtenerReservasProximas(); // <--- LLAMADA
 
-  for (const reserva of reservasProximas) {
-    const mensaje = `Tu reserva en "${reserva.getAlojamientoNombre()}" comienza el ${reserva.getRangoFechaInicio().toLocaleDateString()}. ¡Prepará las valijas!`;
+    for (const reserva of reservasProximas) {
+      const mensaje = `Tu reserva en "${reserva.getAlojamientoNombre()}" comienza el ${reserva.getRangoFechaInicio().toLocaleDateString()}. ¡Prepará las valijas!`;
 
-    await this.crearNotificacion({
-      mensaje,
-      usuario: reserva.getHuespedId(),
-    });
+      await this.crearNotificacion({
+        mensaje,
+        usuario: reserva.getHuespedId(),
+      });
+    }
   }
-}
-async enviarNotificacionCheckout() {
-  const reservasPorFinalizar = await this.reservaService.obtenerReservasPorFinalizar();
+  async enviarNotificacionCheckout() {
+    const reservasPorFinalizar = await this.reservaService.obtenerReservasPorFinalizar();
 
-  for (const reserva of reservasPorFinalizar) {
-    const mensaje = `Tu estadía en "${reserva.getAlojamientoNombre()}" termina el ${reserva.getRangoFechaFinal().toLocaleDateString()}. ¡Esperamos que hayas disfrutado!`;
+    for (const reserva of reservasPorFinalizar) {
+      const mensaje = `Tu estadía en "${reserva.getAlojamientoNombre()}" termina el ${reserva.getRangoFechaFinal().toLocaleDateString()}. ¡Esperamos que hayas disfrutado!`;
 
-    await this.crearNotificacion({
-      mensaje,
-      usuario: reserva.getHuespedId(),
-    });
+      await this.crearNotificacion({
+        mensaje,
+        usuario: reserva.getHuespedId(),
+      });
+    }
   }
-}
   async listarNotificaciones(filters) {
     return await this.notificacionRepository.findAll(filters);
   }
