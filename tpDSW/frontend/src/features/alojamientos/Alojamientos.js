@@ -1,21 +1,21 @@
 import "./alojamientos.css"
 import { useContext } from "react";
-import { CardItem } from "../../components/CardItem/CardItem"
+import ActionAreaCard from "../../components/CardItem/CardItem";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AlojamientosContext } from "../../context/AlojamientosProvider";
 import Filtro from "../../components/filtro/Filtro";
+import {SearchBar} from "../../components/SearchBar/SearchBar";
 
 const ListaAlojamientos = ({ alojamientos }) => {
     const navigate = useNavigate();
     return <div className="alojamientos">{
         alojamientos.map((a) => (
-            <CardItem
+            <ActionAreaCard
                 key={a.id}
                 nombre={a.nombre}
                 imagen={a.imagen || a.image}
                 precio={a.precio || a.precioPorNoche}
-                seleccionado={a.seleccionado}
-                alSeleccionarItem={() => navigate("/alojamiento/" + a.id)}
+                alSeleccionarItem={() => navigate("/alojamiento/" + a.id)} // ✅ este onClick
             />
         ))
     }</div>
@@ -42,6 +42,7 @@ const Alojamientos = () => {
 
     return (
         <section className="home">
+            <SearchBar />
             <Filtro />
             <div className="content">
                 <div>{banner}</div>
