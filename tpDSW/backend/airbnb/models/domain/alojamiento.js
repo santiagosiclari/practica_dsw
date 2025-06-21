@@ -22,7 +22,7 @@ export class Alojamiento{
         this.nombre = nombre;
         this.precioPorNoche = 0;
         this.moneda = Moneda.DOLAR_USA;
-        this.direccion = new Direccion(direccion.calle, direccion.altura, direccion.ciudad, direccion.lat,direccion.long);
+        this.direccion = new Direccion(direccion.calle, direccion.altura, direccion.ciudad, direccion.lat,direccion.longitud);
         this.cantHuespedesMax = 5;
         this.caracteristicas = [];
         this.reservas = [];
@@ -34,11 +34,10 @@ export class Alojamiento{
     getId(){
         return this._id;
     }
-    estasDisponibleEn(rangoDeFechas){
-        return this.reservas.every(reserva =>
-            !reserva.seSuperponeCon(rangoDeFechas)
-        );
+    estasDisponibleEn(rangoFechas) {
+        return this.reservas.every(r => !r.seSuperponeCon(rangoFechas));
     }
+
 
     tuPrecioEstaDentroDe(valorMinimo, valorMaximo){
         return this.precioPorNoche >= valorMinimo && this.precioPorNoche <= valorMaximo;
@@ -67,8 +66,5 @@ export class Alojamiento{
         // Si la reserva es el id directamente, lo usamos tal cual
         const reservaId = reserva._id ? reserva._id : reserva;
         this.reservas.push(reservaId);
-
-        // Guardar los cambios usando Mongoose (this es el documento mongoose)
-        return await this.save();
     }
 }

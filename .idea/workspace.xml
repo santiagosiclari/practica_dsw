@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9dd78ad2-21bb-4e46-bd69-b5a974a33481" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/CardItem/CardItem.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/CardItem/CardItem.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/controllers/alojamientoController.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/controllers/alojamientoController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/alojamientoRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/models/repositories/alojamientoRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/services/alojamientoService.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/services/alojamientoService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/airbnb/services/reservaService.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/airbnb/services/reservaService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,14 +19,6 @@
   </component>
   <component name="ComposerSettings">
     <execution />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-        <option value="CSS File" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -52,9 +46,6 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2xCIjDG4mfanEfwIeFDbCFfzU5f" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -62,38 +53,20 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Node.js.AlojamientoItem.js.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;react-vistas&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;correcciones__e2&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/santiagosiclari/Documents/GitHub/practica_dsw/tpDSW/frontend/src/components/alojamientos&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos" />
-      <recent name="$PROJECT_DIR$/tpDSW/frontend/src/components" />
-      <recent name="$PROJECT_DIR$/tpDSW/frontend/src/features" />
-      <recent name="$PROJECT_DIR$/tpDSW/frontend/src/components/header" />
-      <recent name="$PROJECT_DIR$/tpDSW/frontend/src/components/navbar" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/tpDSW/frontend/public/images" />
-      <recent name="$PROJECT_DIR$/tpDSW/frontend/src/components/navbar" />
-      <recent name="$PROJECT_DIR$/tpDSW/frontend/src/components/header" />
-      <recent name="$PROJECT_DIR$/tpDSW/backend" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="practica_dsw" />
@@ -156,19 +129,11 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <method v="2" />
     </configuration>
-    <configuration name="AlojamientoDetailPage.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoDetailPage.js" working-dir="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos">
-      <method v="2" />
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Node.js.AlojamientoDetailPage.js" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
       </set>
     </attachedChunks>
   </component>
@@ -194,19 +159,9 @@
       <workItem from="1748201931811" duration="1584000" />
       <workItem from="1748214477255" duration="10497000" />
       <workItem from="1748298636078" duration="5757000" />
-      <workItem from="1748880530622" duration="775000" />
-      <workItem from="1748890741779" duration="3581000" />
-      <workItem from="1748975418947" duration="111000" />
-      <workItem from="1749059906289" duration="5476000" />
-      <workItem from="1749088675607" duration="4010000" />
-      <workItem from="1749232586743" duration="8000" />
-      <workItem from="1749232715977" duration="161000" />
-      <workItem from="1749232901245" duration="1003000" />
-      <workItem from="1749234004411" duration="723000" />
-      <workItem from="1749234745634" duration="230000" />
-      <workItem from="1749942228920" duration="20093000" />
-      <workItem from="1750030785831" duration="4140000" />
-      <workItem from="1750346126516" duration="1183000" />
+      <workItem from="1749502237434" duration="3888000" />
+      <workItem from="1749567943089" duration="6019000" />
+      <workItem from="1749581884491" duration="1442000" />
     </task>
     <servers />
   </component>
@@ -214,6 +169,21 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/correcciones_e2" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -224,7 +194,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/cancelar_modificar_listar_reserva" />
+                        <option value="origin/correcciones_e2" />
                       </list>
                     </value>
                   </entry>

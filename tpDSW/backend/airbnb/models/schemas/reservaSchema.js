@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import {Reserva, RECHAZADA, PENDIENTE, CONFIRMADA, CANCELADA, RangoFechas, EstadoReserva} from '../domain/reserva.js';
 import {docToUsuario} from './usuarioSchema.js';
+import { docToAlojamiento } from './alojamientoSchema.js';
+
 const reservaSchema = new mongoose.Schema({
     huespedReservador: {
         type: mongoose.Schema.Types.ObjectId,
@@ -74,14 +76,17 @@ function estadoDesdeNombre(nombre) {
 }
 
 export function docToReserva(doc) {
-  const rango = new RangoFechas(doc.fechaInicio, doc.fechaFinal);
-  const huesped = typeof doc.huespedReservador.getNombre === 'function'
-      ? doc.huespedReservador
-      : docToUsuario(doc.huespedReservador);
-  const reserva = new Reserva(huesped, doc.cantHuespedes, doc.alojamiento, rango, doc.fechaAlta);
-  reserva.estado = doc.estado;
-  reserva.precioPorNoche = doc.precioPorNoche;
-  reserva.setId(doc._id);
+    if (!doc || !doc.fechaInicio || !doc.fechaFinal || !doc.huespedReservador || !doc.alojamiento) {
+        return undefined;
+    }
+    const rango = new RangoFechas(doc.fechaInicio, doc.fechaFinal);
+    const huesped = docToUsuario(doc.huespedReservador);
+    const alojamiento = docToAlojamiento(doc.alojamiento);
 
-  return reserva;
+    const reserva = new Reserva(huesped, doc.cantHuespedes, alojamiento, rango, doc.fechaAlta);
+    reserva.estado = doc.estado;
+    reserva.precioPorNoche = doc.precioPorNoche;
+    reserva.setId(doc._id);
+
+    return reserva;
 }
