@@ -17,7 +17,7 @@ export const AppRoutes = () => {
                 {<Route index element={<HomePage/>}/>}
                 {<Route path="/alojamientos" element={alojamientosLoading ? "Cargando..." : <Alojamientos/>}/>}
                 <Route path="/alojamientos/:id" element={<AlojamientoDetailPage />} />
-                <Route path="/checkout/:id" element={<ReservaDetailPage />} />
+                <Route path="/reservas/:id" element={<ReservaDetailPage />} />
             </Route>
         </Routes>
     </BrowserRouter>

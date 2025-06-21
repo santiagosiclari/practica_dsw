@@ -1,75 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import ModalReservaConfirmada from "../ModalReservaConfirmada/ModalReservaConfirmada";
 import { Texto } from "../ModalReservaConfirmada/ModalReservaConfirmada";
+import dayjs from "dayjs";
 import "./ReservaDetailPage.css";
 
-const API_BASE_URL = "https://684e02cf65ed08713917a135.mockapi.io/api";
+const API_BASE_URL = "http://localhost:3000";
 
 const ReservaDetailPage = () => {
     const { id } = useParams();
-    const [alojamiento, setAlojamiento] = useState(null);
+    const [reserva, setReserva] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [mostrarModal, setMostrarModal] = useState(false);
 
     useEffect(() => {
-        const fetchAlojamiento = async () => {
+        const fetchReserva = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/alojamientos/${id}`);
-                setAlojamiento(response.data);
+                const response = await axios.get(`${API_BASE_URL}/reservas/${id}`);
+                setReserva(response.data);
             } catch (err) {
-                setError("No se pudo cargar el alojamiento.");
+                setError("No se pudo cargar la reserva.");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchAlojamiento();
+        fetchReserva();
     }, [id]);
-
-    const confirmarReserva = () => {
-        setMostrarModal(true);
-    };
 
     if (loading) return <div className="detail-loading">Cargando reserva...</div>;
     if (error) return <div className="detail-error">{error}</div>;
-    if (!alojamiento) return null;
+    if (!reserva) return null;
+
+    const noches = dayjs(reserva.fechaFinal).diff(dayjs(reserva.fechaInicio), 'day');
+    const total = reserva.precioPorNoche * noches;
 
     return (
         <div className="alojamiento-detail-container">
-            <h1 className="alojamiento-detail-title">Check Out - {alojamiento.nombre}</h1>
+            <h1 className="alojamiento-detail-title">Reserva Confirmada</h1>
 
             <div className="alojamiento-detail-info">
-                <Texto etiqueta={"Precio Total"} texto={alojamiento.precioPorNoche || alojamiento.precio}/>
-                <Texto etiqueta={"Ubicación"} texto={alojamiento.ciudad + ", " + alojamiento.pais}/>
-                <Texto etiqueta={"Huéspedes"} texto={alojamiento.cantHuespedesMax || "No especificado"}/>
-                <Texto etiqueta={"Descripción"} texto={alojamiento.descripcion || "Este alojamiento es ideal para tu estadía."}/>
-                <Texto etiqueta={"Fecha Alta"} texto={alojamiento.fechaAlta || "2024-06-01"}/>
-                <Texto etiqueta={"Fecha Inicio:"} texto={alojamiento.fechaInicio || "2024-06-15"}/>
-                <Texto etiqueta={"Fecha Final:"} texto={alojamiento.fechaFinal || "2024-06-18"}/>
+                <Texto etiqueta={"ID de Reserva"} texto={reserva._id} />
+                <Texto etiqueta={"Precio por Noche"} texto={`$${reserva.precioPorNoche}`} />
+                <Texto etiqueta={"Cantidad de Huéspedes"} texto={reserva.cantHuespedes} />
+                <Texto etiqueta={"Estado"} texto={reserva.estado} />
+                <Texto etiqueta={"Fecha de Alta"} texto={dayjs(reserva.fechaAlta).format("YYYY-MM-DD")} />
+                <Texto etiqueta={"Check-in"} texto={dayjs(reserva.fechaInicio).format("YYYY-MM-DD")} />
+                <Texto etiqueta={"Check-out"} texto={dayjs(reserva.fechaFinal).format("YYYY-MM-DD")} />
+                <Texto etiqueta={"Total"} texto={`$${total}`} />
             </div>
-
-            <button className="alojamiento-detail-btn" onClick={confirmarReserva}>
-                Confirmar Reserva
-            </button>
-
-            {mostrarModal && (
-                <ModalReservaConfirmada
-                    datosReserva={{
-                        _id: alojamiento.id || "123ABC",
-                        alojamiento: alojamiento,
-                        precioPorNoche: alojamiento.precioPorNoche || alojamiento.precio,
-                        cantHuespedes: alojamiento.cantHuespedesMax,
-                        fechaAlta: alojamiento.fechaAlta || "2024-06-01",
-                        fechaInicio: alojamiento.fechaInicio || "2024-06-15",
-                        fechaFinal: alojamiento.fechaFinal || "2024-06-18"
-                    }}
-                    onClose={() => setMostrarModal(false)}
-                />
-            )}
-
         </div>
     );
 };

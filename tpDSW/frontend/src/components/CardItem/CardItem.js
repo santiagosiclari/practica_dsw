@@ -5,18 +5,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 
-
-/*export const CardItem = ({ nombre, imagen, precio, seleccionado, alSeleccionarItem }) => {
-    return <div
-        className={`card ${seleccionado && "selected"}`}
-        onClick={alSeleccionarItem}
-    >
-        <h3>{nombre}</h3>
-        <img src={imagen} alt={"Imagen" + nombre + " item"} />
-        <p className="price">${precio}</p>
-    </div>
-}*/
-
 export default function ActionAreaCard({nombre, imagen, precio, seleccionado, alSeleccionarItem}) {
     return (
         <Card sx={{ width: 280, height: 340, display: "flex", flexDirection: "column" }} onClick={alSeleccionarItem}>

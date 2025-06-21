@@ -50,6 +50,7 @@ export class AlojamientoController {
             descripcion: alojamiento.descripcion,
             direccion : alojamiento.direccion,
             precioPorNoche: alojamiento.getPrecioPorNoche(),
+            cantHuespedesMax: alojamiento.cantHuespedesMax,
             fotos: alojamiento.fotos.map(f => ({
                 path: f.path,
                 descripcion: f.descripcion
