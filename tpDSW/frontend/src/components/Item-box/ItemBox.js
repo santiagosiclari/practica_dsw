@@ -34,7 +34,7 @@ const ItemBox = ({ precioPorNoche, alojamientoId }) => {
                     huespedReservador: "68326110d26cbc7eced3985e",
                     cantHuespedes: huespedes,
                     alojamiento: alojamientoId,
-                    fechaInicio: checkIn.format("YYYY-MM-DD"),   // para que coincida con tu backend
+                    fechaInicio: checkIn.format("YYYY-MM-DD"),
                     fechaFinal: checkOut.format("YYYY-MM-DD"),
                 })
             });

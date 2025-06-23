@@ -1,53 +1,64 @@
-import "./alojamientos.css"
-import { useContext } from "react";
+import "./alojamientos.css";
+import { useEffect, useState } from "react";
 import ActionAreaCard from "../../components/CardItem/CardItem";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { AlojamientosContext } from "../../context/AlojamientosProvider";
 import Filtro from "../../components/filtro/Filtro";
-import {SearchBar} from "../../components/SearchBar/SearchBar";
+import { SearchBar } from "../../components/searchBar/SearchBar";
 
 const ListaAlojamientos = ({ alojamientos }) => {
     const navigate = useNavigate();
-    return <div className="alojamientos">
-        {alojamientos.map((a) => (
-            <ActionAreaCard
-                key={a._id}
-                nombre={a.nombre}
-                imagen={a.fotos?.[0]?.path}
-                precio={a.precioPorNoche}
-                alSeleccionarItem={() => navigate(`/alojamientos/${a._id}`)}
-            />
-        ))}
-    </div>
-}
+    return (
+        <div className="alojamientos">
+            {alojamientos.map((a) => (
+                <ActionAreaCard
+                    key={a._id}
+                    nombre={a.nombre}
+                    imagen={a.fotos?.[0]?.path}
+                    precio={a.precioPorNoche}
+                    alSeleccionarItem={() => navigate(`/alojamientos/${a._id}`)}
+                />
+            ))}
+        </div>
+    );
+};
 
 const Alojamientos = () => {
-    const { alojamientos: todosLosAlojamientos = [], banner, error } = useContext(AlojamientosContext);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
-    //Filtrado directo, sin estados ni efectos
-    const ciudadFiltro = searchParams.get("ciudad")?.toLowerCase() || "";
-    const cantHuespedes = parseInt(searchParams.get("cantHuespedes")) || 0;
+    const [alojamientos, setAlojamientos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const alojamientosFiltrados = todosLosAlojamientos.filter(a => {
-        const ciudad = a.direccion?.ciudad?.nombre?.toLowerCase() || "";
-        const coincideCiudad = ciudad.includes(ciudadFiltro);
-        const admiteHuespedes = !cantHuespedes || a.cantHuespedesMax >= cantHuespedes;
-        return coincideCiudad && admiteHuespedes;
-    });
+    const fetchAlojamientos = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const response = await fetch(`http://localhost:3000/alojamientos?${searchParams.toString()}`);
+            if (!response.ok) throw new Error("Error al cargar los alojamientos");
+            const data = await response.json();
+            setAlojamientos(data.alojamientos || []);
+        } catch (err) {
+            setError(err.message);
+            setAlojamientos([]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    if (error) {
-        return <div className="error">HUBO UN ERROR AL CARGAR LOS ALOJAMIENTOS: {error}</div>
-    }
+    useEffect(() => {
+        fetchAlojamientos();
+    }, [searchParams.toString()]);
 
     return (
         <section className="home">
             <SearchBar />
             <Filtro />
             <div className="content">
-                <div>{banner}</div>
-                {alojamientosFiltrados.length === 0 ? (
+                {loading && <p>Cargando alojamientos...</p>}
+                {error && <div className="error">HUBO UN ERROR: {error}</div>}
+
+                {!loading && alojamientos.length === 0 ? (
                     <div className="no-results">
                         <h3>No se encontraron alojamientos con esos filtros 😞</h3>
                         <p>Probá con otra ciudad, una fecha distinta o menos huéspedes.</p>
@@ -56,11 +67,12 @@ const Alojamientos = () => {
                         </button>
                     </div>
                 ) : (
-                    <ListaAlojamientos alojamientos={alojamientosFiltrados} />
+                    <ListaAlojamientos alojamientos={alojamientos} />
                 )}
             </div>
         </section>
-    )
+    );
 };
 
 export default Alojamientos;
+
