@@ -217,3 +217,23 @@
   font-size: 1.1rem;
 }
 
+@media (max-width: 660px) {
+  .alojamiento-detail-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .alojamiento-reserva-box {
+    width: 100%;
+    max-width: 350px;
+    margin-top: 2rem;
+  }
+
+  .alojamiento-detail-info {
+    width: 100%;
+  }
+
+  .caja-detalles {
+    width: 100%;
+  }
+}
