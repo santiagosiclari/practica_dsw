@@ -9,6 +9,7 @@ import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import PoolIcon from '@mui/icons-material/Pool';
 import PetsIcon from '@mui/icons-material/Pets';
 import Skeleton from "@mui/material/Skeleton";
+import CargandoCentrado from "../circularProgress/CircularProgress";
 
 const CARACTERISTICA_SIMBOLOS = {
     "WIFI": <WifiIcon fontSize="small" />,
@@ -37,7 +38,7 @@ const AlojamientoDetailPage = () => {
         fetchData();
     }, [id]);
 
-    if (loading) return <div className="detail-loading">Cargando alojamiento...</div>;
+    if (loading) return <CargandoCentrado/>;
     if (error) return <div className="detail-error">{error}</div>;
     if (!alojamiento) return null;
 

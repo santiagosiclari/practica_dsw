@@ -7,6 +7,7 @@ import {AlojamientosContext} from "./context/AlojamientosProvider";
 import AlojamientoDetailPage from "./components/alojamientos/AlojamientoDetailPage";
 import ReservaDetailPage from "./components/reservas/ReservaDetailPage";
 import HomePage from "./components/homePage/HomePage"
+import CargandoCentrado from "./components/circularProgress/CircularProgress";
 
 
 export const AppRoutes = () => {
@@ -16,7 +17,7 @@ export const AppRoutes = () => {
         <Routes>
             <Route path="/" element={<Layout/>}>
                 {<Route index element={<HomePage/>}/>}
-                {<Route path="/alojamientos" element={alojamientosLoading ? "Cargando..." : <Alojamientos/>}/>}
+                {<Route path="/alojamientos" element={alojamientosLoading ? <CargandoCentrado /> : <Alojamientos/>}/>}
                 <Route path="/alojamientos/:id" element={<AlojamientoDetailPage />} />
                 <Route path="/reservas/:id" element={<ReservaDetailPage />} />
             </Route>
