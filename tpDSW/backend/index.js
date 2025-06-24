@@ -30,7 +30,7 @@ import cors from "cors";
 
 const app = express();
 app.use(cors());
-const port = process.env.port;
+const port = process.env.PORT;
 const server = new Server(app, port);
 
 MongoDBClient.connect();
