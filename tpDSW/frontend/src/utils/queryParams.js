@@ -7,11 +7,14 @@ export const construirQueryParams = ({
                                          precioMin,
                                          precioMax,
                                          lat,
-                                         long
+                                         long,
+                                         page,
+                                        limit
                                      }) => {
     const params = new URLSearchParams();
 
     if (ciudad) params.set("ciudad", ciudad);
+    //if (pais) params.set("pais", pais);
     if (fechaInicio) params.set("fechaInicio", fechaInicio);
     if (fechaFinal) params.set("fechaFinal", fechaFinal);
     if (cantHuespedes) params.set("cantHuespedes", cantHuespedes);
@@ -20,6 +23,9 @@ export const construirQueryParams = ({
     if (precioMax) params.set("precioMax", precioMax);
     if (lat) params.set("lat", lat);
     if (long) params.set("long", long);
+    if (page) params.set("page", page);
+    if (limit) params.set("limit", limit);
+
 
     return params;
 };

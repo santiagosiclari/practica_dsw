@@ -15,6 +15,9 @@ export const SearchBar = () => {
     const [fechaInicio, setFechaInicio] = useState(null);
     const [fechaFinal, setFechaFinal] = useState(null);
     const [cantHuespedes, setCantHuespedes] = useState('');
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,7 +26,9 @@ export const SearchBar = () => {
             ciudad: ubicacion,
             fechaInicio: fechaInicio?.format('YYYY-MM-DD'),
             fechaFinal: fechaFinal?.format('YYYY-MM-DD'),
-            cantHuespedes
+            cantHuespedes,
+            page,
+            limit
         });
 
         navigate(`/alojamientos?${queryParams.toString()}`);
@@ -57,7 +62,10 @@ export const SearchBar = () => {
                 tipo="number"
                 placeInicial="Huespedes"
                 value={cantHuespedes}
-                onChange={(e) => setCantHuespedes(e.target.value)}
+                onChange={(e) => {
+                    const val = parseInt(e.target.value, 10);
+                    if (val >= 1 || isNaN(val)) setCantHuespedes(e.target.value);
+                }}
             />
             <button type="submit" className="search-btn">🔍</button>
         </form>

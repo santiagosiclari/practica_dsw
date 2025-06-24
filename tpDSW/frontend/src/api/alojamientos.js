@@ -4,9 +4,8 @@ const alojamientosApi = axios.create({
     baseURL: 'http://localhost:3000'
 });
 
-export const getAlojamientos = async () => {
+export const getAlojamientos = async (pageNumber) => {
     const { data } = await alojamientosApi.get("/alojamientos");
-    console.log("🧪 Backend respondió:", data);
     return data.alojamientos; // ✅ extrae directamente el array
 };
 

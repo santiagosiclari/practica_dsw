@@ -81,7 +81,6 @@ const Filtro = () => {
                                 )}
                             </div>
                         </section>
-
                         <section>
                             <h4>Rango de precios</h4>
                             <PlaceholderDoble
@@ -92,9 +91,10 @@ const Filtro = () => {
                                 valueFinal={precioMax}
                                 onChangeInicial={e => setPrecioMin(e.target.value)}
                                 onChangeFinal={e => setPrecioMax(e.target.value)}
+                                step={1000}
+                                min={0}
                             />
                         </section>
-
                         <section>
                             <h4>Coordenadas</h4>
                             <PlaceholderDoble
@@ -105,6 +105,7 @@ const Filtro = () => {
                                 valueFinal={long}
                                 onChangeInicial={e => setLat(e.target.value)}
                                 onChangeFinal={e => setLong(e.target.value)}
+                                step={10}
                             />
                         </section>
 

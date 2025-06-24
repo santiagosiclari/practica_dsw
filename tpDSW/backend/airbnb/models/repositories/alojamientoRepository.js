@@ -8,7 +8,7 @@ export class AlojamientoRepository {
     }
 
     async save(alojamiento) {
-        const query = alojamiento.id ? { _id: alojamiento.id } : { _id: new this.model()._id };
+        const query = alojamiento._id ? { _id: alojamiento._id } : { _id: new this.model()._id };
         const updateData = alojamientoToDocument(alojamiento); // sin _id
 
         return await this.model.findOneAndUpdate(
