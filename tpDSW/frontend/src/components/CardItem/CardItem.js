@@ -5,9 +5,18 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 
-export default function ActionAreaCard({nombre, imagen, precio, seleccionado, alSeleccionarItem}) {
+export default function ActionAreaCard({nombre, imagen, precio, huespedMax, seleccionado, alSeleccionarItem}) {
     return (
-        <Card sx={{ width: 280, height: 340, display: "flex", flexDirection: "column" }} onClick={alSeleccionarItem}>
+        <Card sx={{ width: 280,
+            height: 350,
+            display: "flex",
+            flexDirection: "column",
+            transition: 'background-color 0.3s ease',
+            '&:hover': {
+                backgroundColor: '#e7e7e7',
+                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
+                cursor: 'pointer',
+            }}} onClick={alSeleccionarItem}>
         <CardActionArea>
                 <CardMedia
                     component="img"
@@ -27,6 +36,10 @@ export default function ActionAreaCard({nombre, imagen, precio, seleccionado, al
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     Precio: ${precio}
                 </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    Max. huespedes: {huespedMax}
+                </Typography>
+
             </CardContent>
 
         </CardActionArea>

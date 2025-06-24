@@ -17,6 +17,7 @@ const ListaAlojamientos = ({ alojamientos }) => {
                     nombre={a.nombre}
                     imagen={a.fotos?.[0]?.path}
                     precio={a.precioPorNoche}
+                    huespedMax={a.cantHuespedesMax}
                     alSeleccionarItem={() => navigate(`/alojamientos/${a._id}`)}
                 />
             ))}
@@ -43,7 +44,7 @@ const Alojamientos = () => {
 
             const query = new URLSearchParams(searchParams);
             if (!query.has("page")) query.set("page", "1");
-            if (!query.has("limit")) query.set("limit", "6");
+            if (!query.has("limit")) query.set("limit", "10");
 
             //const response = await fetch(`http://localhost:3000/alojamientos?${searchParams.toString()}`);
             const response = await fetch(`http://localhost:3000/alojamientos?${query.toString()}`);

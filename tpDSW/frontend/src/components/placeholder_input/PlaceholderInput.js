@@ -46,8 +46,7 @@ export const PlaceholderDoble = ({
                 value={valueFinal}
                 onChange={onChangeFinal}
                 step={step}
-                min={min}
-                max={valueInicial}
+                min={valueInicial}
                 onKeyDown={handleKeyDown}
             />
         </div>

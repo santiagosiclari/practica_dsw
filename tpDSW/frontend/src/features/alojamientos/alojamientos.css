@@ -7,6 +7,8 @@
     .content{
         display: flex;
         flex-direction: column;
+        margin-left: 2rem;
+        margin-right: 2rem;
     }
 
     .title{
@@ -20,7 +22,7 @@
         align-items: flex-start;
         flex-wrap: wrap;
         padding: 50px;
-        background: #bbbbbb;
+        background: #f0f0f0;
         min-height: 100vh;
         gap: 20px;
         justify-content: center;
@@ -40,7 +42,7 @@
 }
 .volver-btn {
     padding: 10px 20px;
-    background-color: #ff5a5f;
+    background-color: #E0655E;
     color: white;
     border: none;
     border-radius: 5px;
@@ -51,7 +53,7 @@
 }
 
 .volver-btn:hover {
-    background-color: #e0484e;
+    background-color: #AD6F6C;
 }
 
 

@@ -1,14 +1,19 @@
 import './Filtro.css';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { PlaceholderDoble } from '../placeholder_input/PlaceholderInput';
 import { useNavigate, useLocation } from "react-router-dom";
 import { construirQueryParams } from '../../utils/queryParams';
+import WifiIcon from '@mui/icons-material/Wifi';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import PoolIcon from '@mui/icons-material/Pool';
+import PetsIcon from '@mui/icons-material/Pets';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const CARACTERISTICAS_DISPONIBLES = [
-    { clave: "WIFI", nombre: "Wifi", simbolo: "🛜" },
-    { clave: "ESTACIONAMIENTO", nombre: "Estacionamiento", simbolo: "🅿️" },
-    { clave: "PISCINA", nombre: "Piscina", simbolo: "🏊‍♂️" },
-    { clave: "MASCOTAS", nombre: "Mascotas Permitidas", simbolo: "🐶" },
+    { clave: "WIFI", nombre: "Wifi", simbolo: <WifiIcon /> },
+    { clave: "ESTACIONAMIENTO", nombre: "Estacionamiento", simbolo: <LocalParkingIcon /> },
+    { clave: "PISCINA", nombre: "Piscina", simbolo: <PoolIcon /> },
+    { clave: "MASCOTAS_PERMITIDAS", nombre: "Mascotas Permitidas", simbolo: <PetsIcon /> },
 ];
 
 const Caracteristica = ({ item, toggle }) => {
@@ -59,22 +64,62 @@ const Filtro = () => {
 
     const toggleModal = () => setMostrarModal(!mostrarModal);
 
+    const [hayFiltrosAplicados, setHayFiltrosAplicados] = useState(false);
+
+    useEffect(() => {
+        const checkFiltrosAplicados = () => {
+            const algunaCaracteristicaSeleccionada = caracteristicas.some(c => c.seleccionado);
+
+            const precioMinAplicado = precioMin !== '';
+            const precioMaxAplicado = precioMax !== '';
+
+            const latAplicada = lat !== '';
+            const longAplicada = long !== '';
+
+            return algunaCaracteristicaSeleccionada ||
+                precioMinAplicado || precioMaxAplicado ||
+                latAplicada || longAplicada;
+        };
+
+        setHayFiltrosAplicados(checkFiltrosAplicados());
+    }, [caracteristicas, precioMin, precioMax, lat, long]);
+
+    const resetearTodosLosFiltros = () => {
+        setCaracteristicas(
+            CARACTERISTICAS_DISPONIBLES.map(c => ({ ...c, seleccionado: false }))
+        );
+        setPrecioMin('');
+        setPrecioMax('');
+        setLat('');
+        setLong('');
+
+        navigate("/alojamientos");
+        setMostrarModal(false);
+    };
+
     return (
         <div className="filtros-container">
             <div className="filtros">
-                <button className="filter-pill" onClick={toggleModal}>Filters</button>
+                <button className="filter-pill" onClick={toggleModal}>Filtros extra</button>
             </div>
+            {hayFiltrosAplicados && (
+                <div className="filter-delete-container">
+                    <button className="filter-delete" onClick={resetearTodosLosFiltros}>
+                        <ClearIcon />
+                    </button>
+                </div>
+            )}
 
             {mostrarModal && (
                 <div className="modal-overlay" onClick={toggleModal}>
                     <div className="modal-filtros" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
-                            <h2>Filtros</h2>
+                            <h2 className="titulo-filtros" >Filtros</h2>
                             <button className="cerrar-btn" onClick={toggleModal}>✖</button>
                         </div>
 
                         <section>
-                            <h4>Recomendaciones para vos</h4>
+                            <h4>Explora con tus necesidades</h4>
                             <div className="opciones-row">
                                 {caracteristicas.map(c =>
                                     <Caracteristica key={c.clave} item={c} toggle={toggleSeleccion} />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getAlojamientoById } from "../../api/alojamientos";
-import ItemBox from "../Item-box/ItemBox"; // Asegurate de que la ruta sea correcta
+import ItemBox from "../Item-box/ItemBox";
 import "./AlojamientoDetailPage.css";
 import {TituloH3} from "../Titulos/Titulos";
 
