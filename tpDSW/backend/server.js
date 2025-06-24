@@ -27,7 +27,7 @@ export class Server {
     registerNotificacionRoutes(this.app, notificacionController);
     registerAlojamientoRoutes(this.app, alojamientoController);
 
-     // Middleware para manejar rutas no encontradas
+    // Middleware para manejar rutas no encontradas
     this.#app.use((req, res, next) => {
       res.status(404).json({
         status: 'fail',

@@ -1,51 +1,219 @@
+.alojamiento-datail-page {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 .alojamiento-detail-container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 2rem auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  font-family: "Helvetica Neue", sans-serif;
 }
 
 .alojamiento-detail-title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
 }
 
-.alojamiento-detail-img {
+.alojamiento-host {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.2rem;
+}
+
+.alojamiento-detail-gallery {
+  display: grid;
+  grid-template-areas:
+    "main main small1"
+    "main main small2";
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.alojamiento-main-img {
+  grid-area: main;
   width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 1.5rem;
+  height: 300px;
   object-fit: cover;
+  border-radius: 10px;
+}
+
+.alojamiento-small-img {
+  width: 100%;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.alojamiento-detail-body {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.alojamiento-detail-info {
+  flex: 2;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.alojamiento-detail-info h2,
+.alojamiento-detail-info h3 {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .alojamiento-detail-info p {
-  font-size: 1.1rem;
-  margin: 0.6rem 0;
+  margin: 0.5rem 0;
 }
+
+.alojamiento-features,
+.alojamiento-amenities {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.4rem 0.5rem;
+}
+
+.alojamiento-amenities li {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.booking-box {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 350px;
+  font-size: 0.95rem;
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.booking-header .price {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.booking-header .rating {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.booking-inputs {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.date-inputs {
+  display: flex;
+}
+
+.input-box {
+  flex: 1;
+  padding: 0.6rem;
+  border-bottom: 1px solid #eee;
+}
+
+.input-box label {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 0.3rem;
+}
+
+.input-box input {
+  width: 100%;
+  border: none;
+  font-size: 0.9rem;
+  background-color: transparent;
+}
+
+.booking-breakdown {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.booking-breakdown div {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.4rem 0;
+}
+
+.booking-breakdown hr {
+  margin: 0.8rem 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.booking-breakdown .total {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
 
 .alojamiento-detail-btn {
   display: block;
-  margin: 2rem auto 0;
-  padding: 0.75rem 2rem;
+  width: 100%;
   background-color: #ff385c;
   color: white;
+  font-weight: bold;
+  padding: 0.8rem;
+  font-size: 1rem;
   border: none;
   border-radius: 8px;
-  font-size: 1.1rem;
+  margin-top: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .alojamiento-detail-btn:hover {
-  background-color: #e03150;
+  background-color: #e0314b;
 }
 
 .detail-loading,
 .detail-error {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-top: 2rem;
 }
+
+.caja-detalles {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.titulo-caja-detalles {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.descripcion-caja-detalles {
+  font-size: 1.1rem;
+}
+

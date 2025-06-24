@@ -26,7 +26,10 @@ import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import {FactoryNotificacion} from "./airbnb/models/domain/notificacion.js";
 
+import cors from "cors";
+
 const app = express();
+app.use(cors());
 const port = process.env.port;
 const server = new Server(app, port);
 

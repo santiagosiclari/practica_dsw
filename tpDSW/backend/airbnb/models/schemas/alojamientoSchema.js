@@ -3,8 +3,7 @@ import { DOLAR_USA, PESO_ARG, REALES} from '../domain/moneda.js';
 import { WIFI, PISCINA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO } from '../domain/caracteristica.js';
 import { Alojamiento } from '../domain/alojamiento.js';
 import { docToReserva } from './reservaSchema.js';
-import {RangoFechas, Reserva} from "../domain/reserva.js";
-import dayjs from "dayjs";
+import * as path from "node:path";
 
 const alojamientoSchema = new mongoose.Schema({
     anfitrion: {
@@ -50,8 +49,9 @@ const alojamientoSchema = new mongoose.Schema({
     },
     fotos: [
         {
-            type: String
-        }
+            descripcion : {type: String, trim: true},
+                path : {type : String, trim: true},
+    }
     ],
     direccion: {
         calle : {
@@ -96,11 +96,11 @@ export function docToAlojamiento(doc, reservas = []) {
     alojamiento.anfitrion = doc.anfitrion;
     alojamiento.cantHuespedesMax = doc.cantHuespedesMax;
     alojamiento.precioPorNoche = doc.precioPorNoche;
+    alojamiento.descripcion = doc.descripcion;
 
     alojamiento.reservas = reservas; // ← ya vienen convertidas
     return alojamiento;
 }
-
 
 export function alojamientoToDocument(alojamiento) {
     return {
@@ -118,7 +118,6 @@ export function alojamientoToDocument(alojamiento) {
         reservas : alojamiento.reservas.map(r => r._id ?? r) // ids solamente
     };
 }
-
 
 function caracteristicaDesdeNombre(nombres) {
     return nombres.map(nombre => {

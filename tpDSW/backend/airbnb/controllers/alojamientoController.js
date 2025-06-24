@@ -1,8 +1,16 @@
-import { Alojamiento } from "../models/domain/alojamiento.js";
-
 export class AlojamientoController {
     constructor(alojamientoService) {
         this.alojamientoService = alojamientoService
+    }
+
+    async obtenerAlojamiento(req, res, next) {
+        try{
+            const idAlojamiento = req.params.id;
+            const alojamiento = await this.alojamientoService.obtenerAlojamiento(idAlojamiento);
+            res.status(200).json(this.alojamientoToDTO(alojamiento))
+        }catch(error) {
+            next(error);
+        }
     }
 
     async listarAlojamientos(req, res, next) {
@@ -27,24 +35,30 @@ export class AlojamientoController {
                 page: resultado.page,
                 limit: resultado.limit,
                 total: resultado.total,
-                alojamientos : this.alojamientosToDtos(resultado.resultAlojamientos)})
+                alojamientos : this.alojamientosToDTOS(resultado.resultAlojamientos)})
         }catch(error) {
             next(error);
         }
     }
 
-    alojamientoToDto(alojamiento) {
+    alojamientoToDTO(alojamiento) {
         return {
             _id: alojamiento._id,
             anfitrion: alojamiento.anfitrion,
+            anfitrionNombre: alojamiento.getAnfitrionNombre(),
             caracteristicas: alojamiento.caracteristicas,
             nombre: alojamiento.nombre,
             descripcion: alojamiento.descripcion,
             direccion : alojamiento.direccion,
-            precioPorNoche: alojamiento.getPrecioPorNoche()
+            precioPorNoche: alojamiento.getPrecioPorNoche(),
+            cantHuespedesMax: alojamiento.cantHuespedesMax,
+            fotos: alojamiento.fotos.map(f => ({
+                path: f.path,
+                descripcion: f.descripcion
+            }))
         };
     }
-    alojamientosToDtos(alojamientos){
-        return alojamientos.map(alojamiento => this.alojamientoToDto(alojamiento));
+    alojamientosToDTOS(alojamientos){
+        return alojamientos.map(alojamiento => this.alojamientoToDTO(alojamiento));
     }
 }

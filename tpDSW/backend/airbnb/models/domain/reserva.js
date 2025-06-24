@@ -31,7 +31,7 @@ export class Reserva{
     notificacionAlCrear() {
         return new FactoryNotificacion().crearSegunReserva(this);
     }
-    
+
     setId(id) {
         this._id = id;
     }
@@ -46,16 +46,16 @@ export class Reserva{
     }
 
     actualizarEstado(cambioEstado){
-       if(this.getRangoFechaInicio() <= new Date() &&
+        if(this.getRangoFechaInicio() <= new Date() &&
             cambioEstado.estado === 'CANCELADA' ){
-                throw new NoPermitoCambioEstadoReservaError(
-                    "La reserva superó la fecha límite para ser cancelada"
-                );
+            throw new NoPermitoCambioEstadoReservaError(
+                "La reserva superó la fecha límite para ser cancelada"
+            );
         }
-       
+
         this.cambiosDeEstado.push(cambioEstado);
         this.estado = cambioEstado.estado
-    
+
         switch (this.estado) {
             case 'CONFIRMADA':
                 return new FactoryNotificacion().crearSegunReserva(this);
@@ -83,12 +83,12 @@ export class Reserva{
     getRangoFechaInicio(){return this.rangoFechas.getFechaInicio()}
     getRangoFechaFinal(){return this.rangoFechas.getFechaFin()}
     getRangoFechas(){return this.rangoFechas}
-/*    getRangoFechaInicioFormateada() {
-        return this.rangoFechas.getFechaInicioFormateada();
-    }
-      getRangoFechaFinalFormateada() {
-        return this.rangoFechas.getFechaFinFormateada();
-    }*/
+    /*    getRangoFechaInicioFormateada() {
+            return this.rangoFechas.getFechaInicioFormateada();
+        }
+          getRangoFechaFinalFormateada() {
+            return this.rangoFechas.getFechaFinFormateada();
+        }*/
 
     getHuespedNombre(){return this.huespedReservador.getNombre()}
     getHuespedId(){return this.huespedReservador.getId()}

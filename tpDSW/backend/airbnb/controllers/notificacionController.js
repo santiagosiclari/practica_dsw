@@ -12,7 +12,7 @@ export class NotificacionController {
                 leida: req.body.leida
             }
             const notificaciones = await this.notificacionService.listarNotificaciones(filters);
-            res.status(200).json(this.toDtos(notificaciones))
+            res.status(200).json(this.notificacionesToDto(notificaciones))
         }catch(error) {
             next(error);
         }
@@ -26,7 +26,7 @@ export class NotificacionController {
                 leida : req.body.leida
             }
             const notiModificada =  await this.notificacionService.marcarComoLeida(this.validar(parametros));
-            res.status(200).json(this.toDto(notiModificada));
+            res.status(200).json(this.notificacionToDTO(notiModificada));
         }catch(error){
             next(error);
         }
@@ -38,7 +38,7 @@ export class NotificacionController {
         return parametros;
     }
 
-    toDto(notificacion) {
+    notificacionToDTO(notificacion) {
         return {
             _id: notificacion._id,
             mensaje: notificacion.mensaje,
@@ -49,7 +49,7 @@ export class NotificacionController {
         };
     }
 
-    toDtos(notificaciones) {
-        return notificaciones.map(notificacion => this.toDto(notificacion));
+    notificacionesToDto(notificaciones) {
+        return notificaciones.map(notificacion => this.notificacionToDTO(notificacion));
     }
 }

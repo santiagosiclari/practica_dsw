@@ -1,6 +1,10 @@
 .filtros-container {
     text-align: center;
     margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
 }
 
 .filter-pill {
@@ -15,6 +19,23 @@
 
 .filter-pill:hover {
     background-color: #f2f2f2;
+}
+
+.filter-delete {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid #ddd;
+    border-radius: 999px;
+    background-color: #E0655E;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-delete:hover {
+    background-color: #AD6F6C;
+}
+
+.titulo-filtros {
+    color: #AD6F6C
 }
 
 .modal-overlay {
@@ -60,6 +81,7 @@
 .opciones-row {
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -79,7 +101,7 @@
     transition: 0.2s;
 }
 .selected {
-    border: 3px solid black;
+    background-color: #E4E8EB;
 }
 
 .opcion:hover {
@@ -121,8 +143,8 @@
 }
 
 .aplicar-btn {
-    background-color: #222;
-    color: white;
+    background-color: #E0655E;
+    color: #0f0f0f;
     border: none;
     padding: 0.7rem 1.5rem;
     border-radius: 1rem;
@@ -131,5 +153,5 @@
 }
 
 .aplicar-btn:hover {
-    background-color: #333;
+    background-color: #AD6F6C;
 }

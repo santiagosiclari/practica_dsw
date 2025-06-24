@@ -52,27 +52,27 @@ export const ReservaModel = mongoose.model('Reserva', reservaSchema);
 
 // Reserva to DOC
 export function reservaToDocument(reserva) {
-  return {
-    huespedReservador: reserva.huespedReservador,
-    alojamiento: reserva.alojamiento,
-    cantHuespedes: reserva.cantHuespedes,
-    fechaInicio: reserva.getRangoFechaInicio(),
-    fechaFinal: reserva.getRangoFechaFinal(),
-    fechaAlta: reserva.fechaAlta,
-    estado: reserva.estado,
-    precioPorNoche: reserva.precioPorNoche
-  };
+    return {
+        huespedReservador: reserva.huespedReservador,
+        alojamiento: reserva.alojamiento,
+        cantHuespedes: reserva.cantHuespedes,
+        fechaInicio: reserva.getRangoFechaInicio(),
+        fechaFinal: reserva.getRangoFechaFinal(),
+        fechaAlta: reserva.fechaAlta,
+        estado: reserva.estado,
+        precioPorNoche: reserva.precioPorNoche
+    };
 }
 
 // Reserva from Doc
 function estadoDesdeNombre(nombre) {
-  switch (nombre) {
-    case 'PENDIENTE': return EstadoReserva.PENDIENTE;
-    case 'CONFIRMADA': return EstadoReserva.CONFIRMADA;
-    case 'CANCELADA': return EstadoReserva.CANCELADA;
-    case 'RECHAZADA': return EstadoReserva.RECHAZADA
-    default: throw new Error('Estado desconocido: ' + nombre);
-  }
+    switch (nombre) {
+        case 'PENDIENTE': return EstadoReserva.PENDIENTE;
+        case 'CONFIRMADA': return EstadoReserva.CONFIRMADA;
+        case 'CANCELADA': return EstadoReserva.CANCELADA;
+        case 'RECHAZADA': return EstadoReserva.RECHAZADA
+        default: throw new Error('Estado desconocido: ' + nombre);
+    }
 }
 
 export function docToReserva(doc) {

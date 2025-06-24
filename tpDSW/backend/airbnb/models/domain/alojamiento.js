@@ -53,6 +53,8 @@ export class Alojamiento{
 
     getNombre(){ return this.nombre; }
     getAnfitrion(){ return this.anfitrion; }
+    getAnfitrionNombre(){ return this.anfitrion.getNombre(); }
+
     getPrecioPorNoche() {
         return this.precioPorNoche;
     }

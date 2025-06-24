@@ -11,16 +11,16 @@ export class ReservaRepository {
 
   async save(reserva) {
     const query = reserva._id
-      ? { _id: reserva._id }
-      : { _id: new this.model()._id };
+        ? { _id: reserva._id }
+        : { _id: new this.model()._id };
     const reservaMongo = await this.model.findOneAndUpdate(
-      query,
-      reservaToDocument(reserva),
-      {
-        new: true,
-        runValidators: true,
-        upsert: true,
-      }
+        query,
+        reservaToDocument(reserva),
+        {
+          new: true,
+          runValidators: true,
+          upsert: true,
+        }
     ).populate({
       path: 'alojamiento',
       populate: {
@@ -59,19 +59,19 @@ export class ReservaRepository {
     return docs.map(docToReserva);
   }
   async findReservasPorFinalizar(fechaReferencia, dias = 1) {
-  const fechaLimite = new Date(fechaReferencia);
-  fechaLimite.setDate(fechaLimite.getDate() + dias);
+    const fechaLimite = new Date(fechaReferencia);
+    fechaLimite.setDate(fechaLimite.getDate() + dias);
 
-  const docs = await this.model.find({
-    estado: "CONFIRMADA",
-    fechaFinal: {
-      $gte: fechaReferencia,
-      $lte: fechaLimite,
-    },
-  });
+    const docs = await this.model.find({
+      estado: "CONFIRMADA",
+      fechaFinal: {
+        $gte: fechaReferencia,
+        $lte: fechaLimite,
+      },
+    });
 
-  return docs.map(docToReserva);
-}
+    return docs.map(docToReserva);
+  }
   async findAll() {
     const reservas = await this.model.find()
         .populate({
@@ -121,5 +121,5 @@ export class ReservaRepository {
         .map(docToReserva)
         .filter(r => r !== undefined);
   }
-
 }
+

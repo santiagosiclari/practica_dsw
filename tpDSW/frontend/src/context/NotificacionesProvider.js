@@ -42,6 +42,4 @@ export const AlojamientosProvider = ({children}) => {
     return <AlojamientosContext value={contextValue}>
         {children}
     </AlojamientosContext>
-
-
 }

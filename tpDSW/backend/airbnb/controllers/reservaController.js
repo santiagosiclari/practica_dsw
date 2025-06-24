@@ -1,5 +1,4 @@
-import { Reserva, RangoFechas } from "../models/domain/reserva.js";
-import {FactoryNotificacion} from "../models/domain/notificacion.js";
+import { RangoFechas } from "../models/domain/reserva.js";
 import {ValidationError} from "../errors/appError.js";
 
 export class ReservaController {
@@ -121,10 +120,11 @@ export class ReservaController {
             alojamiento: reserva.alojamiento._id,
             fechaInicio: reserva.getRangoFechaInicio(),
             fechaFinal: reserva.getRangoFechaFinal(),
-            precioPorNoche: reserva.getPrecioPorNoche()
+            precioPorNoche: reserva.getPrecioPorNoche(),
+            estado: reserva.getEstado()
         };
     }
-    
+
     reservasToDtos(reservas){
         return reservas.map(reserva => this.reservaToDto(reserva));
     }

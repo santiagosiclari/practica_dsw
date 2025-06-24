@@ -1,5 +1,5 @@
 import {createContext, useEffect, useState} from "react";
-import {getBanner, getAlojamientosFromApi} from "../api/alojamientos";
+import {getBanner, getAlojamientos} from "../api/alojamientos";
 
 export const AlojamientosContext = createContext();
 
@@ -10,7 +10,8 @@ export const AlojamientosProvider = ({children}) => {
     const [alojamientosLoading, setAlojamientosLoading] = useState(false);
 
     const cargarAlojamientos = async () => {
-        setAlojamientos(await getAlojamientosFromApi());
+        const result = await getAlojamientos();
+        setAlojamientos(result);
     }
     const cargarBanner = async () => {
         setBanner(await getBanner())
@@ -39,9 +40,9 @@ export const AlojamientosProvider = ({children}) => {
         alojamientosLoading,
     }
 
-    return <AlojamientosContext value={contextValue}>
-        {children}
-    </AlojamientosContext>
-
-
+    return (
+        <AlojamientosContext.Provider value={contextValue}>
+            {children}
+        </AlojamientosContext.Provider>
+    );
 }

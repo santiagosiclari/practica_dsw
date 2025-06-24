@@ -2,26 +2,25 @@ import { AlojamientoModel, docToAlojamiento} from "../schemas/alojamientoSchema.
 import { docToReserva } from "../schemas/reservaSchema.js";
 import { alojamientoToDocument } from "../schemas/alojamientoSchema.js"; // asegurate de implementar esto
 
-
 export class AlojamientoRepository {
     constructor() {
         this.model = AlojamientoModel
     }
 
-async save(alojamiento) {
-    const query = alojamiento.id ? { _id: alojamiento.id } : { _id: new this.model()._id };
-    const updateData = alojamientoToDocument(alojamiento); // sin _id
+    async save(alojamiento) {
+        const query = alojamiento._id ? { _id: alojamiento._id } : { _id: new this.model()._id };
+        const updateData = alojamientoToDocument(alojamiento); // sin _id
 
-    return await this.model.findOneAndUpdate(
-        query,
-        updateData,
-        {
-            new: true,
-            runValidators: true,
-            upsert: true
-        }
-    );
-}
+        return await this.model.findOneAndUpdate(
+            query,
+            updateData,
+            {
+                new: true,
+                runValidators: true,
+                upsert: true
+            }
+        );
+    }
 
 
     async findAll() {
@@ -46,7 +45,7 @@ async save(alojamiento) {
                 { path: 'huespedReservador' },
                 { path: 'alojamiento' }
             ]
-        });
+        }).populate('anfitrion');
         if (!alojamientoDoc) return null;
         const reservas = (alojamientoDoc.reservas || []).map(docToReserva).filter(r => r !== undefined);
 
@@ -85,7 +84,7 @@ async save(alojamiento) {
                     { path: 'huespedReservador' },
                     { path: 'alojamiento' }
                 ]
-            })
+            }).populate('anfitrion')
             .skip(skip)
             .limit(limit);
         const total = await this.model.countDocuments(query);
@@ -97,6 +96,13 @@ async save(alojamiento) {
             const alojamiento = docToAlojamiento(doc);
             if (alojamiento) alojamiento.reservas = reservas;
 
+        // Mapeo a instancias de dominio
+        const alojamientos = docs.map(doc => {
+            const reservas = (doc.reservas || [])
+                .map(docToReserva)
+                .filter(r => r !== undefined);
+            const alojamiento = docToAlojamiento(doc);
+            if (alojamiento) alojamiento.reservas = reservas;
             return alojamiento;
         }).filter(a => a !== undefined); // Filtra nulos en caso de errores de datos
 

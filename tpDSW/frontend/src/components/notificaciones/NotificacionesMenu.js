@@ -58,21 +58,22 @@ export default function NotificacionesMenu() {
                 }}
             >
                 {notificaciones.length > 0 ? (
-                    <>
-                        {notificaciones.map((n, index) => (
+                    [
+                        ...notificaciones.map((n, index) => (
                             <MenuItem key={index} onClick={handleClose}>
                                 {n}
                             </MenuItem>
-                        ))}
-                        <Divider />
-                        <MenuItem onClick={marcarTodasLeidas} sx={{ fontWeight: 'bold' }}>
+                        )),
+                        <Divider key="divider" />,
+                        <MenuItem key="marcar" onClick={marcarTodasLeidas} sx={{ fontWeight: 'bold' }}>
                             Marcar todas como leídas
                         </MenuItem>
-                    </>
+                    ]
                 ) : (
                     <MenuItem disabled>No hay notificaciones</MenuItem>
                 )}
             </Menu>
+
         </>
     );
 }

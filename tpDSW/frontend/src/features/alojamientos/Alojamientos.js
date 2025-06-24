@@ -1,51 +1,102 @@
-import "./alojamientos.css"
-import { useContext } from "react";
-import { CardItem } from "../../components/CardItem/CardItem"
+import "./alojamientos.css";
+import { useEffect, useState } from "react";
+import ActionAreaCard from "../../components/CardItem/CardItem";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { AlojamientosContext } from "../../context/AlojamientosProvider";
 import Filtro from "../../components/filtro/Filtro";
+import { SearchBar } from "../../components/searchBar/SearchBar";
+import Footer from "../../components/footer/Footer";
+import PageSearch from "../../components/PageSearch/PageSearch"
+import Skeleton from '@mui/material/Skeleton';
+import CardContent from "@mui/material/CardContent";
+import Card from "@mui/material/Card";
 
-const ListaAlojamientos = ({ alojamientos }) => {
+const SkeletonCard = () => {
+    return (
+        <Card sx={{ width: 300, height: 350, display: "flex", flexDirection: "column", padding: 1 }}>
+            <Skeleton variant="rectangular" height={180} />
+
+            <CardContent>
+                <Skeleton variant="text" height={30} width="80%" />
+                <Skeleton variant="text" height={20} width="60%" />
+                <Skeleton variant="text" height={20} width="70%" />
+            </CardContent>
+        </Card>
+    );
+};
+
+
+const ListaAlojamientos = ({ alojamientos, loading }) => {
     const navigate = useNavigate();
-    return <div className="alojamientos">{
-        alojamientos.map((a) => (
-            <CardItem
-                key={a.id}
-                nombre={a.nombre}
-                imagen={a.imagen || a.image}
-                precio={a.precio || a.precioPorNoche}
-                seleccionado={a.seleccionado}
-                alSeleccionarItem={() => navigate("/alojamiento/" + a.id)}
-            />
-        ))
-    }</div>
-}
+    return (
+        <div className="alojamientos">
+            {loading
+                ? Array.from({ length: 6 }).map((_, i) => (
+                    <SkeletonCard key={i} />
+                ))
+                : alojamientos.map((a) => (
+                <ActionAreaCard
+                    key={a._id}
+                    nombre={a.nombre}
+                    imagen={a.fotos?.[0]?.path}
+                    precio={a.precioPorNoche}
+                    huespedMax={a.cantHuespedesMax}
+                    alSeleccionarItem={() => navigate(`/alojamientos/${a._id}`)}
+                />
+            ))}
+        </div>
+    );
+};
 
 const Alojamientos = () => {
-    const { alojamientos: todosLosAlojamientos, banner, error } = useContext(AlojamientosContext);
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const page = parseInt(searchParams.get("page")) || 1;
+
     const navigate = useNavigate();
 
-    //Filtrado directo, sin estados ni efectos
-    const ciudadFiltro = searchParams.get("ciudad")?.toLowerCase() || "";
-    const cantHuespedes = parseInt(searchParams.get("cantHuespedes")) || 0;
+    const [alojamientos, setAlojamientos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const alojamientosFiltrados = todosLosAlojamientos.filter(a => {
-        const coincideCiudad = a.ciudad?.toLowerCase().includes(ciudadFiltro);
-        const admiteHuespedes = !cantHuespedes || a.cantHuespedesMax >= cantHuespedes;
-        return coincideCiudad && admiteHuespedes;
-    });
+    const [totalPages, setTotalPages] = useState(1);
 
-    if (error) {
-        return <div className="error">HUBO UN ERROR AL CARGAR LOS ALOJAMIENTOS: {error}</div>
-    }
+    const API_BASE_URL = "http://localhost:3000";
+
+    const fetchAlojamientos = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            const query = new URLSearchParams(searchParams);
+            if (!query.has("page")) query.set("page", "1");
+            if (!query.has("limit")) query.set("limit", "10");
+
+            //const response = await fetch(`http://localhost:3000/alojamientos?${searchParams.toString()}`);
+            const response = await fetch(`${API_BASE_URL}/alojamientos?${query.toString()}`);
+            if (!response.ok) throw new Error("Error al cargar los alojamientos");
+            const data = await response.json();
+
+            setAlojamientos(data.alojamientos || []);
+            setTotalPages(Math.ceil(data.total / data.limit));
+        } catch (err) {
+            setError(err.message);
+            setAlojamientos([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchAlojamientos();
+    }, [searchParams.toString()]);
 
     return (
         <section className="home">
+            <SearchBar />
             <Filtro />
             <div className="content">
-                <div>{banner}</div>
-                {alojamientosFiltrados.length === 0 ? (
+                {loading && <p>Cargando alojamientos...</p>}
+
+                {!loading && alojamientos.length === 0 ? (
                     <div className="no-results">
                         <h3>No se encontraron alojamientos con esos filtros 😞</h3>
                         <p>Probá con otra ciudad, una fecha distinta o menos huéspedes.</p>
@@ -54,11 +105,14 @@ const Alojamientos = () => {
                         </button>
                     </div>
                 ) : (
-                    <ListaAlojamientos alojamientos={alojamientosFiltrados} />
+                    <ListaAlojamientos alojamientos={alojamientos} loading={loading} />
                 )}
             </div>
+            <PageSearch totalPages={totalPages} />
+            <Footer />
         </section>
-    )
+    );
 };
 
 export default Alojamientos;
+

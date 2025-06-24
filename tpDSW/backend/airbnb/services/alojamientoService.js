@@ -1,13 +1,19 @@
 import { AppError, ValidationError, NotFoundError, ConflictError, NoPermitoCambioEstadoReservaError } from "../errors/appError.js";
-import { Alojamiento } from "../models/domain/alojamiento.js";
 import { RangoFechas } from "../models/domain/reserva.js";
-import { AlojamientoRepository } from "../models/repositories/alojamientoRepository.js";
 import { WIFI, PISCINA, MASCOTAS_PERMITIDAS, ESTACIONAMIENTO } from '../models/domain/caracteristica.js';
 
 
 export class AlojamientoService {
     constructor(alojamientoRepository) {
-            this.alojamientoRepository = alojamientoRepository
+        this.alojamientoRepository = alojamientoRepository
+    }
+
+    async obtenerAlojamiento(id) {
+        const alojamiento = await this.alojamientoRepository.findById(id);
+        if (!alojamiento) {
+            throw new NotFoundError(`Alojamiento con id ${id} no encontrado`);
+        }
+        return alojamiento;
     }
 
     async listarAlojamientos(filters, page, limit) {

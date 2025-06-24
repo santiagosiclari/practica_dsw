@@ -1,75 +1,51 @@
-.checkout-container {
+.reserva-detail-container {
     padding: 2rem;
     max-width: 600px;
-    margin: auto;
+    margin: 2rem auto;
     background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    border: 2px solid #E1655F;
+    font-family: 'Arial', sans-serif;
 }
 
-.checkout-info p,
-.fechas label {
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    color: #333;
-}
-
-.fechas {
-    margin: 1rem 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.btn-confirmar {
-    padding: 0.5rem 1rem;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.btn-confirmar:hover {
-    background-color: #006f98;
-}
-
-.reserva-confirmada {
+.reserva-detail-title {
     text-align: center;
-    padding: 2rem;
-    background-color: #e6ffe6;
-    border: 1px solid #00a100;
-    border-radius: 6px;
-    margin-top: 1rem;
+    color: #E1655F;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
 }
 
-.reserva-confirmada p {
-    color: #006600;
-    font-size: 1.1rem;
+.reserva-detail-info {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+}
+
+.reserva-detail-info p {
+    font-size: 1rem;
+    color: #362827;
     margin: 0.5rem 0;
 }
 
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+.volver-home-container {
+    margin-top: 2rem;
+    text-align: center;
 }
 
-.modal-content {
-    background: white;
-    padding: 2rem;
+.volver-home-btn {
+    background-color: #E1655F;
+    color: white;
+    padding: 12px 24px;
+    border: none;
     border-radius: 8px;
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.volver-home-btn:hover {
+    background-color: #B66E6B;
 }

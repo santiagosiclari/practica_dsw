@@ -1,22 +1,17 @@
 import axios from "axios";
 
 const alojamientosApi = axios.create({
-    baseURL: 'https://684e02cf65ed08713917a135.mockapi.io/api'
-})
+    baseURL: 'http://localhost:3000'
+});
 
-export const getAlojamientosFromApi = async () => {
-    try{
-        const alojamientos = await alojamientosApi.get('/alojamientos')
-            .then(r => r.data);
+export const getAlojamientos = async (pageNumber) => {
+    const { data } = await alojamientosApi.get("/alojamientos");
+    return data.alojamientos; // ✅ extrae directamente el array
+};
 
-        return alojamientos.map(p => ({
-            ...p,
-            imagen: p.image,
-            precio: p.precioPorNoche,
-        }));
-    }catch (error) {
-        throw error;
-    }
-}
+export const getAlojamientoById = async (id) => {
+    const { data } = await alojamientosApi.get(`/alojamientos/${id}`);
+    return data;
+};
 
 export const getBanner = () => alojamientosApi.get('banner').then(r => r.data.message)

@@ -40,10 +40,10 @@ export class ReservaService {
     const alojamientoEncontrado = await this.alojamientoRepository.findById(alojamiento);
 
     const nueva = new Reserva(
-      huespedEncontrado,
-      cantHuespedes,
-      alojamientoEncontrado,
-      rangoFechas
+        huespedEncontrado,
+        cantHuespedes,
+        alojamientoEncontrado,
+        rangoFechas
     );
 
     const reservaGuardada = await this.reservaRepository.save(nueva);
@@ -75,19 +75,19 @@ export class ReservaService {
 
     const quiereModificarCant = cantHuespedes !== undefined;
     const quiereModificarFechas =
-      fechaInicio !== undefined ||
-      fechaFinal !== undefined;
+        fechaInicio !== undefined ||
+        fechaFinal !== undefined;
 
     if (!quiereModificarCant && !quiereModificarFechas) {
       throw new ValidationError(
-        "Debe especificar al menos un campo a modificar"
+          "Debe especificar al menos un campo a modificar"
       );
     }
 
     // Validar fechas: si viene solo una, es error
     if (
-      (fechaInicio && !fechaFinal) ||
-      (!fechaInicio && fechaFinal)
+        (fechaInicio && !fechaFinal) ||
+        (!fechaInicio && fechaFinal)
     ) {
       throw new ValidationError("Para modificar fechas deben enviarse fechaInicio y fechaFinal juntas");
     }
