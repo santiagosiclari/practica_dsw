@@ -8,6 +8,7 @@ import WifiIcon from '@mui/icons-material/Wifi';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import PoolIcon from '@mui/icons-material/Pool';
 import PetsIcon from '@mui/icons-material/Pets';
+import Skeleton from "@mui/material/Skeleton";
 
 const CARACTERISTICA_SIMBOLOS = {
     "WIFI": <WifiIcon fontSize="small" />,

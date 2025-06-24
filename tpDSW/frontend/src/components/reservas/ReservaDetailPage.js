@@ -37,10 +37,10 @@ const ReservaDetailPage = () => {
     const total = reserva.precioPorNoche * noches;
 
     return (
-        <div className="alojamiento-detail-container">
-            <h1 className="alojamiento-detail-title">Reserva Confirmada</h1>
+        <div className="reserva-detail-container">
+            <h1 className="reserva-detail-title">Reserva Confirmada</h1>
 
-            <div className="alojamiento-detail-info">
+            <div className="reserva-detail-info">
                 <Texto etiqueta={"ID de Reserva"} texto={reserva._id} />
                 <Texto etiqueta={"Precio por Noche"} texto={`$${reserva.precioPorNoche}`} />
                 <Texto etiqueta={"Cantidad de Huéspedes"} texto={reserva.cantHuespedes} />

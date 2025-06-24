@@ -11,6 +11,7 @@ import HomePage from "./components/homePage/HomePage"
 
 export const AppRoutes = () => {
     const {alojamientos, alojamientosLoading} = useContext(AlojamientosContext);
+
     return <BrowserRouter>
         <Routes>
             <Route path="/" element={<Layout/>}>

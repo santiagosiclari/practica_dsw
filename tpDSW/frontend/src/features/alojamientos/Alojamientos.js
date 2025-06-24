@@ -3,15 +3,37 @@ import { useEffect, useState } from "react";
 import ActionAreaCard from "../../components/CardItem/CardItem";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Filtro from "../../components/filtro/Filtro";
-import { SearchBar } from "../../components/SearchBar/SearchBar";
+import { SearchBar } from "../../components/searchBar/SearchBar";
 import Footer from "../../components/footer/Footer";
 import PageSearch from "../../components/PageSearch/PageSearch"
+import Skeleton from '@mui/material/Skeleton';
+import CardContent from "@mui/material/CardContent";
+import Card from "@mui/material/Card";
 
-const ListaAlojamientos = ({ alojamientos }) => {
+const SkeletonCard = () => {
+    return (
+        <Card sx={{ width: 300, height: 350, display: "flex", flexDirection: "column", padding: 1 }}>
+            <Skeleton variant="rectangular" height={180} />
+
+            <CardContent>
+                <Skeleton variant="text" height={30} width="80%" />
+                <Skeleton variant="text" height={20} width="60%" />
+                <Skeleton variant="text" height={20} width="70%" />
+            </CardContent>
+        </Card>
+    );
+};
+
+
+const ListaAlojamientos = ({ alojamientos, loading }) => {
     const navigate = useNavigate();
     return (
         <div className="alojamientos">
-            {alojamientos.map((a) => (
+            {loading
+                ? Array.from({ length: 6 }).map((_, i) => (
+                    <SkeletonCard key={i} />
+                ))
+                : alojamientos.map((a) => (
                 <ActionAreaCard
                     key={a._id}
                     nombre={a.nombre}
@@ -83,7 +105,7 @@ const Alojamientos = () => {
                         </button>
                     </div>
                 ) : (
-                    <ListaAlojamientos alojamientos={alojamientos} />
+                    <ListaAlojamientos alojamientos={alojamientos} loading={loading} />
                 )}
             </div>
             <PageSearch totalPages={totalPages} />
