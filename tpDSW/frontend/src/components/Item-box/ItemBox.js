@@ -5,10 +5,11 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 
-const ItemBox = ({ precioPorNoche, alojamientoId }) => {
+const ItemBox = ({ precioPorNoche, alojamientoId, cantHuespedesTotal }) => {
     const [checkIn, setCheckIn] = useState(null);
     const [checkOut, setCheckOut] = useState(null);
     const [huespedes, setHuespedes] = useState(1);
+    const huespedesTotal = cantHuespedesTotal;
 
     const cantidadNoches = useMemo(() => {
         if (checkIn && checkOut && dayjs(checkOut).isValid() && dayjs(checkIn).isValid()) {
@@ -84,17 +85,25 @@ const ItemBox = ({ precioPorNoche, alojamientoId }) => {
                         renderInput={(params) => <TextField {...params} fullWidth size="small" />}
                     />
                     <TextField
-                        select
                         label="Huéspedes"
+                        type="number"
                         value={huespedes}
-                        onChange={(e) => setHuespedes(parseInt(e.target.value))}
+                        onChange={(e) => {
+                            const val = parseInt(e.target.value);
+                            if (!isNaN(val)) {
+                                if (val >= 1 && val <= huespedesTotal) {
+                                    setHuespedes(val);
+                                } else if (val < 1) {
+                                    setHuespedes(1);
+                                } else if (val > huespedesTotal) {
+                                    setHuespedes(huespedesTotal);
+                                }
+                            }
+                        }}
                         fullWidth
                         size="small"
-                    >
-                        {[1, 2, 3, 4, 5, 6].map((num) => (
-                            <MenuItem key={num} value={num}>{num}</MenuItem>
-                        ))}
-                    </TextField>
+                        inputProps={{ min: 1, max: huespedesTotal }}
+                    />
                 </Box>
 
                 <Typography variant="body2" mb={1}>
@@ -106,7 +115,7 @@ const ItemBox = ({ precioPorNoche, alojamientoId }) => {
                 <Button
                     fullWidth
                     variant="contained"
-                    sx={{ backgroundColor: '#ff385c', ':hover': { backgroundColor: '#e0314b' } }}
+                    sx={{ backgroundColor: '#E0655E', ':hover': { backgroundColor: '#AD6F6C' } }}
                     onClick={handleReserva}
                 >
                     Reservar ahora

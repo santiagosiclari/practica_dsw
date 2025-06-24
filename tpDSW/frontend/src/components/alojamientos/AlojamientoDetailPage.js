@@ -102,6 +102,7 @@ const AlojamientoDetailPage = () => {
                         <ItemBox
                             precioPorNoche={alojamiento.precioPorNoche}
                             alojamientoId={alojamiento._id}
+                            cantHuespedesTotal={alojamiento.cantHuespedesMax}
                         />
 
                     </div>
