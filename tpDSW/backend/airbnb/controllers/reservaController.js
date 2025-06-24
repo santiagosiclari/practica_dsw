@@ -120,7 +120,8 @@ export class ReservaController {
             alojamiento: reserva.alojamiento._id,
             fechaInicio: reserva.getRangoFechaInicio(),
             fechaFinal: reserva.getRangoFechaFinal(),
-            precioPorNoche: reserva.getPrecioPorNoche()
+            precioPorNoche: reserva.getPrecioPorNoche(),
+            estado: reserva.getEstado()
         };
     }
 

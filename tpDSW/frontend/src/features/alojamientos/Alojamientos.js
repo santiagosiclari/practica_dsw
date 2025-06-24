@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ActionAreaCard from "../../components/CardItem/CardItem";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Filtro from "../../components/filtro/Filtro";
-import { SearchBar } from "../../components/searchBar/SearchBar";
+import { SearchBar } from "../../components/SearchBar/SearchBar";
 import Footer from "../../components/footer/Footer";
 import PageSearch from "../../components/PageSearch/PageSearch"
 
@@ -37,6 +37,8 @@ const Alojamientos = () => {
 
     const [totalPages, setTotalPages] = useState(1);
 
+    const API_BASE_URL = "http://localhost:3000";
+
     const fetchAlojamientos = async () => {
         try {
             setLoading(true);
@@ -47,7 +49,7 @@ const Alojamientos = () => {
             if (!query.has("limit")) query.set("limit", "10");
 
             //const response = await fetch(`http://localhost:3000/alojamientos?${searchParams.toString()}`);
-            const response = await fetch(`http://localhost:3000/alojamientos?${query.toString()}`);
+            const response = await fetch(`${API_BASE_URL}/alojamientos?${query.toString()}`);
             if (!response.ok) throw new Error("Error al cargar los alojamientos");
             const data = await response.json();
 

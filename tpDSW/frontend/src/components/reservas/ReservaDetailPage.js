@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Texto } from "../ModalReservaConfirmada/ModalReservaConfirmada";
 import dayjs from "dayjs";
@@ -9,6 +9,7 @@ const API_BASE_URL = "http://localhost:3000";
 
 const ReservaDetailPage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [reserva, setReserva] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -48,6 +49,12 @@ const ReservaDetailPage = () => {
                 <Texto etiqueta={"Check-in"} texto={dayjs(reserva.fechaInicio).format("YYYY-MM-DD")} />
                 <Texto etiqueta={"Check-out"} texto={dayjs(reserva.fechaFinal).format("YYYY-MM-DD")} />
                 <Texto etiqueta={"Total"} texto={`$${total}`} />
+            </div>
+
+            <div className="volver-home-container">
+                <button className="volver-home-btn" onClick={() => navigate("/")}>
+                    Volver a la página principal
+                </button>
             </div>
         </div>
     );

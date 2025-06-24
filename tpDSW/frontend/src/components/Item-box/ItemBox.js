@@ -19,6 +19,9 @@ const ItemBox = ({ precioPorNoche, alojamientoId, cantHuespedesTotal }) => {
         return 0;
     }, [checkIn, checkOut]);
 
+    const API_BASE_URL = "http://localhost:3000";
+
+
 
     const total = precioPorNoche * cantidadNoches;
 
@@ -26,7 +29,7 @@ const ItemBox = ({ precioPorNoche, alojamientoId, cantHuespedesTotal }) => {
         if (!checkIn || !checkOut || cantidadNoches <= 0) return alert("Selecciona fechas válidas");
 
         try {
-            const response = await fetch("http://localhost:3000/reservas", {
+            const response = await fetch(`${API_BASE_URL}/reservas`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
