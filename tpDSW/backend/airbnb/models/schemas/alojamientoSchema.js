@@ -95,6 +95,7 @@ export function docToAlojamiento(doc, reservas = []) {
     alojamiento.anfitrion = doc.anfitrion;
     alojamiento.cantHuespedesMax = doc.cantHuespedesMax;
     alojamiento.precioPorNoche = doc.precioPorNoche;
+    alojamiento.descripcion = doc.descripcion;
 
     alojamiento.reservas = reservas; // ← ya vienen convertidas
     return alojamiento;

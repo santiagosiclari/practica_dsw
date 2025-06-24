@@ -45,6 +45,7 @@ export class AlojamientoController {
         return {
             _id: alojamiento._id,
             anfitrion: alojamiento.anfitrion,
+            anfitrionNombre: alojamiento.getAnfitrionNombre(),
             caracteristicas: alojamiento.caracteristicas,
             nombre: alojamiento.nombre,
             descripcion: alojamiento.descripcion,

@@ -45,7 +45,7 @@ export class AlojamientoRepository {
                 { path: 'huespedReservador' },
                 { path: 'alojamiento' }
             ]
-        });
+        }).populate('anfitrion');
         if (!alojamientoDoc) return null;
         const reservas = (alojamientoDoc.reservas || []).map(docToReserva).filter(r => r !== undefined);
 
@@ -84,7 +84,7 @@ export class AlojamientoRepository {
                     { path: 'huespedReservador' },
                     { path: 'alojamiento' }
                 ]
-            })
+            }).populate('anfitrion')
             .skip(skip)
             .limit(limit);
         const total = await this.model.countDocuments(query);

@@ -29,11 +29,13 @@ const AlojamientoDetailPage = () => {
     if (error) return <div className="detail-error">{error}</div>;
     if (!alojamiento) return null;
 
+    console.log(alojamiento.descripcion);
+
     return (
         <div className="alojamiento-detail-container">
             <h1 className="alojamiento-detail-title">{alojamiento.nombre}</h1>
             <p className="alojamiento-host">
-                Entire place hosted by {alojamiento.anfitrion?.nombre || "Anfitrión"} – {alojamiento.cantHuespedesMax || "X"} guests
+                Entire place hosted by {alojamiento.anfitrionNombre} – {alojamiento.cantHuespedesMax || "X"} guests
             </p>
 
             <div className="alojamiento-detail-gallery">
@@ -57,16 +59,7 @@ const AlojamientoDetailPage = () => {
 
             <div className="alojamiento-detail-body">
                 <div className="alojamiento-detail-info">
-                    <h2>Lo que ofrece este lugar</h2>
-                    <ul className="alojamiento-features">
-                        <li>Entire home • Private entrance</li>
-                        <li>Enhanced Clean • Self check-in</li>
-                        <li>Free cancellation • Wifi • Pets allowed</li>
-                    </ul>
-
                     <TituloH3 titulo={"Descripcion"} parrafo={alojamiento.descripcion}/>
-                    <TituloH3 titulo={"Dónde vas a dormir"} parrafo={"Dormitorio principal: 1 cama grande"} />
-
                     <TituloH3 titulo={"Comodidades"} />
                     <ul className="alojamiento-amenities">
                         {alojamiento.caracteristicas && alojamiento.caracteristicas.length > 0 ? (
