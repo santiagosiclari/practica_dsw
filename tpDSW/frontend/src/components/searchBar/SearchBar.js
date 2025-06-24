@@ -7,6 +7,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TextField } from "@mui/material";
 import { construirQueryParams } from '../../utils/queryParams';
+import SearchIcon from '@mui/icons-material/Search';
 
 export const SearchBar = () => {
     const navigate = useNavigate();
@@ -67,7 +68,9 @@ export const SearchBar = () => {
                     if (val >= 1 || isNaN(val)) setCantHuespedes(e.target.value);
                 }}
             />
-            <button type="submit" className="search-btn">🔍</button>
+            <button type="submit" className="search-btn">
+                <SearchIcon />
+            </button>
         </form>
     );
 };

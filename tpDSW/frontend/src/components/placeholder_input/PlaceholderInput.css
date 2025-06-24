@@ -1,12 +1,13 @@
 .search-input {
     flex: 1;
-    min-width: 80px;
+    min-width: 120px;
+    min-height: 57px;
     border: none;
     outline: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 999px;
-    background-color: transparent;
-    font-size: 0.9rem;
+    padding: 0.6rem 1rem;         /* más espacio interno */
+    border-radius: 10px;
+    background-color: #ffffff;
+    font-size: 1rem;              /* texto más grande */
 }
 
 .rango {
