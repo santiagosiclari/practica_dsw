@@ -59,21 +59,6 @@
   padding: 0.4rem 0.8rem;
 }
 
-/* Responsive para pantallas chicas */
-@media (max-width: 768px) {
-  .navbar-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .navbar-center,
-  .navbar-right {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
-
 .navbar-center button {
   background: transparent;
   border: none;
@@ -106,4 +91,10 @@
 
 .navbar-center button:hover::after {
   transform: scaleX(1);
+}
+
+@media (max-width: 774px) {
+  .navbar-center {
+    display: none;
+  }
 }
