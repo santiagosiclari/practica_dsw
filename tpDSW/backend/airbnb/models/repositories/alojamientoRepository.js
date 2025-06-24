@@ -88,7 +88,6 @@ export class AlojamientoRepository {
             .skip(skip)
             .limit(limit);
         const total = await this.model.countDocuments(query);
-
         // Mapeo a instancias de dominio
         const alojamientos = docs.map(doc => {
             const reservas = (doc.reservas || [])
@@ -97,6 +96,13 @@ export class AlojamientoRepository {
             const alojamiento = docToAlojamiento(doc);
             if (alojamiento) alojamiento.reservas = reservas;
 
+        // Mapeo a instancias de dominio
+        const alojamientos = docs.map(doc => {
+            const reservas = (doc.reservas || [])
+                .map(docToReserva)
+                .filter(r => r !== undefined);
+            const alojamiento = docToAlojamiento(doc);
+            if (alojamiento) alojamiento.reservas = reservas;
             return alojamiento;
         }).filter(a => a !== undefined); // Filtra nulos en caso de errores de datos
 
@@ -107,4 +113,5 @@ export class AlojamientoRepository {
             alojamientos
         };
     }
+
 }

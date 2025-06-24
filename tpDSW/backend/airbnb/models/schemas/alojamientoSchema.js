@@ -56,6 +56,7 @@ const alojamientoSchema = new mongoose.Schema({
     direccion: {
         calle : {
             type: String,
+            required: true
         },
         altura : String,
         ciudad : {
@@ -65,7 +66,7 @@ const alojamientoSchema = new mongoose.Schema({
             },
         },
         lat : String,
-        long : String,
+        longitud : String,
     },
     reservas: [
         {

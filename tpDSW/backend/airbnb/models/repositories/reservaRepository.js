@@ -121,5 +121,5 @@ export class ReservaRepository {
         .map(docToReserva)
         .filter(r => r !== undefined);
   }
-
 }
+
