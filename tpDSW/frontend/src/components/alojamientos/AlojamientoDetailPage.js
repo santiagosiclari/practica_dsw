@@ -3,7 +3,18 @@ import { useParams } from "react-router-dom";
 import { getAlojamientoById } from "../../api/alojamientos";
 import ItemBox from "../Item-box/ItemBox";
 import "./AlojamientoDetailPage.css";
-import {TituloH3} from "../Titulos/Titulos";
+import Footer from "../footer/Footer";
+import WifiIcon from '@mui/icons-material/Wifi';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import PoolIcon from '@mui/icons-material/Pool';
+import PetsIcon from '@mui/icons-material/Pets';
+
+const CARACTERISTICA_SIMBOLOS = {
+    "WIFI": <WifiIcon fontSize="small" />,
+    "ESTACIONAMIENTO": <LocalParkingIcon fontSize="small" />,
+    "PISCINA": <PoolIcon fontSize="small" />,
+    "MASCOTAS_PERMITIDAS": <PetsIcon fontSize="small" />,
+};
 
 const AlojamientoDetailPage = () => {
     const { id } = useParams();
@@ -32,60 +43,71 @@ const AlojamientoDetailPage = () => {
     console.log(alojamiento.descripcion);
 
     return (
-        <div className="alojamiento-detail-container">
-            <h1 className="alojamiento-detail-title">{alojamiento.nombre}</h1>
-            <p className="alojamiento-host">
-                Entire place hosted by {alojamiento.anfitrionNombre} – {alojamiento.cantHuespedesMax || "X"} guests
-            </p>
+        <div className="alojamiento-detail-page">
+            <div className="alojamiento-detail-container">
+                <h1 className="alojamiento-detail-title">{alojamiento.nombre}</h1>
 
-            <div className="alojamiento-detail-gallery">
-                {alojamiento.fotos.slice(0, 1).map((foto, index) => (
-                    <img
-                        key={index}
-                        src={foto.path}
-                        alt={`Principal`}
-                        className="alojamiento-main-img"
-                    />
-                ))}
-                {alojamiento.fotos.slice(1, 5).map((foto, index) => (
-                    <img
-                        key={index}
-                        src={foto.path}
-                        alt={`Imagen ${index + 2}`}
-                        className="alojamiento-small-img"
-                    />
-                ))}
-            </div>
-
-            <div className="alojamiento-detail-body">
-                <div className="alojamiento-detail-info">
-                    <TituloH3 titulo={"Descripcion"} parrafo={alojamiento.descripcion}/>
-                    <TituloH3 titulo={"Comodidades"} />
-                    <ul className="alojamiento-amenities">
-                        {alojamiento.caracteristicas && alojamiento.caracteristicas.length > 0 ? (
-                            alojamiento.caracteristicas.map((caracteristica, index) => (
-                                <li key={index}>
-                                    {caracteristica
-                                        .replaceAll("_", " ")        // Reemplaza guiones bajos por espacios
-                                        .toLowerCase()               // Minúscula general
-                                        .replace(/^\w/, c => c.toUpperCase())} {/* Capitaliza la primera letra */}
-                                </li>
-                            ))
-                        ) : (
-                            <li>No se especificaron comodidades.</li>
-                        )}
-                    </ul>
-
+                <div className="alojamiento-detail-gallery">
+                    {alojamiento.fotos.slice(0, 1).map((foto, index) => (
+                        <img
+                            key={index}
+                            src={foto.path}
+                            alt={`Principal`}
+                            className="alojamiento-main-img"
+                        />
+                    ))}
+                    {alojamiento.fotos.slice(1, 5).map((foto, index) => (
+                        <img
+                            key={index}
+                            src={foto.path}
+                            alt={`Imagen ${index + 2}`}
+                            className="alojamiento-small-img"
+                        />
+                    ))}
                 </div>
 
-                <div className="alojamiento-reserva-box">
-                    <ItemBox
-                        precioPorNoche={alojamiento.precioPorNoche}
-                        alojamientoId={alojamiento._id}
-                    />
+                <p className="alojamiento-host">
+                    Lugar alojado por {alojamiento.anfitrionNombre} – {alojamiento.cantHuespedesMax || "X"} guests
+                </p>
 
+                <div className="alojamiento-detail-body">
+                    <div className="alojamiento-detail-info">
+                        <div className="caja-detalles">
+                            <h1 className="titulo-caja-detalles">{"Descripción"}</h1>
+                            <h2 className="descripcion-caja-detalles">{alojamiento.descripcion}</h2>
+                        </div>
+                        <div className="caja-detalles">
+                            <h1 className="titulo-caja-detalles">{"Comodidades"}</h1>
+                            <ul className="alojamiento-amenities">
+                                {alojamiento.caracteristicas && alojamiento.caracteristicas.length > 0 ? (
+                                    alojamiento.caracteristicas.map((caracteristica, index) => (
+                                        <li key={index}>
+                                            {CARACTERISTICA_SIMBOLOS[caracteristica]}
+                                            <span>
+                                                {caracteristica
+                                                    .replaceAll("_", " ")
+                                                    .toLowerCase()
+                                                    .replace(/^\w/, c => c.toUpperCase())}
+                                            </span>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <li>No se especificaron comodidades.</li>
+                                )}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="alojamiento-reserva-box">
+                        <ItemBox
+                            precioPorNoche={alojamiento.precioPorNoche}
+                            alojamientoId={alojamiento._id}
+                        />
+
+                    </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
