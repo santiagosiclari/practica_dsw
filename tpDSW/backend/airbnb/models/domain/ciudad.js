@@ -4,7 +4,7 @@ export class Ciudad{
     nombre
     pais
     constructor(nombre, pais){
-        this.nombre = nombre;
+        this.nombre = nombre.toLowerCase();
         this.pais = new Pais(pais.nombre);
     }
 }

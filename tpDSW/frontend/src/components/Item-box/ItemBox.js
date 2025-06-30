@@ -11,17 +11,17 @@ const ItemBox = ({ precioPorNoche, alojamientoId, cantHuespedesTotal }) => {
     const [huespedes, setHuespedes] = useState(1);
     const huespedesTotal = cantHuespedesTotal;
 
-    const cantidadNoches = useMemo(() => {
+    const calcularCantidadNoches = () => {
         if (checkIn && checkOut && dayjs(checkOut).isValid() && dayjs(checkIn).isValid()) {
             const diff = dayjs(checkOut).diff(dayjs(checkIn), 'day');
             return diff > 0 ? diff : 0;
         }
         return 0;
-    }, [checkIn, checkOut]);
+    }
+
+    const cantidadNoches = calcularCantidadNoches()
 
     const API_BASE_URL = "http://localhost:3000";
-
-
 
     const total = precioPorNoche * cantidadNoches;
 

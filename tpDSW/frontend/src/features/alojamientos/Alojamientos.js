@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ActionAreaCard from "../../components/CardItem/CardItem";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Filtro from "../../components/filtro/Filtro";
-import { SearchBar } from "../../components/searchBar/SearchBar";
+import { SearchBar } from "../../components/SearchBar/SearchBar";
 import Footer from "../../components/footer/Footer";
 import PageSearch from "../../components/PageSearch/PageSearch"
 import Skeleton from '@mui/material/Skeleton';

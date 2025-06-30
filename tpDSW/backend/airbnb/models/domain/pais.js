@@ -1,6 +1,6 @@
 export class Pais{
     nombre
     constructor(nombre){
-        this.nombre = nombre;
+        this.nombre = nombre.toLowerCase();
     }
 }

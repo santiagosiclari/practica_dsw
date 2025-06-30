@@ -62,10 +62,10 @@ export class AlojamientoRepository {
         const query = {};
 
         // Construcción del filtro MongoDB
-        if (filtros.ciudad) query['direccion.ciudad.nombre'] = filtros.ciudad;
+        if (filtros.ciudad) query['direccion.ciudad.nombre'] = filtros.ciudad.toLowerCase();
         if (filtros.pais) query['direccion.ciudad.pais.nombre'] = filtros.pais;
         if (filtros.lat) query['direccion.lat'] = filtros.lat;
-        if (filtros.long) query['direccion.long'] = filtros.long;
+        if (filtros.long) query['direccion.long'] = filtros.longitud;
         if (!isNaN(filtros.precioMin) && !isNaN(filtros.precioMax)) {
             query.precioPorNoche = { $gte: filtros.precioMin, $lte: filtros.precioMax };
         }

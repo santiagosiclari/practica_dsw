@@ -41,7 +41,10 @@ export const SearchBar = () => {
                 tipo="text"
                 placeInicial="Ubicación"
                 value={ubicacion}
-                onChange={(e) => setUbicacion(e.target.value)}
+                onChange={(e) => {
+                    const value = e.target.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    setUbicacion(value);
+                }}
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker

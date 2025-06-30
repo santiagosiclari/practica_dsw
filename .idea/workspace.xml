@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9dd78ad2-21bb-4e46-bd69-b5a974a33481" name="Changes" comment="" />
+    <list default="true" id="9dd78ad2-21bb-4e46-bd69-b5a974a33481" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/backend/airbnb/models/domain/ciudad.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/backend/airbnb/models/domain/ciudad.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/backend/airbnb/models/domain/pais.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/backend/airbnb/models/domain/pais.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/backend/airbnb/models/repositories/alojamientoRepository.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/backend/airbnb/models/repositories/alojamientoRepository.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/Item-box/ItemBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/Item-box/ItemBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoDetailPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/components/alojamientos/AlojamientoDetailPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" beforeDir="false" afterPath="$PROJECT_DIR$/tpDSW/frontend/src/features/alojamientos/Alojamientos.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,22 +53,22 @@
     <option name="showLibraryContents" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;correcciones__e2&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="practica_dsw" />
@@ -126,7 +135,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
       </set>
     </attachedChunks>
   </component>
@@ -168,6 +177,7 @@
       <workItem from="1750459544468" duration="149000" />
       <workItem from="1750520970908" duration="4088000" />
       <workItem from="1750532689913" duration="4388000" />
+      <workItem from="1750797590607" duration="9706000" />
     </task>
     <servers />
   </component>
