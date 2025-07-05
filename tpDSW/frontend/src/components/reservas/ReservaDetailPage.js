@@ -5,8 +5,6 @@ import { Texto } from "../ModalReservaConfirmada/ModalReservaConfirmada";
 import dayjs from "dayjs";
 import "./ReservaDetailPage.css";
 
-const API_BASE_URL = "http://localhost:3000";
-
 const ReservaDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -17,7 +15,7 @@ const ReservaDetailPage = () => {
     useEffect(() => {
         const fetchReserva = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/reservas/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/reservas/${id}`);
                 setReserva(response.data);
             } catch (err) {
                 setError("No se pudo cargar la reserva.");
