@@ -1,4 +1,13 @@
+[build]
+base = "tpDSW/frontend"
+command = "npm run build"
+publish = "tpDSW/frontend/build"
+
+[build.environment]
+REACT_APP_API_URL = "https://backend-birbnb.onrender.com"
+CI = "false"
+
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+from = "/*"
+to = "/index.html"
+status = 200

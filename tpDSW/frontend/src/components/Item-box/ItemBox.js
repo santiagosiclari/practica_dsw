@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TextField, Box, Typography, Button, MenuItem } from "@mui/material";
+import { TextField, Box, Typography, Button } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
@@ -21,15 +21,13 @@ const ItemBox = ({ precioPorNoche, alojamientoId, cantHuespedesTotal }) => {
 
     const cantidadNoches = calcularCantidadNoches()
 
-    const API_BASE_URL = "http://localhost:3000";
-
     const total = precioPorNoche * cantidadNoches;
 
     const handleReserva = async () => {
         if (!checkIn || !checkOut || cantidadNoches <= 0) return alert("Selecciona fechas válidas");
 
         try {
-            const response = await fetch(`${API_BASE_URL}/reservas`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/reservas`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

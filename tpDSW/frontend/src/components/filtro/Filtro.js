@@ -1,7 +1,7 @@
 import './Filtro.css';
 import {useEffect, useState} from 'react';
 import { PlaceholderDoble } from '../placeholder_input/PlaceholderInput';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { construirQueryParams } from '../../utils/queryParams';
 import WifiIcon from '@mui/icons-material/Wifi';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
@@ -27,7 +27,6 @@ const Caracteristica = ({ item, toggle }) => {
 
 const Filtro = () => {
     const navigate = useNavigate();
-    const location = useLocation();
 
     const [mostrarModal, setMostrarModal] = useState(false);
     const [caracteristicas, setCaracteristicas] = useState(

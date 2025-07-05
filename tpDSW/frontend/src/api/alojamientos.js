@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const alojamientosApi = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: process.env.REACT_APP_API_URL || "http://localhost:3000",
 });
 
-export const getAlojamientos = async (pageNumber) => {
-    const { data } = await alojamientosApi.get("/alojamientos");
-    return data.alojamientos; // ✅ extrae directamente el array
+export const getAlojamientos = async (pageNumber = 1) => {
+    const { data } = await alojamientosApi.get(`/alojamientos?page=${pageNumber}`);
+    return data.alojamientos;
 };
 
 export const getAlojamientoById = async (id) => {
@@ -14,4 +14,7 @@ export const getAlojamientoById = async (id) => {
     return data;
 };
 
-export const getBanner = () => alojamientosApi.get('banner').then(r => r.data.message)
+export const getBanner = async () => {
+    const { data } = await alojamientosApi.get("/banner");
+    return data.message;
+};

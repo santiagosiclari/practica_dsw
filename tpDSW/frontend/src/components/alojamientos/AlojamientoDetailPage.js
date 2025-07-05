@@ -8,7 +8,6 @@ import WifiIcon from '@mui/icons-material/Wifi';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import PoolIcon from '@mui/icons-material/Pool';
 import PetsIcon from '@mui/icons-material/Pets';
-import Skeleton from "@mui/material/Skeleton";
 import CargandoCentrado from "../circularProgress/CircularProgress";
 
 const CARACTERISTICA_SIMBOLOS = {

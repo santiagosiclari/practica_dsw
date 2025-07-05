@@ -16,8 +16,8 @@ export const SearchBar = () => {
     const [fechaInicio, setFechaInicio] = useState(null);
     const [fechaFinal, setFechaFinal] = useState(null);
     const [cantHuespedes, setCantHuespedes] = useState('');
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [page] = useState(1);
+    const [limit] = useState(10);
 
 
     const handleSubmit = (e) => {

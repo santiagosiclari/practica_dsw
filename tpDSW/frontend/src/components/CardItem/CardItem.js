@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 
-export default function ActionAreaCard({nombre, imagen, precio, huespedMax, seleccionado, alSeleccionarItem}) {
+export default function ActionAreaCard({nombre, imagen, precio, huespedMax, alSeleccionarItem}) {
     return (
         <Card sx={{ width: 280,
             height: 350,
