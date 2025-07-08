@@ -62,8 +62,8 @@
 
 .modal-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
+    align-items: end;
     margin-bottom: 1rem;
 }
 

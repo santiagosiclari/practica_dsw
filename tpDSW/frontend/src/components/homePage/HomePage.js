@@ -44,6 +44,7 @@ const HomePage = () => {
                     src="/images/patagonia.jpg"
                     alt="imagen patagonia"
                     className="hero-image"
+                    style={{ filter: "brightness(70%)" }}
                 />
             </header>
 
