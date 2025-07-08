@@ -21,7 +21,7 @@ const ItemBox = ({ precioPorNoche, alojamientoId, cantHuespedesTotal }) => {
 
     const cantidadNoches = calcularCantidadNoches()
 
-    const API_BASE_URL = "http://localhost:3000";
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
 
     const total = precioPorNoche * cantidadNoches;
 

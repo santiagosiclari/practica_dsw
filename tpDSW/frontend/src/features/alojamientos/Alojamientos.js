@@ -59,7 +59,7 @@ const Alojamientos = () => {
 
     const [totalPages, setTotalPages] = useState(1);
 
-    const API_BASE_URL = "http://localhost:3000";
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
 
     const fetchAlojamientos = async () => {
         try {
@@ -70,7 +70,6 @@ const Alojamientos = () => {
             if (!query.has("page")) query.set("page", "1");
             if (!query.has("limit")) query.set("limit", "10");
 
-            //const response = await fetch(`http://localhost:3000/alojamientos?${searchParams.toString()}`);
             const response = await fetch(`${API_BASE_URL}/alojamientos?${query.toString()}`);
             if (!response.ok) throw new Error("Error al cargar los alojamientos");
             const data = await response.json();

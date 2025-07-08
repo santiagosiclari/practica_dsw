@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const alojamientosApi = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: process.env.REACT_APP_API_URL,
 });
 
 export const getAlojamientos = async (pageNumber) => {
