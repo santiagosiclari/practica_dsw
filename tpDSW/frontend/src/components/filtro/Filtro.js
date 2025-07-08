@@ -114,7 +114,6 @@ const Filtro = () => {
                 <div className="modal-overlay" onClick={toggleModal}>
                     <div className="modal-filtros" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
-                            <h2 className="titulo-filtros" >Filtros</h2>
                             <button className="cerrar-btn" onClick={toggleModal}>✖</button>
                         </div>
 
@@ -127,7 +126,7 @@ const Filtro = () => {
                             </div>
                         </section>
                         <section>
-                            <h4>Rango de precios</h4>
+                            <h4 style={{ textAlign: "left", marginLeft: "4px" }}>Rango de precios</h4>
                             <PlaceholderDoble
                                 tipo={"number"}
                                 placeInicial={"Minimo"}
@@ -141,7 +140,7 @@ const Filtro = () => {
                             />
                         </section>
                         <section>
-                            <h4>Coordenadas</h4>
+                            <h4 style={{ textAlign: "left", marginLeft: "4px", marginTop: "25px" }}>Coordenadas</h4>
                             <PlaceholderDoble
                                 tipo={"number"}
                                 placeInicial={"Latitud"}
