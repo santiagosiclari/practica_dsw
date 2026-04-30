@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: dsw-backend
+    ports:
+      - "3005:3005"
+    env_file:
+      - ./backend/.env
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: dsw-frontend
+    ports:
+      - "8085:80"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    restart: always
